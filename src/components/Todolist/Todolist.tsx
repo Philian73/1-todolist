@@ -10,7 +10,7 @@ type PropsType = {
    title: string
    tasks: Array<TaskType>
 }
-export const Todolist: React.FC<PropsType> = (props) => {
+export const Todolist: React.FC<PropsType> = props => {
    return (
       <div>
          <h3>{props.title}</h3>
