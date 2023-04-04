@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {TaskType} from '../../App'
-//test
+
 type FilterValuesType = 'all' | 'active' | 'completed'
 
 type PropsType = {
