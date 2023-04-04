@@ -15,9 +15,9 @@ export const Todolist: React.FC<PropsType> = props => {
       let tasksForTodolist = tasks
 
       if (filter === 'active') {
-         tasksForTodolist = tasksForTodolist.filter(task => !task.isDone)
+         tasksForTodolist = tasks.filter(task => !task.isDone)
       } else if (filter === 'completed') {
-         tasksForTodolist = tasksForTodolist.filter(task => task.isDone)
+         tasksForTodolist = tasks.filter(task => task.isDone)
       }
 
       return tasksForTodolist
