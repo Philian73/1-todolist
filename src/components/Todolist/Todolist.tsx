@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {TaskType} from '../../App'
 
-type FilterValuesType = 'all' | 'active' | 'completed'
+type FilterValuesType = 'all' | 'active' | 'completed' | 'firstThree'
 
 type PropsType = {
    title: string
@@ -18,6 +18,8 @@ export const Todolist: React.FC<PropsType> = props => {
          tasksForTodolist = tasks.filter(task => !task.isDone)
       } else if (filter === 'completed') {
          tasksForTodolist = tasks.filter(task => task.isDone)
+      } else if (filter === 'firstThree') {
+         tasksForTodolist = tasks.filter((task, i) => i < 3)
       }
 
       return tasksForTodolist
@@ -26,6 +28,8 @@ export const Todolist: React.FC<PropsType> = props => {
    const removeTask = (id: number): void => setTasks(tasks.filter(task => task.id !== id))
 
    const changeFilter = (value: FilterValuesType): void => setFilter(value)
+
+   const deleteAllTasks = (): void => setTasks([])
 
    return (
       <div>
@@ -45,10 +49,12 @@ export const Todolist: React.FC<PropsType> = props => {
                )
             })}
          </ul>
+         <button onClick={deleteAllTasks}>DELETE ALL TASKS</button>
          <div>
             <button onClick={() => changeFilter('all')}>All</button>
             <button onClick={() => changeFilter('active')}>Active</button>
             <button onClick={() => changeFilter('completed')}>Completed</button>
+            <button onClick={() => changeFilter('firstThree')}>First three</button>
          </div>
       </div>
    )
