@@ -8,7 +8,7 @@ type PropsType = {
    tasksArr: Array<TaskType>
 }
 export const Todolist: React.FC<PropsType> = props => {
-   const {title, tasksArr, ...restProps} = props
+   const {title, tasksArr} = props
 
    const [tasks, setTasks] = useState<Array<TaskType>>(tasksArr)
    const [filter, setFilter] = useState<FilterValuesType>('all')
