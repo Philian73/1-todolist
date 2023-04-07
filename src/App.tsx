@@ -8,7 +8,7 @@ export type TaskType = {
    isDone: boolean
 }
 
-const App: React.FC = () => {
+const App = () => {
    const tasks1: Array<TaskType> = [
       {id: 1, title: 'HTML&CSS', isDone: true},
       {id: 2, title: 'JS', isDone: true},
@@ -19,7 +19,7 @@ const App: React.FC = () => {
 
    return (
       <div className="App">
-         <Todolist title="What to learn" tasks={tasks1} />
+         <Todolist title="What to learn" tasksArr={tasks1} />
       </div>
    )
 }

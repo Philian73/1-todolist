@@ -5,10 +5,12 @@ type FilterValuesType = 'all' | 'active' | 'completed' | 'firstThree'
 
 type PropsType = {
    title: string
-   tasks: Array<TaskType>
+   tasksArr: Array<TaskType>
 }
 export const Todolist: React.FC<PropsType> = props => {
-   const [tasks, setTasks] = useState<Array<TaskType>>([...props.tasks])
+   const {title, tasksArr, ...restProps} = props
+
+   const [tasks, setTasks] = useState<Array<TaskType>>(tasksArr)
    const [filter, setFilter] = useState<FilterValuesType>('all')
 
    const tasksForTodolistFoo = (): Array<TaskType> => {
@@ -26,28 +28,28 @@ export const Todolist: React.FC<PropsType> = props => {
    }
 
    const removeTask = (id: number): void => setTasks(tasks.filter(task => task.id !== id))
-
    const changeFilter = (value: FilterValuesType): void => setFilter(value)
-
    const deleteAllTasks = (): void => setTasks([])
+
+   const tasksMap = tasksForTodolistFoo().map(task => {
+      return (
+         <li key={task.id}>
+            <button onClick={() => removeTask(task.id)}>✖️</button>
+            <input type="checkbox" checked={task.isDone} />
+            <span>{task.title}</span>
+         </li>
+      )
+   })
 
    return (
       <div>
-         <h3>{props.title}</h3>
+         <h3>{title}</h3>
          <div>
             <input />
             <button>+</button>
          </div>
          <ul>
-            {tasksForTodolistFoo().map(task => {
-               return (
-                  <li key={task.id}>
-                     <button onClick={() => removeTask(task.id)}>✖️</button>
-                     <input type="checkbox" checked={task.isDone} />
-                     <span>{task.title}</span>
-                  </li>
-               )
-            })}
+            {tasksMap}
          </ul>
          <button onClick={deleteAllTasks}>DELETE ALL TASKS</button>
          <div>
