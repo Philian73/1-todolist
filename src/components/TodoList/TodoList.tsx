@@ -5,7 +5,7 @@ import { FilterValuesType, TaskType } from '../../App'
 type PropsType = {
   title: string
   tasks: TaskType[]
-  removeTask: (taskId: number) => void
+  removeTask: (taskId: string) => void
   changeFilter: (value: FilterValuesType) => void
 }
 export const TodoList: FC<PropsType> = ({
