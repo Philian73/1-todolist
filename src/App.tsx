@@ -1,7 +1,6 @@
-import './styles/App.css'
-
 import { useState } from 'react'
 
+import './styles/App.css'
 import { v1 } from 'uuid'
 
 import { TodoList } from './components/TodoList/TodoList'
