@@ -10,22 +10,20 @@ type PropsType = {
   addTask: (title: string) => void
 }
 export const TodoList: FC<PropsType> = ({ title, tasks, removeTask, changeFilter, addTask }) => {
-  const [newTitle, setNewTitle] = useState<string>('')
+  const [taskTitle, setTaskTitle] = useState<string>('')
 
-  const MAX_LENGTH_NEW_TITLE = 15
+  const MAX_LENGTH_TASK_TITLE = 15
 
-  const changeNewTitleHandler = (e: ChangeEvent<HTMLInputElement>) =>
-    setNewTitle(e.currentTarget.value)
+  const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) =>
+    setTaskTitle(e.currentTarget.value)
   const addTaskHandler = () => {
-    if (newTitle.trim().length && newTitle.trim().length <= MAX_LENGTH_NEW_TITLE) {
-      addTask(newTitle.trim())
-      setNewTitle('')
+    if (taskTitle.trim().length && taskTitle.trim().length <= MAX_LENGTH_TASK_TITLE) {
+      addTask(taskTitle.trim())
+      setTaskTitle('')
     }
   }
   const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && e.ctrlKey) {
-      addTaskHandler()
-    }
+    if (e.key === 'Enter' && e.ctrlKey) addTaskHandler()
   }
 
   const tasksMap = tasks.map(t => {
@@ -41,10 +39,10 @@ export const TodoList: FC<PropsType> = ({ title, tasks, removeTask, changeFilter
   })
 
   const addTaskButtonState =
-    newTitle.trim().length === 0 || newTitle.trim().length > MAX_LENGTH_NEW_TITLE
-  const addTaskErrorMessage = newTitle.trim().length > MAX_LENGTH_NEW_TITLE && (
+    taskTitle.trim().length === 0 || taskTitle.trim().length > MAX_LENGTH_TASK_TITLE
+  const addTaskErrorMessage = taskTitle.trim().length > MAX_LENGTH_TASK_TITLE && (
     <div>
-      <span>Task name must be no more than {MAX_LENGTH_NEW_TITLE} characters</span>
+      <span>Task name must be no more than {MAX_LENGTH_TASK_TITLE} characters</span>
     </div>
   )
 
@@ -54,8 +52,8 @@ export const TodoList: FC<PropsType> = ({ title, tasks, removeTask, changeFilter
       <div>
         <input
           type="text"
-          value={newTitle}
-          onChange={changeNewTitleHandler}
+          value={taskTitle}
+          onChange={changeTaskTitleHandler}
           onKeyDown={onKeyDownHandler}
         />
         <button disabled={addTaskButtonState} onClick={addTaskHandler}>
