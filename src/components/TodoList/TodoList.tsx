@@ -11,6 +11,7 @@ type PropsType = {
   changeFilter: (value: FilterValuesType) => void
   addTask: (taskTitle: string) => void
   changeStatus: (taskId: string, isDone: boolean) => void
+  filter: FilterValuesType
 }
 export const TodoList: FC<PropsType> = ({
   title,
@@ -19,6 +20,7 @@ export const TodoList: FC<PropsType> = ({
   changeFilter,
   addTask,
   changeStatus,
+  filter,
 }) => {
   const newTaskTitle = useRef<HTMLInputElement>(null)
   const [error, setError] = useState<string | null>(null)
@@ -69,9 +71,24 @@ export const TodoList: FC<PropsType> = ({
       </div>
       <ul>{tasksMap}</ul>
       <div>
-        <button onClick={() => changeFilter('all')}>All</button>
-        <button onClick={() => changeFilter('active')}>Active</button>
-        <button onClick={() => changeFilter('completed')}>Completed</button>
+        <button
+          className={filter === 'all' ? s.activeFilter : ''}
+          onClick={() => changeFilter('all')}
+        >
+          All
+        </button>
+        <button
+          className={filter === 'active' ? s.activeFilter : ''}
+          onClick={() => changeFilter('active')}
+        >
+          Active
+        </button>
+        <button
+          className={filter === 'completed' ? s.activeFilter : ''}
+          onClick={() => changeFilter('completed')}
+        >
+          Completed
+        </button>
       </div>
     </div>
   )
