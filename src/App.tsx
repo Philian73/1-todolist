@@ -33,9 +33,11 @@ const App = () => {
     setTasks(tasks.map(t => (t.id === taskId ? { ...t, isDone: isDone } : t)))
   }
 
-  const changeFilter = (value: FilterValuesType) => setFilter(value)
+  const changeFilter = (value: FilterValuesType) => {
+    setFilter(value)
+  }
 
-  const tasksForTodolist = (): TaskType[] => {
+  const filteredTasks = (): TaskType[] => {
     if (filter === 'active') return tasks.filter(t => !t.isDone)
     else if (filter === 'completed') return tasks.filter(t => t.isDone)
 
@@ -46,7 +48,7 @@ const App = () => {
     <div className="App">
       <TodoList
         title="What to learn"
-        tasks={tasksForTodolist()}
+        tasks={filteredTasks()}
         removeTask={removeTask}
         changeFilter={changeFilter}
         addTask={addTask}

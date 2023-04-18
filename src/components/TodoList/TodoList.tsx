@@ -28,7 +28,7 @@ export const TodoList: FC<PropsType> = ({
   const addTaskHandler = () => {
     if (error) return
 
-    if (newTaskTitle.current && newTaskTitle.current.value.trim()) {
+    if (newTaskTitle.current?.value.trim()) {
       addTask(newTaskTitle.current.value.trim())
       newTaskTitle.current.value = ''
     } else {
