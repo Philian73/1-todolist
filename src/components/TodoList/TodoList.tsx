@@ -1,71 +1,77 @@
-import { ChangeEvent, KeyboardEvent, FC, useState } from 'react'
+import { KeyboardEvent, FC, useRef, ChangeEvent, useState } from 'react'
 
 import { FilterValuesType, TaskType } from '../../App'
+
+import s from './TodoList.module.css'
 
 type PropsType = {
   title: string
   tasks: TaskType[]
   removeTask: (taskId: string) => void
   changeFilter: (value: FilterValuesType) => void
-  addTask: (title: string) => void
+  addTask: (taskTitle: string) => void
+  changeStatus: (taskId: string, isDone: boolean) => void
 }
-export const TodoList: FC<PropsType> = ({ title, tasks, removeTask, changeFilter, addTask }) => {
-  const [taskTitle, setTaskTitle] = useState<string>('')
+export const TodoList: FC<PropsType> = ({
+  title,
+  tasks,
+  removeTask,
+  changeFilter,
+  addTask,
+  changeStatus,
+}) => {
+  const newTaskTitle = useRef<HTMLInputElement>(null)
+  const [error, setError] = useState<string | null>(null)
 
-  const MAX_LENGTH_TASK_TITLE = 15
-
-  const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) =>
-    setTaskTitle(e.currentTarget.value)
   const addTaskHandler = () => {
-    if (taskTitle.trim().length && taskTitle.trim().length <= MAX_LENGTH_TASK_TITLE) {
-      addTask(taskTitle.trim())
-      setTaskTitle('')
+    if (error) return
+
+    if (newTaskTitle.current && newTaskTitle.current.value.trim()) {
+      addTask(newTaskTitle.current.value.trim())
+      newTaskTitle.current.value = ''
+    } else {
+      setError('Title is required')
     }
   }
   const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && e.ctrlKey) addTaskHandler()
+    if (error && e.key !== ' ') setError(null)
   }
 
   const tasksMap = tasks.map(t => {
-    const removeTaskHandler = () => removeTask(t.id)
+    const removeTaskHandler = () => {
+      removeTask(t.id)
+    }
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+      changeStatus(t.id, e.currentTarget.checked)
+    }
 
     return (
       <li key={t.id}>
-        <input type="checkbox" checked={t.isDone} />
+        <input type="checkbox" checked={t.isDone} onChange={onChangeHandler} />
         <span>{t.title}</span>
-        <button onClick={removeTaskHandler}>x</button>
+        <button onClick={removeTaskHandler}>✖️</button>
       </li>
     )
   })
-
-  const addTaskButtonState =
-    taskTitle.trim().length === 0 || taskTitle.trim().length > MAX_LENGTH_TASK_TITLE
-  const addTaskErrorMessage = taskTitle.trim().length > MAX_LENGTH_TASK_TITLE && (
-    <div>
-      <span>Task name must be no more than {MAX_LENGTH_TASK_TITLE} characters</span>
-    </div>
-  )
 
   return (
     <div>
       <h3>{title}</h3>
       <div>
-        <input
-          type="text"
-          value={taskTitle}
-          onChange={changeTaskTitleHandler}
-          onKeyDown={onKeyDownHandler}
-        />
-        <button disabled={addTaskButtonState} onClick={addTaskHandler}>
-          +
-        </button>
-        {addTaskErrorMessage}
+        <input className={error ? s.error : ''} ref={newTaskTitle} onKeyDown={onKeyDownHandler} />
+        <button onClick={addTaskHandler}>+</button>
+        {error && (
+          <div>
+            <span className={s.errorMessage}>{error}</span>
+          </div>
+        )}
       </div>
       <ul>{tasksMap}</ul>
       <div>
         <button onClick={() => changeFilter('all')}>All</button>
         <button onClick={() => changeFilter('active')}>Active</button>
-        <button onClick={() => changeFilter('completed')}>completed</button>
+        <button onClick={() => changeFilter('completed')}>Completed</button>
       </div>
     </div>
   )
