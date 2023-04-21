@@ -53,7 +53,7 @@ export const TodoList: FC<PropsType> = ({
       <li key={t.id}>
         <input type="checkbox" checked={t.isDone} onChange={onChangeHandler} />
         <span>{t.title}</span>
-        <SuperButton name="✖" onClick={removeTaskHandler} />
+        <SuperButton name={'✖'} onClick={removeTaskHandler} />
       </li>
     )
   })
@@ -72,24 +72,21 @@ export const TodoList: FC<PropsType> = ({
       </div>
       <ul>{tasksMap}</ul>
       <div>
-        <button
+        <SuperButton
           className={filter === 'all' ? s.activeFilter : ''}
+          name="All"
           onClick={() => changeFilter('all')}
-        >
-          All
-        </button>
-        <button
+        />
+        <SuperButton
           className={filter === 'active' ? s.activeFilter : ''}
+          name="Active"
           onClick={() => changeFilter('active')}
-        >
-          Active
-        </button>
-        <button
+        />
+        <SuperButton
           className={filter === 'completed' ? s.activeFilter : ''}
+          name="Completed"
           onClick={() => changeFilter('completed')}
-        >
-          Completed
-        </button>
+        />
       </div>
     </div>
   )
