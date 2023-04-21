@@ -4,10 +4,11 @@ type PropsType = {
   name: string
   onClick: () => void
   disabled?: boolean
+  className?: string
 }
-export const SuperButton: FC<PropsType> = ({ name, onClick, disabled }) => {
+export const SuperButton: FC<PropsType> = ({ name, onClick, disabled, className }) => {
   return (
-    <button onClick={onClick} disabled={disabled}>
+    <button className={className ? className : undefined} onClick={onClick} disabled={disabled}>
       {name}
     </button>
   )
