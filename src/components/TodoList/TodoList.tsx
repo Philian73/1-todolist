@@ -1,6 +1,7 @@
 import { KeyboardEvent, FC, useRef, ChangeEvent, useState } from 'react'
 
 import { FilterValuesType, TaskType } from '../../App'
+import { SuperButton } from '../SuperButton/SuperButton'
 
 import s from './TodoList.module.css'
 
@@ -52,7 +53,7 @@ export const TodoList: FC<PropsType> = ({
       <li key={t.id}>
         <input type="checkbox" checked={t.isDone} onChange={onChangeHandler} />
         <span>{t.title}</span>
-        <button onClick={removeTaskHandler}>✖️</button>
+        <SuperButton name="✖" onClick={removeTaskHandler} />
       </li>
     )
   })
@@ -62,7 +63,7 @@ export const TodoList: FC<PropsType> = ({
       <h3>{title}</h3>
       <div>
         <input className={error ? s.error : ''} ref={newTaskTitle} onKeyDown={onKeyDownHandler} />
-        <button onClick={addTaskHandler}>+</button>
+        <SuperButton name="+" onClick={addTaskHandler} />
         {error && (
           <div>
             <span className={s.errorMessage}>{error}</span>
