@@ -8,25 +8,29 @@ import s from './TodoList.module.css'
 type PropsType = {
   todoListID: string
   title: string
+  filter: FilterValuesType
+  removeTodoList: (todoListID: string) => void
   tasks: TaskType[]
   removeTask: (taskId: string, todoListID: string) => void
   changeFilter: (value: FilterValuesType, todoListID: string) => void
   addTask: (taskTitle: string, todoListID: string) => void
   changeStatus: (taskId: string, isDone: boolean, todoListID: string) => void
-  filter: FilterValuesType
 }
 export const TodoList: FC<PropsType> = ({
   todoListID,
   title,
+  filter,
+  removeTodoList,
   tasks,
   removeTask,
   changeFilter,
   addTask,
   changeStatus,
-  filter,
 }) => {
   const newTaskTitle = useRef<HTMLInputElement>(null)
   const [error, setError] = useState<string | null>(null)
+
+  const removeTodoListHandler = () => removeTodoList(todoListID)
 
   const addTaskHandler = () => {
     if (error) return
@@ -55,14 +59,17 @@ export const TodoList: FC<PropsType> = ({
       <li key={t.id}>
         <input type="checkbox" checked={t.isDone} onChange={onChangeHandler} />
         <span>{t.title}</span>
-        <SuperButton name={'✖'} onClick={removeTaskHandler} />
+        <SuperButton name="✖" onClick={removeTaskHandler} />
       </li>
     )
   })
 
   return (
     <div>
-      <h3>{title}</h3>
+      <h3>
+        {title}
+        <button onClick={removeTodoListHandler}>✖</button>
+      </h3>
       <div>
         <input className={error ? s.error : ''} ref={newTaskTitle} onKeyDown={onKeyDownHandler} />
         <SuperButton name="+" onClick={addTaskHandler} />
