@@ -6,15 +6,17 @@ import { SuperButton } from '../SuperButton/SuperButton'
 import s from './TodoList.module.css'
 
 type PropsType = {
+  todoListID: string
   title: string
   tasks: TaskType[]
   removeTask: (taskId: string) => void
-  changeFilter: (value: FilterValuesType) => void
+  changeFilter: (value: FilterValuesType, todoListID: string) => void
   addTask: (taskTitle: string) => void
   changeStatus: (taskId: string, isDone: boolean) => void
   filter: FilterValuesType
 }
 export const TodoList: FC<PropsType> = ({
+  todoListID,
   title,
   tasks,
   removeTask,
@@ -75,17 +77,17 @@ export const TodoList: FC<PropsType> = ({
         <SuperButton
           className={filter === 'all' ? s.activeFilter : ''}
           name="All"
-          onClick={() => changeFilter('all')}
+          onClick={() => changeFilter('all', todoListID)}
         />
         <SuperButton
           className={filter === 'active' ? s.activeFilter : ''}
           name="Active"
-          onClick={() => changeFilter('active')}
+          onClick={() => changeFilter('active', todoListID)}
         />
         <SuperButton
           className={filter === 'completed' ? s.activeFilter : ''}
           name="Completed"
-          onClick={() => changeFilter('completed')}
+          onClick={() => changeFilter('completed', todoListID)}
         />
       </div>
     </div>
