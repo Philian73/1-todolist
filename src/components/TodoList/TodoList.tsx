@@ -9,10 +9,10 @@ type PropsType = {
   todoListID: string
   title: string
   tasks: TaskType[]
-  removeTask: (taskId: string) => void
+  removeTask: (taskId: string, todoListID: string) => void
   changeFilter: (value: FilterValuesType, todoListID: string) => void
-  addTask: (taskTitle: string) => void
-  changeStatus: (taskId: string, isDone: boolean) => void
+  addTask: (taskTitle: string, todoListID: string) => void
+  changeStatus: (taskId: string, isDone: boolean, todoListID: string) => void
   filter: FilterValuesType
 }
 export const TodoList: FC<PropsType> = ({
@@ -32,7 +32,7 @@ export const TodoList: FC<PropsType> = ({
     if (error) return
 
     if (newTaskTitle.current?.value.trim()) {
-      addTask(newTaskTitle.current.value.trim())
+      addTask(newTaskTitle.current.value.trim(), todoListID)
       newTaskTitle.current.value = ''
     } else {
       setError('Title is required')
@@ -45,10 +45,10 @@ export const TodoList: FC<PropsType> = ({
 
   const tasksMap = tasks.map(t => {
     const removeTaskHandler = () => {
-      removeTask(t.id)
+      removeTask(t.id, todoListID)
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-      changeStatus(t.id, e.currentTarget.checked)
+      changeStatus(t.id, e.currentTarget.checked, todoListID)
     }
 
     return (
