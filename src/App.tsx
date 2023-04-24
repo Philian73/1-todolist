@@ -27,7 +27,6 @@ const App = () => {
     { id: v1(), title: 'Rest API', isDone: false },
     { id: v1(), title: 'GraphQL', isDone: false },
   ])
-  const [filter, setFilter] = useState<FilterValuesType>('all')
   const [todoLists, setTodoLists] = useState<TodoListType[]>([
     { id: v1(), title: 'What to learn', filter: 'all' },
     { id: v1(), title: 'What to learn', filter: 'all' },
@@ -43,21 +42,22 @@ const App = () => {
     setTasks(tasks.map(t => (t.id === taskId ? { ...t, isDone: isDone } : t)))
   }
 
-  const changeFilter = (value: FilterValuesType) => {
-    setFilter(value)
-  }
-
-  const filteredTasks = (): TaskType[] => {
-    if (filter === 'active') return tasks.filter(t => !t.isDone)
-    else if (filter === 'completed') return tasks.filter(t => t.isDone)
-
-    return tasks
+  const changeFilter = (value: FilterValuesType, todoListID: string) => {
+    setTodoLists(todoLists.map(tl => (tl.id === todoListID ? { ...tl, filter: value } : tl)))
   }
 
   const todoListsMap = todoLists.map(tl => {
+    const filteredTasks = (): TaskType[] => {
+      if (tl.filter === 'active') return tasks.filter(t => !t.isDone)
+      else if (tl.filter === 'completed') return tasks.filter(t => t.isDone)
+
+      return tasks
+    }
+
     return (
       <TodoList
         key={tl.id}
+        todoListID={tl.id}
         title={tl.title}
         tasks={filteredTasks()}
         removeTask={removeTask}
