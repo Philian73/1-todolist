@@ -64,17 +64,23 @@ const App = () => {
 
     setTasks({ ...tasks, [todoListID]: updateTasks })
   }
-  const changeFilter = (todoListID: string, value: FilterValuesType) => {
+  const changeTodoListFilter = (todoListID: string, value: FilterValuesType) => {
     setTodoLists(todoLists.map(tl => (tl.id === todoListID ? { ...tl, filter: value } : tl)))
   }
 
-  const todoListsMap = todoLists.map(tl => {
-    const filteredTasks = (): TaskType[] => {
-      if (tl.filter === 'active') return tasks[tl.id].filter(t => !t.isDone)
-      else if (tl.filter === 'completed') return tasks[tl.id].filter(t => t.isDone)
-
-      return tasks[tl.id]
+  const getTasksForRender = (tasksList: TaskType[], filterValue: FilterValuesType): TaskType[] => {
+    switch (filterValue) {
+      case 'active':
+        return tasksList.filter(t => !t.isDone)
+      case 'completed':
+        return tasksList.filter(t => t.isDone)
+      default:
+        return tasksList
     }
+  }
+
+  const todoListsMap = todoLists.map(tl => {
+    const filteredTasks = getTasksForRender(tasks[tl.id], tl.filter)
 
     return (
       <TodoList
@@ -83,9 +89,9 @@ const App = () => {
         title={tl.title}
         filter={tl.filter}
         removeTodoList={removeTodoList}
-        tasks={filteredTasks()}
+        tasks={filteredTasks}
         removeTask={removeTask}
-        changeFilter={changeFilter}
+        changeTodoListFilter={changeTodoListFilter}
         addTask={addTask}
         changeStatus={changeStatus}
       />
