@@ -12,7 +12,7 @@ type PropsType = {
   removeTodoList: (todoListID: string) => void
   tasks: TaskType[]
   removeTask: (todoListID: string, taskID: string) => void
-  changeFilter: (todoListID: string, value: FilterValuesType) => void
+  changeTodoListFilter: (todoListID: string, value: FilterValuesType) => void
   addTask: (todoListID: string, taskTitle: string) => void
   changeStatus: (todoListID: string, taskID: string, isDone: boolean) => void
 }
@@ -23,7 +23,7 @@ export const TodoList: FC<PropsType> = ({
   removeTodoList,
   tasks,
   removeTask,
-  changeFilter,
+  changeTodoListFilter,
   addTask,
   changeStatus,
 }) => {
@@ -84,17 +84,17 @@ export const TodoList: FC<PropsType> = ({
         <SuperButton
           className={filter === 'all' ? s.activeFilter : ''}
           name="All"
-          onClick={() => changeFilter(todoListID, 'all')}
+          onClick={() => changeTodoListFilter(todoListID, 'all')}
         />
         <SuperButton
           className={filter === 'active' ? s.activeFilter : ''}
           name="Active"
-          onClick={() => changeFilter(todoListID, 'active')}
+          onClick={() => changeTodoListFilter(todoListID, 'active')}
         />
         <SuperButton
           className={filter === 'completed' ? s.activeFilter : ''}
           name="Completed"
-          onClick={() => changeFilter(todoListID, 'completed')}
+          onClick={() => changeTodoListFilter(todoListID, 'completed')}
         />
       </div>
     </div>
