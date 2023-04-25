@@ -11,10 +11,10 @@ type PropsType = {
   filter: FilterValuesType
   removeTodoList: (todoListID: string) => void
   tasks: TaskType[]
-  removeTask: (taskId: string, todoListID: string) => void
-  changeFilter: (value: FilterValuesType, todoListID: string) => void
-  addTask: (taskTitle: string, todoListID: string) => void
-  changeStatus: (taskId: string, isDone: boolean, todoListID: string) => void
+  removeTask: (todoListID: string, taskId: string) => void
+  changeFilter: (todoListID: string, value: FilterValuesType) => void
+  addTask: (todoListID: string, taskTitle: string) => void
+  changeStatus: (todoListID: string, taskId: string, isDone: boolean) => void
 }
 export const TodoList: FC<PropsType> = ({
   todoListID,
@@ -36,7 +36,7 @@ export const TodoList: FC<PropsType> = ({
     if (error) return
 
     if (newTaskTitle.current?.value.trim()) {
-      addTask(newTaskTitle.current.value.trim(), todoListID)
+      addTask(todoListID, newTaskTitle.current.value.trim())
       newTaskTitle.current.value = ''
     } else {
       setError('Title is required')
@@ -52,7 +52,7 @@ export const TodoList: FC<PropsType> = ({
       removeTask(t.id, todoListID)
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-      changeStatus(t.id, e.currentTarget.checked, todoListID)
+      changeStatus(todoListID, t.id, e.currentTarget.checked)
     }
 
     return (
@@ -84,17 +84,17 @@ export const TodoList: FC<PropsType> = ({
         <SuperButton
           className={filter === 'all' ? s.activeFilter : ''}
           name="All"
-          onClick={() => changeFilter('all', todoListID)}
+          onClick={() => changeFilter(todoListID, 'all')}
         />
         <SuperButton
           className={filter === 'active' ? s.activeFilter : ''}
           name="Active"
-          onClick={() => changeFilter('active', todoListID)}
+          onClick={() => changeFilter(todoListID, 'active')}
         />
         <SuperButton
           className={filter === 'completed' ? s.activeFilter : ''}
           name="Completed"
-          onClick={() => changeFilter('completed', todoListID)}
+          onClick={() => changeFilter(todoListID, 'completed')}
         />
       </div>
     </div>
