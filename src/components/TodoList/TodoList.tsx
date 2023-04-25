@@ -49,7 +49,7 @@ export const TodoList: FC<PropsType> = ({
 
   const tasksMap = tasks.map(t => {
     const removeTaskHandler = () => {
-      removeTask(t.id, todoListID)
+      removeTask(todoListID, t.id)
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
       changeStatus(todoListID, t.id, e.currentTarget.checked)
