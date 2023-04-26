@@ -48,7 +48,15 @@ const App = () => {
     delete tasks[todoListID]
     setTasks({ ...tasks })
   }
+  const changeTodoListFilter = (todoListID: string, value: FilterValuesType) => {
+    setTodoLists(todoLists.map(tl => (tl.id === todoListID ? { ...tl, filter: value } : tl)))
+  }
 
+  const changeTaskStatus = (todoListID: string, taskID: string, isDone: boolean) => {
+    const updateTasks = tasks[todoListID].map(t => (t.id === taskID ? { ...t, isDone: isDone } : t))
+
+    setTasks({ ...tasks, [todoListID]: updateTasks })
+  }
   const removeTask = (todoListID: string, taskID: string) => {
     const updateTasks = tasks[todoListID].filter(t => t.id !== taskID)
 
@@ -58,14 +66,6 @@ const App = () => {
     const updateTasks = [{ id: v1(), title: taskTitle, isDone: false }, ...tasks[todoListID]]
 
     setTasks({ ...tasks, [todoListID]: updateTasks })
-  }
-  const changeStatus = (todoListID: string, taskID: string, isDone: boolean) => {
-    const updateTasks = tasks[todoListID].map(t => (t.id === taskID ? { ...t, isDone: isDone } : t))
-
-    setTasks({ ...tasks, [todoListID]: updateTasks })
-  }
-  const changeTodoListFilter = (todoListID: string, value: FilterValuesType) => {
-    setTodoLists(todoLists.map(tl => (tl.id === todoListID ? { ...tl, filter: value } : tl)))
   }
 
   const getTasksForRender = (tasksList: TaskType[], filterValue: FilterValuesType): TaskType[] => {
@@ -88,12 +88,12 @@ const App = () => {
         todoListID={tl.id}
         title={tl.title}
         filter={tl.filter}
+        changeTodoListFilter={changeTodoListFilter}
         removeTodoList={removeTodoList}
         tasks={filteredTasks}
+        changeTaskStatus={changeTaskStatus}
         removeTask={removeTask}
-        changeTodoListFilter={changeTodoListFilter}
         addTask={addTask}
-        changeStatus={changeStatus}
       />
     )
   })
