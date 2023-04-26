@@ -1,4 +1,4 @@
-import { KeyboardEvent, FC, useRef, ChangeEvent, useState } from 'react'
+import { KeyboardEvent, FC, ChangeEvent, useState } from 'react'
 
 import { FilterValuesType, TaskType } from '../../App'
 import { SuperButton } from '../SuperButton/SuperButton'
@@ -27,7 +27,7 @@ export const TodoList: FC<PropsType> = ({
   removeTask,
   addTask,
 }) => {
-  const newTaskTitle = useRef<HTMLInputElement>(null)
+  const [newTaskTitle, setNewTaskTitle] = useState<string>('')
   const [error, setError] = useState<string | null>(null)
 
   const removeTodoListHandler = () => removeTodoList(todoListID)
@@ -35,9 +35,9 @@ export const TodoList: FC<PropsType> = ({
   const addTaskHandler = () => {
     if (error) return
 
-    if (newTaskTitle.current?.value.trim()) {
-      addTask(todoListID, newTaskTitle.current.value.trim())
-      newTaskTitle.current.value = ''
+    if (newTaskTitle.trim()) {
+      addTask(todoListID, newTaskTitle.trim())
+      setNewTaskTitle('')
     } else {
       setError('Title is required')
     }
@@ -45,6 +45,9 @@ export const TodoList: FC<PropsType> = ({
   const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && e.ctrlKey) addTaskHandler()
     if (error && e.key !== ' ') setError(null)
+  }
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setNewTaskTitle(e.currentTarget.value)
   }
 
   const tasksMap = tasks.map(t => {
@@ -71,7 +74,12 @@ export const TodoList: FC<PropsType> = ({
         <button onClick={removeTodoListHandler}>✖</button>
       </h3>
       <div>
-        <input className={error ? s.error : ''} ref={newTaskTitle} onKeyDown={onKeyDownHandler} />
+        <input
+          className={error ? s.error : ''}
+          value={newTaskTitle}
+          onChange={onChangeHandler}
+          onKeyDown={onKeyDownHandler}
+        />
         <SuperButton name="+" onClick={addTaskHandler} />
         {error && (
           <div>
