@@ -12,9 +12,9 @@ type PropsType = {
   changeTodoListFilter: (todoListID: string, value: FilterValuesType) => void
   removeTodoList: (todoListID: string) => void
   tasks: TaskType[]
+  changeTaskStatus: (todoListID: string, taskID: string, isDone: boolean) => void
   removeTask: (todoListID: string, taskID: string) => void
   addTask: (todoListID: string, taskTitle: string) => void
-  changeStatus: (todoListID: string, taskID: string, isDone: boolean) => void
 }
 export const TodoList: FC<PropsType> = ({
   todoListID,
@@ -23,9 +23,9 @@ export const TodoList: FC<PropsType> = ({
   changeTodoListFilter,
   removeTodoList,
   tasks,
+  changeTaskStatus,
   removeTask,
   addTask,
-  changeStatus,
 }) => {
   const newTaskTitle = useRef<HTMLInputElement>(null)
   const [error, setError] = useState<string | null>(null)
@@ -52,7 +52,7 @@ export const TodoList: FC<PropsType> = ({
       removeTask(todoListID, t.id)
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-      changeStatus(todoListID, t.id, e.currentTarget.checked)
+      changeTaskStatus(todoListID, t.id, e.currentTarget.checked)
     }
 
     return (
