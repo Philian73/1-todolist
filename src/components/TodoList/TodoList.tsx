@@ -1,4 +1,4 @@
-import { KeyboardEvent, FC, ChangeEvent, useState } from 'react'
+import { FC, ChangeEvent } from 'react'
 
 import { FilterValuesType, TaskType } from '../../App'
 import { AddItemForm } from '../AddItemForm/AddItemForm'
