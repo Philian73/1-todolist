@@ -1,6 +1,7 @@
 import { KeyboardEvent, FC, ChangeEvent, useState } from 'react'
 
 import { FilterValuesType, TaskType } from '../../App'
+import { AddItemForm } from '../AddItemForm/AddItemForm'
 import { SuperButton } from '../SuperButton/SuperButton'
 
 import s from './TodoList.module.css'
@@ -27,28 +28,9 @@ export const TodoList: FC<PropsType> = ({
   removeTask,
   addTask,
 }) => {
-  const [newTaskTitle, setNewTaskTitle] = useState<string>('')
-  const [error, setError] = useState<string | null>(null)
-
   const removeTodoListHandler = () => removeTodoList(todoListID)
 
-  const addTaskHandler = () => {
-    if (error) return
-
-    if (newTaskTitle.trim()) {
-      addTask(todoListID, newTaskTitle.trim())
-      setNewTaskTitle('')
-    } else {
-      setError('Title is required')
-    }
-  }
-  const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && e.ctrlKey) addTaskHandler()
-    if (error && e.key !== ' ') setError(null)
-  }
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setNewTaskTitle(e.currentTarget.value)
-  }
+  const addTaskCallback = (title: string) => addTask(todoListID, title)
 
   const tasksMap = tasks.map(t => {
     const removeTaskHandler = () => {
@@ -73,20 +55,7 @@ export const TodoList: FC<PropsType> = ({
         {title}
         <button onClick={removeTodoListHandler}>✖</button>
       </h3>
-      <div>
-        <input
-          className={error ? s.error : ''}
-          value={newTaskTitle}
-          onChange={onChangeHandler}
-          onKeyDown={onKeyDownHandler}
-        />
-        <SuperButton name="+" onClick={addTaskHandler} />
-        {error && (
-          <div>
-            <span className={s.errorMessage}>{error}</span>
-          </div>
-        )}
-      </div>
+      <AddItemForm addItem={addTaskCallback} />
       <ul>{tasksMap}</ul>
       <div>
         <SuperButton
