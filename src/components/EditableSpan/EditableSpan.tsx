@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, FocusEvent, FC, useState } from 'react'
 
 type PropsType = {
   title: string
@@ -9,8 +9,8 @@ export const EditableSpan: FC<PropsType> = ({ title, changeTitle }) => {
   const [editMode, setEditMode] = useState(false)
 
   const activateEditMode = () => {
-    setInputValue(title)
     setEditMode(true)
+    setInputValue(title)
   }
   const activateViewMode = () => {
     changeTitle(inputValue)
@@ -18,9 +18,20 @@ export const EditableSpan: FC<PropsType> = ({ title, changeTitle }) => {
   }
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.currentTarget.value)
+  const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) =>
+    e.key === 'Enter' && activateViewMode()
+  const onFocusHandler = (e: FocusEvent<HTMLInputElement>) => e.target.select()
 
   return editMode ? (
-    <input type="text" value={inputValue} onChange={onChangeHandler} onBlur={activateViewMode} />
+    <input
+      type="text"
+      value={inputValue}
+      autoFocus
+      onChange={onChangeHandler}
+      onBlur={activateViewMode}
+      onKeyDown={onKeyDownHandler}
+      onFocus={onFocusHandler}
+    />
   ) : (
     <span onDoubleClick={activateEditMode}>{title}</span>
   )
