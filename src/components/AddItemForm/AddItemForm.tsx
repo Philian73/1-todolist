@@ -14,7 +14,7 @@ export const AddItemForm: FC<PropsType> = ({ addItem }) => {
     if (error) return
 
     if (title.trim()) {
-      addItem(title)
+      addItem(title.trim())
       setTitle('')
     } else {
       setError('Title is required')
@@ -27,10 +27,12 @@ export const AddItemForm: FC<PropsType> = ({ addItem }) => {
     if (error && e.key !== ' ') setError(null)
   }
 
+  const inputClasses = error ? s.error : ''
+
   return (
     <div>
       <input
-        className={error ? s.error : ''}
+        className={inputClasses}
         value={title}
         onChange={onChangeHandler}
         onKeyDown={onKeyDownHandler}
