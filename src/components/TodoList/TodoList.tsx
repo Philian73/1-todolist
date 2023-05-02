@@ -2,6 +2,7 @@ import { FC, ChangeEvent } from 'react'
 
 import { FilterValuesType, TaskType } from '../../App'
 import { AddItemForm } from '../AddItemForm/AddItemForm'
+import { EditableSpan } from '../EditableSpan/EditableSpan'
 import { SuperButton } from '../SuperButton/SuperButton'
 
 import s from './TodoList.module.css'
@@ -14,6 +15,7 @@ type PropsType = {
   removeTodoList: (todoListID: string) => void
   tasks: TaskType[]
   changeTaskStatus: (todoListID: string, taskID: string, isDone: boolean) => void
+  changeTaskTitle: (todoListID: string, taskID: string, title: string) => void
   removeTask: (todoListID: string, taskID: string) => void
   addTask: (todoListID: string, taskTitle: string) => void
 }
@@ -25,6 +27,7 @@ export const TodoList: FC<PropsType> = ({
   removeTodoList,
   tasks,
   changeTaskStatus,
+  changeTaskTitle,
   removeTask,
   addTask,
 }) => {
@@ -41,11 +44,14 @@ export const TodoList: FC<PropsType> = ({
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
       changeTaskStatus(todoListID, t.id, e.currentTarget.checked)
     }
+    const changeTaskTitleCallback = (title: string) => {
+      changeTaskTitle(todoListID, t.id, title)
+    }
 
     return (
       <li key={t.id}>
         <input type="checkbox" checked={t.isDone} onChange={onChangeHandler} />
-        <span>{t.title}</span>
+        <EditableSpan title={t.title} changeTitle={changeTaskTitleCallback} />
         <SuperButton name="✖" onClick={removeTaskHandler} />
       </li>
     )
