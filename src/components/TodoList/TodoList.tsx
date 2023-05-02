@@ -28,9 +28,11 @@ export const TodoList: FC<PropsType> = ({
   removeTask,
   addTask,
 }) => {
-  const removeTodoListHandler = () => removeTodoList(todoListID)
+  const removeTodoListCallback = () => removeTodoList(todoListID)
 
   const addTaskCallback = (title: string) => addTask(todoListID, title)
+
+  const getFilterClasses = (value: FilterValuesType) => (filter === value ? s.activeFilter : '')
 
   const tasksMap = tasks.map(t => {
     const removeTaskHandler = () => {
@@ -53,23 +55,23 @@ export const TodoList: FC<PropsType> = ({
     <div>
       <h3>
         {title}
-        <button onClick={removeTodoListHandler}>✖</button>
+        <button onClick={removeTodoListCallback}>✖</button>
       </h3>
       <AddItemForm addItem={addTaskCallback} />
       <ul>{tasksMap}</ul>
       <div>
         <SuperButton
-          className={filter === 'all' ? s.activeFilter : ''}
+          className={getFilterClasses('all')}
           name="All"
           onClick={() => changeTodoListFilter(todoListID, 'all')}
         />
         <SuperButton
-          className={filter === 'active' ? s.activeFilter : ''}
+          className={getFilterClasses('active')}
           name="Active"
           onClick={() => changeTodoListFilter(todoListID, 'active')}
         />
         <SuperButton
-          className={filter === 'completed' ? s.activeFilter : ''}
+          className={getFilterClasses('completed')}
           name="Completed"
           onClick={() => changeTodoListFilter(todoListID, 'completed')}
         />
