@@ -12,6 +12,7 @@ type PropsType = {
   title: string
   filter: FilterValuesType
   changeTodoListFilter: (todoListID: string, value: FilterValuesType) => void
+  changeTodoListTitle: (todoListID: string, title: string) => void
   removeTodoList: (todoListID: string) => void
   tasks: TaskType[]
   changeTaskStatus: (todoListID: string, taskID: string, isDone: boolean) => void
@@ -24,6 +25,7 @@ export const TodoList: FC<PropsType> = ({
   title,
   filter,
   changeTodoListFilter,
+  changeTodoListTitle,
   removeTodoList,
   tasks,
   changeTaskStatus,
@@ -31,6 +33,7 @@ export const TodoList: FC<PropsType> = ({
   removeTask,
   addTask,
 }) => {
+  const changeTodoListTitleCallback = (title: string) => changeTodoListTitle(todoListID, title)
   const removeTodoListCallback = () => removeTodoList(todoListID)
 
   const addTaskCallback = (title: string) => addTask(todoListID, title)
@@ -60,8 +63,8 @@ export const TodoList: FC<PropsType> = ({
   return (
     <div>
       <h3>
-        {title}
-        <button onClick={removeTodoListCallback}>✖</button>
+        <EditableSpan title={title} changeTitle={changeTodoListTitleCallback} />
+        <SuperButton name="✖" onClick={removeTodoListCallback} />
       </h3>
       <AddItemForm addItem={addTaskCallback} />
       <ul>{tasksMap}</ul>
