@@ -41,15 +41,11 @@ export const TodoList: FC<PropsType> = ({
   const getFilterClasses = (value: FilterValuesType) => (filter === value ? s.activeFilter : '')
 
   const tasksMap = tasks.map(t => {
-    const removeTaskHandler = () => {
-      removeTask(todoListID, t.id)
-    }
+    const removeTaskHandler = () => removeTask(todoListID, t.id)
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
       changeTaskStatus(todoListID, t.id, e.currentTarget.checked)
     }
-    const changeTaskTitleCallback = (title: string) => {
-      changeTaskTitle(todoListID, t.id, title)
-    }
+    const changeTaskTitleCallback = (title: string) => changeTaskTitle(todoListID, t.id, title)
 
     return (
       <li key={t.id}>
