@@ -1,7 +1,8 @@
 import { ChangeEvent, KeyboardEvent, FC, useState } from 'react'
 
-import { SuperButton } from '../SuperButton/SuperButton'
-import s from '../TodoList/TodoList.module.css'
+import AddBoxIcon from '@mui/icons-material/AddBox'
+import IconButton from '@mui/material/IconButton'
+import TextField from '@mui/material/TextField'
 
 type PropsType = {
   addItem: (title: string) => void
@@ -27,22 +28,22 @@ export const AddItemForm: FC<PropsType> = ({ addItem }) => {
     if (error && e.key !== ' ') setError(null)
   }
 
-  const inputClasses = error ? s.error : ''
+  const inputPlaceholder = error ? error : 'Enter the title'
 
   return (
     <div>
-      <input
-        className={inputClasses}
+      <TextField
+        variant="outlined"
+        size="small"
+        label={inputPlaceholder}
+        error={!!error}
         value={title}
         onChange={onChangeHandler}
         onKeyDown={onKeyDownHandler}
       />
-      <SuperButton name="+" onClick={addItemCallback} />
-      {error && (
-        <div>
-          <span className={s.errorMessage}>{error}</span>
-        </div>
-      )}
+      <IconButton color="primary" size="small" onClick={addItemCallback}>
+        <AddBoxIcon />
+      </IconButton>
     </div>
   )
 }
