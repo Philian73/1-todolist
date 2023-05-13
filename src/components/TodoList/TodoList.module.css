@@ -1,16 +1,14 @@
-.error {
-    border: 1px solid red;
-    outline: 1px solid red;
+.todoList {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
 }
 
-.errorMessage {
-    color: red;
+.todoList ul {
+    flex: 1 1 auto;
 }
 
-.activeFilter {
-    background-color: aquamarine;
-}
-
-.isDone {
-    opacity: 0.5;
+.todoListControls {
+    display: flex;
+    justify-content: space-between;
 }
