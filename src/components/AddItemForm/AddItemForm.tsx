@@ -41,7 +41,12 @@ export const AddItemForm: FC<PropsType> = ({ addItem }) => {
         onChange={onChangeHandler}
         onKeyDown={onKeyDownHandler}
       />
-      <IconButton color="primary" size="small" onClick={addItemCallback}>
+      <IconButton
+        color="primary"
+        size="small"
+        onClick={addItemCallback}
+        disabled={!title.trim().length}
+      >
         <AddBoxIcon />
       </IconButton>
     </div>
