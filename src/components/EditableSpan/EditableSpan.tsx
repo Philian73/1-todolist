@@ -1,5 +1,7 @@
 import { ChangeEvent, KeyboardEvent, FocusEvent, FC, useState } from 'react'
 
+import TextField from '@mui/material/TextField'
+
 type PropsType = {
   title: string
   changeTitle: (title: string) => void
@@ -23,7 +25,8 @@ export const EditableSpan: FC<PropsType> = ({ title, changeTitle }) => {
   const onFocusHandler = (e: FocusEvent<HTMLInputElement>) => e.target.select()
 
   return editMode ? (
-    <input
+    <TextField
+      variant="standard"
       type="text"
       value={inputValue}
       autoFocus
