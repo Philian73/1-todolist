@@ -1,9 +1,16 @@
 import { FC, ChangeEvent } from 'react'
 
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import Button from '@mui/material/Button'
+import Checkbox from '@mui/material/Checkbox'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import Typography from '@mui/material/Typography'
+
 import { FilterValuesType, TaskType } from '../../App'
 import { AddItemForm } from '../AddItemForm/AddItemForm'
 import { EditableSpan } from '../EditableSpan/EditableSpan'
-import { SuperButton } from '../SuperButton/SuperButton'
 
 import s from './TodoList.module.css'
 
@@ -38,7 +45,7 @@ export const TodoList: FC<PropsType> = ({
 
   const addTaskCallback = (title: string) => addTask(todoListID, title)
 
-  const getFilterClasses = (value: FilterValuesType) => (filter === value ? s.activeFilter : '')
+  const getFilterClasses = (value: FilterValuesType) => (filter === value ? 'outlined' : 'text')
 
   const tasksMap = tasks.map(t => {
     const removeTaskHandler = () => removeTask(todoListID, t.id)
@@ -48,38 +55,61 @@ export const TodoList: FC<PropsType> = ({
     const changeTaskTitleCallback = (title: string) => changeTaskTitle(todoListID, t.id, title)
 
     return (
-      <li key={t.id}>
-        <input type="checkbox" checked={t.isDone} onChange={onChangeHandler} />
+      <ListItem
+        key={t.id}
+        divider
+        disablePadding
+        disableGutters
+        secondaryAction={
+          <IconButton size="small" onClick={removeTaskHandler}>
+            <DeleteForeverIcon fontSize="small" />
+          </IconButton>
+        }
+      >
+        <Checkbox size="small" checked={t.isDone} onChange={onChangeHandler} />
         <EditableSpan title={t.title} changeTitle={changeTaskTitleCallback} />
-        <SuperButton name="✖" onClick={removeTaskHandler} />
-      </li>
+      </ListItem>
     )
   })
 
   return (
-    <div>
-      <h3>
+    <div className={s.todoList}>
+      <Typography fontSize="x-large" variant="h2" fontWeight="bold" sx={{ mb: '15px', ml: '5px' }}>
         <EditableSpan title={title} changeTitle={changeTodoListTitleCallback} />
-        <SuperButton name="✖" onClick={removeTodoListCallback} />
-      </h3>
+        <IconButton sx={{ ml: '15px' }} onClick={removeTodoListCallback}>
+          <DeleteForeverIcon />
+        </IconButton>
+      </Typography>
       <AddItemForm addItem={addTaskCallback} />
-      <ul>{tasksMap}</ul>
-      <div>
-        <SuperButton
-          className={getFilterClasses('all')}
-          name="All"
+      <List>{tasksMap}</List>
+      <div className={s.todoListControls}>
+        <Button
+          size="small"
+          variant={getFilterClasses('all')}
+          color="inherit"
+          disableElevation
           onClick={() => changeTodoListFilter(todoListID, 'all')}
-        />
-        <SuperButton
-          className={getFilterClasses('active')}
-          name="Active"
+        >
+          All
+        </Button>
+        <Button
+          size="small"
+          variant={getFilterClasses('active')}
+          color="primary"
+          disableElevation
           onClick={() => changeTodoListFilter(todoListID, 'active')}
-        />
-        <SuperButton
-          className={getFilterClasses('completed')}
-          name="Completed"
+        >
+          Active
+        </Button>
+        <Button
+          size="small"
+          variant={getFilterClasses('completed')}
+          color="secondary"
+          disableElevation
           onClick={() => changeTodoListFilter(todoListID, 'completed')}
-        />
+        >
+          Completed
+        </Button>
       </div>
     </div>
   )
