@@ -26,6 +26,30 @@ export const tasksReducer = (state: TasksType, action: ActionsType): TasksType =
           ...state[action.payload.todoListID],
         ],
       }
+    case 'CHANGE-TITLE-TASK':
+      return {
+        ...state,
+        [action.payload.todoListID]: state[action.payload.todoListID].map(task =>
+          task.id === action.payload.taskID
+            ? {
+                ...task,
+                title: action.payload.newTitle,
+              }
+            : task
+        ),
+      }
+    case 'CHANGE-STATUS-TASK':
+      return {
+        ...state,
+        [action.payload.todoListID]: state[action.payload.todoListID].map(task =>
+          task.id === action.payload.taskID
+            ? {
+                ...task,
+                isDone: action.payload.newStatus,
+              }
+            : task
+        ),
+      }
     default:
       return state
   }
@@ -39,4 +63,14 @@ export const tasksActions = {
     } as const),
   addTask: (todoListID: string, title: string) =>
     ({ type: 'ADD-TASK', payload: { todoListID, title } } as const),
+  changeTitleTask: (todoListID: string, taskID: string, newTitle: string) =>
+    ({
+      type: 'CHANGE-TITLE-TASK',
+      payload: { todoListID, taskID, newTitle },
+    } as const),
+  changeStatusTask: (todoListID: string, taskID: string, newStatus: boolean) =>
+    ({
+      type: 'CHANGE-STATUS-TASK',
+      payload: { todoListID, taskID, newStatus },
+    } as const),
 }
