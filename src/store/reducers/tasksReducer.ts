@@ -3,7 +3,12 @@ import { v1 } from 'uuid'
 import { TasksType } from '../../App.tsx'
 import { InferActionTypes } from '../store.ts'
 
-type ActionsType = InferActionTypes<typeof tasksActions>
+import { todoListsActions } from './todoListsReducer.ts'
+
+type ActionsType =
+  | InferActionTypes<typeof tasksActions>
+  | ReturnType<typeof todoListsActions.removeTodoList>
+  | ReturnType<typeof todoListsActions.addTodoList>
 
 export const tasksReducer = (state: TasksType, action: ActionsType): TasksType => {
   switch (action.type) {
@@ -50,6 +55,15 @@ export const tasksReducer = (state: TasksType, action: ActionsType): TasksType =
             : task
         ),
       }
+    case 'REMOVE-TODOLIST': {
+      const stateCopy = { ...state }
+
+      delete stateCopy[action.payload.id]
+
+      return stateCopy
+    }
+    case 'ADD-TODOLIST':
+      return { ...state, [action.payload.id]: [] }
     default:
       return state
   }
