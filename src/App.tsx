@@ -49,10 +49,10 @@ const App = () => {
     ],
   })
 
-  const changeTodoListFilter = (todoListID: string, value: FilterValuesType) => {
+  const changeFilterTodoList = (todoListID: string, value: FilterValuesType) => {
     setTodoLists(todoLists.map(tl => (tl.id === todoListID ? { ...tl, filter: value } : tl)))
   }
-  const changeTodoListTitle = (todoListID: string, title: string) => {
+  const changeTitleTodoList = (todoListID: string, title: string) => {
     setTodoLists(todoLists.map(tl => (tl.id === todoListID ? { ...tl, title } : tl)))
   }
   const removeTodoList = (todoListID: string) => {
@@ -67,12 +67,12 @@ const App = () => {
     setTasks({ ...tasks, [newTodoList.id]: [] })
   }
 
-  const changeTaskStatus = (todoListID: string, taskID: string, isDone: boolean) => {
+  const changeStatusTask = (todoListID: string, taskID: string, isDone: boolean) => {
     const updateTasks = tasks[todoListID].map(t => (t.id === taskID ? { ...t, isDone: isDone } : t))
 
     setTasks({ ...tasks, [todoListID]: updateTasks })
   }
-  const changeTaskTitle = (todoListID: string, taskID: string, title: string) => {
+  const changeTitleTask = (todoListID: string, taskID: string, title: string) => {
     const updateTasks = tasks[todoListID].map(t => (t.id === taskID ? { ...t, title } : t))
 
     setTasks({ ...tasks, [todoListID]: updateTasks })
@@ -99,22 +99,22 @@ const App = () => {
     }
   }
 
-  const todoListsMap = todoLists.map(tl => {
-    const filteredTasks = getTasksForRender(tasks[tl.id], tl.filter)
+  const todoListsMap = todoLists.map(todoList => {
+    const filteredTasks = getTasksForRender(tasks[todoList.id], todoList.filter)
 
     return (
-      <Grid item key={tl.id}>
+      <Grid item key={todoList.id}>
         <Paper style={{ padding: '10px', height: '100%' }}>
           <TodoList
-            todoListID={tl.id}
-            title={tl.title}
-            filter={tl.filter}
-            changeTodoListFilter={changeTodoListFilter}
-            changeTodoListTitle={changeTodoListTitle}
+            todoListID={todoList.id}
+            title={todoList.title}
+            filter={todoList.filter}
+            changeTodoListFilter={changeFilterTodoList}
+            changeTodoListTitle={changeTitleTodoList}
             removeTodoList={removeTodoList}
             tasks={filteredTasks}
-            changeTaskStatus={changeTaskStatus}
-            changeTaskTitle={changeTaskTitle}
+            changeTaskStatus={changeStatusTask}
+            changeTaskTitle={changeTitleTask}
             removeTask={removeTask}
             addTask={addTask}
           />
