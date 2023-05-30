@@ -1,6 +1,6 @@
 import { v1 } from 'uuid'
 
-import { TasksType } from '../../App.tsx'
+import { TasksType } from '../../types/types.ts'
 import { InferActionTypes } from '../store.ts'
 
 import { todoListsActions } from './todoListsReducer.ts'
@@ -10,7 +10,9 @@ type ActionsType =
   | ReturnType<typeof todoListsActions.removeTodoList>
   | ReturnType<typeof todoListsActions.addTodoList>
 
-export const tasksReducer = (state: TasksType, action: ActionsType): TasksType => {
+const initialState = {} as TasksType
+
+export const tasksReducer = (state = initialState, action: ActionsType): TasksType => {
   switch (action.type) {
     case 'REMOVE-TASK':
       return {
@@ -58,12 +60,12 @@ export const tasksReducer = (state: TasksType, action: ActionsType): TasksType =
     case 'REMOVE-TODOLIST': {
       const stateCopy = { ...state }
 
-      delete stateCopy[action.payload.id]
+      delete stateCopy[action.payload.ID]
 
       return stateCopy
     }
     case 'ADD-TODOLIST':
-      return { ...state, [action.payload.id]: [] }
+      return { ...state, [action.payload.ID]: [] }
     default:
       return state
   }
@@ -76,7 +78,10 @@ export const tasksActions = {
       payload: { todoListID, taskID },
     } as const),
   addTask: (todoListID: string, title: string) =>
-    ({ type: 'ADD-TASK', payload: { todoListID, title } } as const),
+    ({
+      type: 'ADD-TASK',
+      payload: { todoListID, title },
+    } as const),
   changeTitleTask: (todoListID: string, taskID: string, newTitle: string) =>
     ({
       type: 'CHANGE-TITLE-TASK',
