@@ -1,4 +1,4 @@
-import { TasksType } from '../../App.tsx'
+import { TasksType } from '../../types/types.ts'
 
 import { tasksActions, tasksReducer } from './tasksReducer.ts'
 import { todoListsActions } from './todoListsReducer.ts'

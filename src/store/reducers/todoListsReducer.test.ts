@@ -1,4 +1,4 @@
-import { FilterValuesType, TodoListType } from '../../App.tsx'
+import { FilterValuesType, TodoListType } from '../../types/types.ts'
 
 import { todoListsActions, todoListsReducer } from './todoListsReducer.ts'
 
