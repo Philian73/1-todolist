@@ -1,7 +1,13 @@
-import { combineReducers, legacy_createStore } from 'redux'
+import { combineReducers, compose, legacy_createStore } from 'redux'
 
 import { tasksReducer } from './reducers/tasksReducer.ts'
 import { todoListsReducer } from './reducers/todoListsReducer.ts'
+
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose
+  }
+}
 
 export type InferActionTypes<T> = T extends { [keys: string]: (...args: any[]) => infer U }
   ? U
@@ -14,4 +20,6 @@ const rootReducer = combineReducers({
   todoLists: todoListsReducer,
 })
 
-export const store = legacy_createStore(rootReducer)
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
+export const store = legacy_createStore(rootReducer, composeEnhancers())
