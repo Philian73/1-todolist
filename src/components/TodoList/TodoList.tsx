@@ -1,4 +1,4 @@
-import { FC, ChangeEvent } from 'react'
+import { FC, ChangeEvent, memo } from 'react'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import Button from '@mui/material/Button'
@@ -23,7 +23,7 @@ type PropsType = {
   title: string
   filter: FilterValuesType
 }
-export const TodoList: FC<PropsType> = ({ todoListID, title, filter }) => {
+export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
   console.log('TodoList rendering')
 
   const tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[todoListID])
@@ -123,4 +123,4 @@ export const TodoList: FC<PropsType> = ({ todoListID, title, filter }) => {
       </div>
     </div>
   )
-}
+})
