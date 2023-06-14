@@ -12,14 +12,19 @@ import { todoListsActions } from './store/reducers/todoListsReducer.ts'
 import { AppRootStateType } from './store/store.ts'
 import { TodoListType } from './types/types.ts'
 
+import { useCallback } from 'react'
+
 const App = () => {
   const todoLists = useSelector<AppRootStateType, TodoListType[]>(state => state.todoLists)
 
   const dispatch = useDispatch()
 
-  const addTodoList = (title: string) => {
-    dispatch(todoListsActions.addTodoList(title))
-  }
+  const addTodoList = useCallback(
+    (title: string) => {
+      dispatch(todoListsActions.addTodoList(title))
+    },
+    [todoListsActions.addTodoList]
+  )
 
   const todoListsMap = todoLists.map(todoList => {
     return (
