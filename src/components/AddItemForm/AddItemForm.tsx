@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, FC, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, FC, useState, memo } from 'react'
 
 import AddBoxIcon from '@mui/icons-material/AddBox'
 import IconButton from '@mui/material/IconButton'
@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField'
 type PropsType = {
   addItem: (title: string) => void
 }
-export const AddItemForm: FC<PropsType> = ({ addItem }) => {
+export const AddItemForm: FC<PropsType> = memo(({ addItem }) => {
   console.log('AddItem rendering')
 
   const [title, setTitle] = useState('')
@@ -53,4 +53,4 @@ export const AddItemForm: FC<PropsType> = ({ addItem }) => {
       </IconButton>
     </div>
   )
-}
+})
