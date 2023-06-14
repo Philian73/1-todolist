@@ -30,9 +30,12 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
 
   const dispatch = useDispatch()
 
-  const changeTitleTodoList = (newTitle: string) => {
-    dispatch(todoListsActions.changeTitleTodoList(todoListID, newTitle))
-  }
+  const changeTitleTodoList = useCallback(
+    (newTitle: string) => {
+      dispatch(todoListsActions.changeTitleTodoList(todoListID, newTitle))
+    },
+    [todoListID, todoListsActions.changeTitleTodoList]
+  )
   const removeTodoList = () => {
     dispatch(todoListsActions.removeTodoList(todoListID))
   }
