@@ -24,6 +24,8 @@ type PropsType = {
   filter: FilterValuesType
 }
 export const TodoList: FC<PropsType> = ({ todoListID, title, filter }) => {
+  console.log('TodoList rendering')
+
   const tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[todoListID])
 
   const dispatch = useDispatch()
