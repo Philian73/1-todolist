@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, memo } from 'react'
+import { FC, ChangeEvent, memo, useCallback } from 'react'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import Button from '@mui/material/Button'
@@ -37,9 +37,12 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
     dispatch(todoListsActions.removeTodoList(todoListID))
   }
 
-  const addTask = (title: string) => {
-    dispatch(tasksActions.addTask(todoListID, title))
-  }
+  const addTask = useCallback(
+    (title: string) => {
+      dispatch(tasksActions.addTask(todoListID, title))
+    },
+    [todoListID, tasksActions.addTask]
+  )
 
   const getFilterClasses = (value: FilterValuesType) => (filter === value ? 'outlined' : 'text')
   const getTasksForRender = (tasks: TaskType[], filterValue: FilterValuesType): TaskType[] => {
