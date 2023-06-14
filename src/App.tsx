@@ -1,3 +1,5 @@
+import { useCallback } from 'react'
+
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
@@ -11,8 +13,6 @@ import { TodoList } from './components/TodoList/TodoList'
 import { todoListsActions } from './store/reducers/todoListsReducer.ts'
 import { AppRootStateType } from './store/store.ts'
 import { TodoListType } from './types/types.ts'
-
-import { useCallback } from 'react'
 
 const App = () => {
   const todoLists = useSelector<AppRootStateType, TodoListType[]>(state => state.todoLists)
