@@ -1,11 +1,9 @@
-import { FC, ChangeEvent, memo, useCallback } from 'react'
+import { FC, memo, useCallback } from 'react'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import Button from '@mui/material/Button'
-import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
 import Typography from '@mui/material/Typography'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -16,6 +14,7 @@ import { FilterValuesType, TaskType } from '../../types/types.ts'
 import { AddItemForm } from '../AddItemForm/AddItemForm'
 import { EditableSpan } from '../EditableSpan/EditableSpan'
 
+import { Task } from './Task/Task.tsx'
 import s from './TodoList.module.css'
 
 type PropsType = {
@@ -60,32 +59,7 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
   }
 
   const tasksMap = getTasksForRender(tasks, filter).map(task => {
-    const removeTask = () => {
-      dispatch(tasksActions.removeTask(todoListID, task.id))
-    }
-    const changeStatusTask = (e: ChangeEvent<HTMLInputElement>) => {
-      dispatch(tasksActions.changeStatusTask(todoListID, task.id, e.currentTarget.checked))
-    }
-    const changeTitleTask = (newTitle: string) => {
-      dispatch(tasksActions.changeTitleTask(todoListID, task.id, newTitle))
-    }
-
-    return (
-      <ListItem
-        key={task.id}
-        divider
-        disablePadding
-        disableGutters
-        secondaryAction={
-          <IconButton size="small" onClick={removeTask}>
-            <DeleteForeverIcon fontSize="small" />
-          </IconButton>
-        }
-      >
-        <Checkbox size="small" checked={task.isDone} onChange={changeStatusTask} />
-        <EditableSpan title={task.title} changeTitle={changeTitleTask} />
-      </ListItem>
-    )
+    return <Task key={task.id} todoListID={todoListID} task={task} />
   })
 
   return (
