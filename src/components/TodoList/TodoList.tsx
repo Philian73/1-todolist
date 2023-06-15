@@ -33,17 +33,17 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
     (newTitle: string) => {
       dispatch(todoListsActions.changeTitleTodoList(todoListID, newTitle))
     },
-    [todoListID, todoListsActions.changeTitleTodoList]
+    [dispatch, todoListID]
   )
-  const removeTodoList = () => {
+  const removeTodoList = useCallback(() => {
     dispatch(todoListsActions.removeTodoList(todoListID))
-  }
+  }, [dispatch, todoListID])
 
   const addTask = useCallback(
     (title: string) => {
       dispatch(tasksActions.addTask(todoListID, title))
     },
-    [todoListID, tasksActions.addTask]
+    [dispatch, todoListID]
   )
 
   const getFilterClasses = (value: FilterValuesType) => (filter === value ? 'outlined' : 'text')
