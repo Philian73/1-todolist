@@ -20,9 +20,12 @@ export const Task: FC<PropsType> = ({ todoListID, task }) => {
   const removeTask = useCallback(() => {
     dispatch(tasksActions.removeTask(todoListID, task.id))
   }, [dispatch, task.id])
-  const changeStatusTask = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(tasksActions.changeStatusTask(todoListID, task.id, e.currentTarget.checked))
-  }
+  const changeStatusTask = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      dispatch(tasksActions.changeStatusTask(todoListID, task.id, e.currentTarget.checked))
+    },
+    [dispatch, task.id]
+  )
   const changeTitleTask = useCallback(
     (newTitle: string) => {
       dispatch(tasksActions.changeTitleTask(todoListID, task.id, newTitle))
