@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback } from 'react'
+import { ChangeEvent, FC, memo, useCallback } from 'react'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import Checkbox from '@mui/material/Checkbox'
@@ -14,7 +14,7 @@ type PropsType = {
   todoListID: string
   task: TaskType
 }
-export const Task: FC<PropsType> = ({ todoListID, task }) => {
+export const Task: FC<PropsType> = memo(({ todoListID, task }) => {
   const dispatch = useDispatch()
 
   const removeTask = useCallback(() => {
@@ -49,4 +49,4 @@ export const Task: FC<PropsType> = ({ todoListID, task }) => {
       <EditableSpan title={task.title} changeTitle={changeTitleTask} />
     </ListItem>
   )
-}
+})
