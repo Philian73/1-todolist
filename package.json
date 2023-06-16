@@ -30,6 +30,7 @@
   "devDependencies": {
     "@it-incubator/eslint-config": "^0.1.2",
     "@it-incubator/prettier-config": "^0.1.1",
+    "@storybook/addon-actions": "^7.0.21",
     "@storybook/addon-essentials": "7.0.21",
     "@storybook/addon-interactions": "7.0.21",
     "@storybook/addon-links": "7.0.21",
