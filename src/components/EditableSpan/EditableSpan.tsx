@@ -7,7 +7,6 @@ type PropsType = {
   changeTitle: (title: string) => void
 }
 export const EditableSpan: FC<PropsType> = memo(({ title, changeTitle }) => {
-  console.log('EditableSpan rendering')
   const [inputValue, setInputValue] = useState('')
   const [editMode, setEditMode] = useState(false)
 

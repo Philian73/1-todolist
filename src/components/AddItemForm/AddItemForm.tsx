@@ -8,8 +8,6 @@ type PropsType = {
   addItem: (title: string) => void
 }
 export const AddItemForm: FC<PropsType> = memo(({ addItem }) => {
-  console.log('AddItem rendering')
-
   const [title, setTitle] = useState('')
   const [error, setError] = useState<string | null>(null)
 
