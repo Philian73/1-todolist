@@ -23,7 +23,7 @@ const App = () => {
     (title: string) => {
       dispatch(todoListsActions.addTodoList(title))
     },
-    [todoListsActions.addTodoList]
+    [dispatch]
   )
 
   const todoListsMap = todoLists.map(todoList => {
