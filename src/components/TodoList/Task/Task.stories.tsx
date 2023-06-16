@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 
 import { ReduxStoreProviderDecorator } from '../../../store/decorators/ReduxStoreProviderDecorator.tsx'
 import { AppRootStateType } from '../../../store/store.ts'
+import { TaskType } from '../../../types/types.ts'
 import { EditableSpan } from '../../EditableSpan/EditableSpan.tsx'
 
 import { Task } from './Task.tsx'
@@ -68,14 +69,10 @@ export const IsDone: Story = {
 }
 
 const BaseWrap = () => {
-  const tasks = useSelector((state: AppRootStateType) => state.tasks)
   const todoListID = 'todoListID_1'
+  const task = useSelector<AppRootStateType, TaskType>(state => state.tasks[todoListID][1])
 
-  return tasks[todoListID].length ? (
-    <Task todoListID={todoListID} task={tasks[todoListID][0]} />
-  ) : (
-    <span>Список пуст</span>
-  )
+  return task ? <Task todoListID={todoListID} task={task} /> : <span>Список пуст</span>
 }
 
 export const Base: Story = {
