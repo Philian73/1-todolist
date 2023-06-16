@@ -13,11 +13,11 @@ const initialState = {
     { id: 'todoListID_2', title: 'What to buy', filter: 'all' },
   ],
   tasks: {
-    ['todolistId1']: [
+    ['todoListID_1']: [
       { id: 'some-task-id-1', title: 'HTML&CSS', isDone: true },
       { id: 'some-task-id-2', title: 'JS', isDone: false },
     ],
-    ['todolistId2']: [
+    ['todoListID_2']: [
       { id: 'some-task-id-3', title: 'Milk', isDone: false },
       { id: 'some-task-id-4', title: 'React Book', isDone: true },
     ],
