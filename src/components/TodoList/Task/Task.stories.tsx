@@ -10,16 +10,21 @@ import { useSelector } from 'react-redux'
 
 import { ReduxStoreProviderDecorator } from '../../../store/decorators/ReduxStoreProviderDecorator.tsx'
 import { AppRootStateType } from '../../../store/store.ts'
+import { TaskType } from '../../../types/types.ts'
 import { EditableSpan } from '../../EditableSpan/EditableSpan.tsx'
 
 import { Task } from './Task.tsx'
 
 const TaskWithStoryBook: typeof Task = ({ todoListID, task }) => {
-  const changeStatusTask = (e: ChangeEvent<HTMLInputElement>) => {
-    action('status changed')(todoListID, task.id, e.currentTarget.checked)
+  const removeTask = () => {
+    action('Remove Button clicked changed inside Task')(todoListID, task.id)
   }
-  const removeTask = () => action('removed task')(todoListID, task.id)
-  const changeTitleTask = (title: string) => action('changed name')(todoListID, task.id, title)
+  const changeTitleTask = (title: string) => {
+    action('Title changed inside Task')(todoListID, task.id, title)
+  }
+  const changeStatusTask = (e: ChangeEvent<HTMLInputElement>) => {
+    action('Status changed inside Task')(todoListID, task.id, e.currentTarget.checked)
+  }
 
   return (
     <ListItem
@@ -68,14 +73,10 @@ export const IsDone: Story = {
 }
 
 const BaseWrap = () => {
-  const tasks = useSelector((state: AppRootStateType) => state.tasks)
   const todoListID = 'todoListID_1'
+  const task = useSelector<AppRootStateType, TaskType>(state => state.tasks[todoListID][1])
 
-  return tasks[todoListID].length ? (
-    <Task todoListID={todoListID} task={tasks[todoListID][0]} />
-  ) : (
-    <span>Список пуст</span>
-  )
+  return task ? <Task todoListID={todoListID} task={task} /> : <span>Список пуст</span>
 }
 
 export const Base: Story = {
