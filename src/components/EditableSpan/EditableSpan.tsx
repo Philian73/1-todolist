@@ -3,19 +3,19 @@ import { ChangeEvent, KeyboardEvent, FocusEvent, FC, useState, memo } from 'reac
 import TextField from '@mui/material/TextField'
 
 type PropsType = {
-  title: string
-  changeTitle: (title: string) => void
+  value: string
+  onChange: (value: string) => void
 }
-export const EditableSpan: FC<PropsType> = memo(({ title, changeTitle }) => {
+export const EditableSpan: FC<PropsType> = memo(({ value, onChange }) => {
   const [inputValue, setInputValue] = useState('')
   const [editMode, setEditMode] = useState(false)
 
   const activateEditMode = () => {
     setEditMode(true)
-    setInputValue(title)
+    setInputValue(value)
   }
   const activateViewMode = () => {
-    changeTitle(inputValue)
+    onChange(inputValue)
     setEditMode(false)
   }
 
@@ -36,6 +36,6 @@ export const EditableSpan: FC<PropsType> = memo(({ title, changeTitle }) => {
       onFocus={onFocusHandler}
     />
   ) : (
-    <span onDoubleClick={activateEditMode}>{title}</span>
+    <span onDoubleClick={activateEditMode}>{value}</span>
   )
 })

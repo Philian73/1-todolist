@@ -63,7 +63,7 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
   return (
     <div className={s.todoList}>
       <Typography fontSize="x-large" variant="h2" fontWeight="bold" sx={{ mb: '15px', ml: '5px' }}>
-        <EditableSpan title={title} changeTitle={changeTitleTodoList} />
+        <EditableSpan value={title} onChange={changeTitleTodoList} />
         <IconButton sx={{ ml: '15px' }} onClick={removeTodoList}>
           <DeleteForeverIcon />
         </IconButton>

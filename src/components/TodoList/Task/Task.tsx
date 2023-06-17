@@ -46,7 +46,7 @@ export const Task: FC<PropsType> = memo(({ todoListID, task }) => {
       }
     >
       <Checkbox size="small" checked={task.isDone} onChange={changeStatusTask} />
-      <EditableSpan title={task.title} changeTitle={changeTitleTask} />
+      <EditableSpan value={task.title} onChange={changeTitleTask} />
     </ListItem>
   )
 })
