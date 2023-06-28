@@ -9,10 +9,6 @@ declare global {
   }
 }
 
-export type InferActionTypes<T> = T extends { [keys: string]: (...args: any[]) => infer U }
-  ? U
-  : never
-
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
 const rootReducer = combineReducers({
