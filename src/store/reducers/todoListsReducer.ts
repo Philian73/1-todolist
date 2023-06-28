@@ -1,13 +1,21 @@
 import { v1 } from 'uuid'
 
 import { FilterValuesType, TodoListType } from '../../types/types.ts'
-import { InferActionTypes } from '../store.ts'
 
-type ActionsType = InferActionTypes<typeof todoListsActions>
+type ActionsType = typeof todoListsActions
+
+export type TodoListsActionsType = ReturnType<ActionsType[keyof ActionsType]>
+
+export type AddAndRemoveTodoListsActionsType = ReturnType<
+  ActionsType['addTodoList' | 'removeTodoList']
+>
 
 const initialState = [] as TodoListType[]
 
-export const todoListsReducer = (state = initialState, action: ActionsType): TodoListType[] => {
+export const todoListsReducer = (
+  state = initialState,
+  action: TodoListsActionsType
+): TodoListType[] => {
   switch (action.type) {
     case 'REMOVE-TODOLIST':
       return state.filter(todoList => todoList.id !== action.payload.ID)
