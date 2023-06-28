@@ -1,18 +1,23 @@
 import { v1 } from 'uuid'
 
 import { TasksType } from '../../types/types.ts'
-import { InferActionTypes } from '../store.ts'
 
-import { todoListsActions } from './todoListsReducer.ts'
+import { AddAndRemoveTodoListsActionsType } from './todoListsReducer.ts'
 
-type ActionsType =
-  | InferActionTypes<typeof tasksActions>
-  | ReturnType<typeof todoListsActions.removeTodoList>
-  | ReturnType<typeof todoListsActions.addTodoList>
+// type ActionsType =
+//   | InferActionTypes<typeof tasksActions>
+//   | ReturnType<typeof todoListsActions.removeTodoList>
+//   | ReturnType<typeof todoListsActions.addTodoList>
 
-const initialState = {} as TasksType
+type ActionsType = typeof tasksActions
 
-export const tasksReducer = (state = initialState, action: ActionsType): TasksType => {
+export type TasksActionsType =
+  | ReturnType<ActionsType[keyof ActionsType]>
+  | AddAndRemoveTodoListsActionsType
+
+export const initialState = {} as TasksType
+
+export const tasksReducer = (state = initialState, action: TasksActionsType): TasksType => {
   switch (action.type) {
     case 'REMOVE-TASK':
       return {
