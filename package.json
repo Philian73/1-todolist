@@ -2,7 +2,7 @@
   "name": "1-todolist",
   "homepage": "https://philian73.github.io/1-todolist",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,7 +13,7 @@
     "test:watch": "jest --watchAll",
     "predeploy": "pnpm run build",
     "deploy": "gh-pages -d build",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 9009",
     "build-storybook": "storybook build",
     "jest:integration": "jest -c integration/jest.config.cjs",
     "test:integration": "start-server-and-test storybook http-get://localhost:6006 jest:integration"
