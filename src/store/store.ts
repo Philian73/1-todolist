@@ -1,4 +1,5 @@
-import { combineReducers, compose, legacy_createStore } from 'redux'
+import { AnyAction, combineReducers, compose, legacy_createStore } from 'redux'
+import { ThunkDispatch } from 'redux-thunk'
 
 import { tasksReducer } from './reducers/tasksReducer.ts'
 import { todoListsReducer } from './reducers/todoListsReducer.ts'
@@ -10,6 +11,8 @@ declare global {
 }
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
+
+export type AppDispatchType = ThunkDispatch<AppRootStateType, unknown, AnyAction>
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,
