@@ -2,23 +2,29 @@ import { v1 } from 'uuid'
 
 import { TasksType } from '../../types/types.ts'
 
-import { AddAndRemoveTodoListsActionsType } from './todoListsReducer.ts'
+import { AddRemoveSetTodolistsType } from './todoListsReducer.ts'
 
-// type ActionsType =
-//   | InferActionTypes<typeof tasksActions>
-//   | ReturnType<typeof todoListsActions.removeTodoList>
-//   | ReturnType<typeof todoListsActions.addTodoList>
+type TasksActionsType = typeof tasksActions
 
-type ActionsType = typeof tasksActions
-
-export type TasksActionsType =
-  | ReturnType<ActionsType[keyof ActionsType]>
-  | AddAndRemoveTodoListsActionsType
+export type ActionsType =
+  | ReturnType<TasksActionsType[keyof TasksActionsType]>
+  | AddRemoveSetTodolistsType
 
 export const initialState = {} as TasksType
 
-export const tasksReducer = (state = initialState, action: TasksActionsType): TasksType => {
+export const tasksReducer = (state = initialState, action: ActionsType): TasksType => {
   switch (action.type) {
+    case 'SET-TODOLISTS':
+      return action.payload.todoLists.reduce((acc, todoList) => ({ ...acc, [todoList.id]: [] }), {})
+    case 'REMOVE-TODOLIST': {
+      const stateCopy = { ...state }
+
+      delete stateCopy[action.payload.ID]
+
+      return stateCopy
+    }
+    case 'ADD-TODOLIST':
+      return { ...state, [action.payload.ID]: [] }
     case 'REMOVE-TASK':
       return {
         ...state,
@@ -62,15 +68,6 @@ export const tasksReducer = (state = initialState, action: TasksActionsType): Ta
             : task
         ),
       }
-    case 'REMOVE-TODOLIST': {
-      const stateCopy = { ...state }
-
-      delete stateCopy[action.payload.ID]
-
-      return stateCopy
-    }
-    case 'ADD-TODOLIST':
-      return { ...state, [action.payload.ID]: [] }
     default:
       return state
   }

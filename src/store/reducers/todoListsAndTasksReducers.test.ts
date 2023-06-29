@@ -1,11 +1,11 @@
-import { TasksType, TodoListType } from '../../types/types.ts'
+import { TasksType, TodoListDomainType } from '../../types/types.ts'
 
 import { tasksReducer } from './tasksReducer.ts'
 import { todoListsActions, todoListsReducer } from './todoListsReducer.ts'
 
 test('ids should be equals', () => {
   const initialTasksState: TasksType = {}
-  const initialTodoListsState: TodoListType[] = []
+  const initialTodoListsState: TodoListDomainType[] = []
 
   const action = todoListsActions.addTodoList('new todolist')
 

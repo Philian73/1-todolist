@@ -1,11 +1,13 @@
+import { Dispatch } from 'redux'
 import { v1 } from 'uuid'
 
+import { todoListsAPI } from '../../api/todoListsAPI.ts'
 import { FilterValuesType, TodoListDomainType, TodoListType } from '../../types/types.ts'
 
 type TodoListsActionsType = typeof todoListsActions
 
-export type AddAndRemoveTodoListsActionsType = ReturnType<
-  TodoListsActionsType['addTodoList' | 'removeTodoList']
+export type AddRemoveSetTodolistsType = ReturnType<
+  TodoListsActionsType['addTodoList' | 'removeTodoList' | 'setTodoLists']
 >
 
 type ActionsType = ReturnType<TodoListsActionsType[keyof TodoListsActionsType]>
@@ -78,4 +80,12 @@ export const todoListsActions = {
       type: 'CHANGE-FILTER-TODOLIST',
       payload: { ID, newFilter },
     } as const),
+}
+
+export const getTodoLists = () => {
+  return (dispatch: Dispatch) => {
+    todoListsAPI.getTodoLists().then(response => {
+      dispatch(todoListsActions.setTodoLists(response.data))
+    })
+  }
 }
