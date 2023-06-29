@@ -3,21 +3,19 @@ import { useCallback } from 'react'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
-import { useDispatch, useSelector } from 'react-redux'
 
 import './styles/App.css'
 
 import { AddItemForm } from './components/AddItemForm/AddItemForm'
 import { ButtonAppBar } from './components/ButtonAppBar/ButtonAppBar.tsx'
 import { TodoList } from './components/TodoList/TodoList'
+import { useAppDispatch, useAppSelector } from './hooks/hooks.ts'
 import { todoListsActions } from './store/reducers/todoListsReducer.ts'
-import { AppRootStateType } from './store/store.ts'
 import { TodoListType } from './types/types.ts'
 
 const App = () => {
-  const todoLists = useSelector<AppRootStateType, TodoListType[]>(state => state.todoLists)
-
-  const dispatch = useDispatch()
+  const todoLists = useAppSelector<TodoListType[]>(state => state.todoLists)
+  const dispatch = useAppDispatch()
 
   const addTodoList = useCallback(
     (title: string) => {
