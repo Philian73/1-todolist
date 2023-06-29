@@ -1,26 +1,37 @@
 import { v1 } from 'uuid'
 
-import { FilterValuesType, TodoListType } from '../../types/types.ts'
+import { FilterValuesType, TodoListDomainType, TodoListType } from '../../types/types.ts'
 
-type ActionsType = typeof todoListsActions
-
-export type TodoListsActionsType = ReturnType<ActionsType[keyof ActionsType]>
+type TodoListsActionsType = typeof todoListsActions
 
 export type AddAndRemoveTodoListsActionsType = ReturnType<
-  ActionsType['addTodoList' | 'removeTodoList']
+  TodoListsActionsType['addTodoList' | 'removeTodoList']
 >
 
-const initialState = [] as TodoListType[]
+type ActionsType = ReturnType<TodoListsActionsType[keyof TodoListsActionsType]>
+
+const initialState = [] as TodoListDomainType[]
 
 export const todoListsReducer = (
   state = initialState,
-  action: TodoListsActionsType
-): TodoListType[] => {
+  action: ActionsType
+): TodoListDomainType[] => {
   switch (action.type) {
+    case 'SET-TODOLISTS':
+      return action.payload.todoLists.map(todoList => ({ ...todoList, filter: 'all' }))
     case 'REMOVE-TODOLIST':
       return state.filter(todoList => todoList.id !== action.payload.ID)
     case 'ADD-TODOLIST':
-      return [{ id: action.payload.ID, title: action.payload.title, filter: 'all' }, ...state]
+      return [
+        {
+          id: action.payload.ID,
+          title: action.payload.title,
+          filter: 'all',
+          addedDate: new Date().toISOString(),
+          order: 0,
+        },
+        ...state,
+      ]
     case 'CHANGE-TITLE-TODOLIST':
       return state.map(todoList =>
         todoList.id === action.payload.ID
@@ -45,6 +56,8 @@ export const todoListsReducer = (
 }
 
 export const todoListsActions = {
+  setTodoLists: (todoLists: TodoListType[]) =>
+    ({ type: 'SET-TODOLISTS', payload: { todoLists } } as const),
   removeTodoList: (ID: string) =>
     ({
       type: 'REMOVE-TODOLIST',
