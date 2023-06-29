@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
@@ -10,12 +10,16 @@ import { AddItemForm } from './components/AddItemForm/AddItemForm'
 import { ButtonAppBar } from './components/ButtonAppBar/ButtonAppBar.tsx'
 import { TodoList } from './components/TodoList/TodoList'
 import { useAppDispatch, useAppSelector } from './hooks/hooks.ts'
-import { todoListsActions } from './store/reducers/todoListsReducer.ts'
-import { TodoListType } from './types/types.ts'
+import { getTodoLists, todoListsActions } from './store/reducers/todoListsReducer.ts'
+import { TodoListDomainType } from './types/types.ts'
 
 const App = () => {
-  const todoLists = useAppSelector<TodoListType[]>(state => state.todoLists)
+  const todoLists = useAppSelector<TodoListDomainType[]>(state => state.todoLists)
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(getTodoLists())
+  }, [])
 
   const addTodoList = useCallback(
     (title: string) => {
