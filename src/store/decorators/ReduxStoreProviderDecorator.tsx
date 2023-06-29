@@ -9,8 +9,20 @@ import { AppRootStateType } from '../store.ts'
 
 const initialState = {
   todoLists: [
-    { id: 'todoListID_1', title: 'What to learn', filter: 'all' },
-    { id: 'todoListID_2', title: 'What to buy', filter: 'all' },
+    {
+      id: 'todoListID_1',
+      title: 'What to learn',
+      order: -1,
+      addedDate: new Date().toISOString(),
+      filter: 'all',
+    },
+    {
+      id: 'todoListID_2',
+      title: 'What to buy',
+      order: 0,
+      addedDate: new Date().toISOString(),
+      filter: 'all',
+    },
   ],
   tasks: {
     ['todoListID_1']: [
