@@ -1,19 +1,31 @@
-import { FilterValuesType, TodoListType } from '../../types/types.ts'
+import { FilterValuesType, TodoListDomainType } from '../../types/types.ts'
 
 import { todoListsActions, todoListsReducer } from './todoListsReducer.ts'
 
 describe('todoListsReducer', () => {
   let todoListID_1: string
   let todoListID_2: string
-  let initialState: TodoListType[]
+  let initialState: TodoListDomainType[]
 
   beforeEach(() => {
     todoListID_1 = 'todoListID_1'
     todoListID_2 = 'todoListID_2'
 
     initialState = [
-      { id: todoListID_1, title: 'What to learn', filter: 'all' },
-      { id: todoListID_2, title: 'What to learn', filter: 'all' },
+      {
+        id: todoListID_1,
+        title: 'What to learn',
+        order: -1,
+        addedDate: new Date().toISOString(),
+        filter: 'all',
+      },
+      {
+        id: todoListID_2,
+        title: 'What to learn',
+        order: 0,
+        addedDate: new Date().toISOString(),
+        filter: 'all',
+      },
     ]
   })
 
