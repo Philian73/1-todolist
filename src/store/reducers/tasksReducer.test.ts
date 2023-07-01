@@ -129,7 +129,7 @@ describe('tasksReducer', () => {
   it('title of specified task should be changed', () => {
     const newTitleTask = 'New Title'
 
-    const action = tasksActions.changeTitleTask(todoListID_2, '2', newTitleTask)
+    const action = tasksActions.changeTask(todoListID_2, '2', { title: newTitleTask })
     const endState = tasksReducer(initialState, action)
 
     expect(endState[todoListID_1][1].title).toBe('JS')
@@ -137,7 +137,7 @@ describe('tasksReducer', () => {
   })
 
   it('status of specified task should be changed', () => {
-    const action = tasksActions.changeStatusTask(todoListID_2, '2', 0)
+    const action = tasksActions.changeTask(todoListID_2, '2', { status: 0 })
     const endState = tasksReducer(initialState, action)
 
     expect(endState[todoListID_1][1].status).toBe(2)
