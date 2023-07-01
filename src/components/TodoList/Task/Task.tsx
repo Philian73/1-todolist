@@ -7,7 +7,7 @@ import ListItem from '@mui/material/ListItem'
 
 import { useAppDispatch } from '../../../hooks/hooks.ts'
 import { deleteTask, tasksActions } from '../../../store/reducers/tasksReducer.ts'
-import { TaskType } from '../../../types/types.ts'
+import { TaskStatuses, TaskType } from '../../../types/types.ts'
 import { EditableSpan } from '../../EditableSpan/EditableSpan.tsx'
 
 type PropsType = {
@@ -47,7 +47,11 @@ export const Task: FC<PropsType> = memo(({ todoListID, task }) => {
         </IconButton>
       }
     >
-      <Checkbox size="small" checked={task.isDone} onChange={changeStatusTask} />
+      <Checkbox
+        size="small"
+        checked={task.status === TaskStatuses.Completed}
+        onChange={changeStatusTask}
+      />
       <EditableSpan value={task.title} onChange={changeTitleTask} />
     </ListItem>
   )
