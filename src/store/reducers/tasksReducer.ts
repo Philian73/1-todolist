@@ -118,3 +118,11 @@ export const deleteTask = (todoListID: string, taskID: string) => {
     })
   }
 }
+
+export const createTask = (todoListID: string, title: string) => {
+  return (dispatch: Dispatch) => {
+    todoListsAPI.createTask(todoListID, title).then(response => {
+      dispatch(tasksActions.addTask(response.data.data.item))
+    })
+  }
+}
