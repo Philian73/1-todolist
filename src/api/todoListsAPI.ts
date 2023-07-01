@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios'
 
-import { TaskType, TodoListType } from '../types/types.ts'
+import { TaskType, TodoListType, UpdateTaskModelType } from '../types/types.ts'
 
 import { instance, ResponseType } from './api.ts'
 
@@ -28,5 +28,16 @@ export const todoListsAPI = {
         title: string
       }
     >(`todo-lists/${todoListID}/tasks`, { title })
+  },
+  updateTask(todoListID: string, taskID: string, model: UpdateTaskModelType) {
+    return instance.put<
+      null,
+      AxiosResponse<
+        ResponseType<{
+          item: TaskType
+        }>
+      >,
+      UpdateTaskModelType
+    >(`todo-lists/${todoListID}/tasks/${taskID}`, { ...model })
   },
 }
