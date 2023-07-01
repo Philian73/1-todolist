@@ -1,7 +1,8 @@
 import { Dispatch } from 'redux'
 
 import { todoListsAPI } from '../../api/todoListsAPI.ts'
-import { TaskStatuses, TasksType, TaskType } from '../../types/types.ts'
+import { TasksType, TaskType, UpdateTaskModelType } from '../../types/types.ts'
+import { AppRootStateType } from '../store.ts'
 
 import { AddRemoveSetTodolistsType } from './todoListsReducer.ts'
 
@@ -46,28 +47,11 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksTy
           ...state[action.payload.task.todoListId],
         ],
       }
-    case 'CHANGE-TITLE-TASK':
+    case 'CHANGE-TASK':
       return {
         ...state,
         [action.payload.todoListID]: state[action.payload.todoListID].map(task =>
-          task.id === action.payload.taskID
-            ? {
-                ...task,
-                title: action.payload.newTitle,
-              }
-            : task
-        ),
-      }
-    case 'CHANGE-STATUS-TASK':
-      return {
-        ...state,
-        [action.payload.todoListID]: state[action.payload.todoListID].map(task =>
-          task.id === action.payload.taskID
-            ? {
-                ...task,
-                status: action.payload.newStatus,
-              }
-            : task
+          task.id === action.payload.taskID ? { ...task, ...action.payload.model } : task
         ),
       }
     default:
@@ -91,15 +75,10 @@ export const tasksActions = {
       type: 'ADD-TASK',
       payload: { task },
     } as const),
-  changeTitleTask: (todoListID: string, taskID: string, newTitle: string) =>
+  changeTask: (todoListID: string, taskID: string, model: UpdateTaskModelType) =>
     ({
-      type: 'CHANGE-TITLE-TASK',
-      payload: { todoListID, taskID, newTitle },
-    } as const),
-  changeStatusTask: (todoListID: string, taskID: string, newStatus: TaskStatuses) =>
-    ({
-      type: 'CHANGE-STATUS-TASK',
-      payload: { todoListID, taskID, newStatus },
+      type: 'CHANGE-TASK',
+      payload: { todoListID, taskID, model },
     } as const),
 }
 
@@ -124,5 +103,27 @@ export const createTask = (todoListID: string, title: string) => {
     todoListsAPI.createTask(todoListID, title).then(response => {
       dispatch(tasksActions.addTask(response.data.data.item))
     })
+  }
+}
+
+export const updateTask = (todoListID: string, taskID: string, data: UpdateTaskModelType) => {
+  return (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    const task = getState().tasks[todoListID].find(task => task.id === taskID)
+
+    if (task) {
+      const model: UpdateTaskModelType = {
+        title: task.title,
+        deadline: task.deadline,
+        startDate: task.startDate,
+        priority: task.priority,
+        description: task.description,
+        status: task.status,
+        ...data,
+      }
+
+      todoListsAPI.updateTask(todoListID, taskID, model).then(() => {
+        dispatch(tasksActions.changeTask(todoListID, taskID, model))
+      })
+    }
   }
 }
