@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios'
+
 import { TaskType, TodoListType } from '../types/types.ts'
 
 import { instance, ResponseType } from './api.ts'
@@ -17,5 +19,14 @@ export const todoListsAPI = {
   },
   deleteTask(todoListID: string, taskID: string) {
     return instance.delete<ResponseType>(`todo-lists/${todoListID}/tasks/${taskID}`)
+  },
+  createTask(todoListID: string, title: string) {
+    return instance.post<
+      null,
+      AxiosResponse<ResponseType<{ item: TaskType }>>,
+      {
+        title: string
+      }
+    >(`todo-lists/${todoListID}/tasks`, { title })
   },
 }
