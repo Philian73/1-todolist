@@ -37,6 +37,10 @@ export type TaskType = {
   todoListId: string
 }
 
+export type UpdateTaskModelType = Partial<
+  Omit<TaskType, 'id' | 'todoListId' | 'addedDate' | 'order'>
+>
+
 export type TasksType = {
   [key: string]: TaskType[]
 }
