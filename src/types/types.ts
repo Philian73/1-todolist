@@ -25,16 +25,16 @@ export type TodoListType = {
 export type TodoListDomainType = TodoListType & { filter: FilterValuesType }
 
 export type TaskType = {
-  description: string
-  title: string
-  status: TaskStatuses
+  addedDate: string
+  deadline: string
+  description: string | null
+  id: string
+  order: number
   priority: TaskPriorities
   startDate: string
-  deadline: string
-  id: string
+  status: TaskStatuses
+  title: string
   todoListId: string
-  order: number
-  addedDate: string
 }
 
 export type TasksType = {
