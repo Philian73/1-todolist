@@ -115,3 +115,11 @@ export const getTasks = (todoListID: string) => {
     })
   }
 }
+
+export const deleteTask = (todoListID: string, taskID: string) => {
+  return (dispatch: Dispatch) => {
+    todoListsAPI.deleteTask(todoListID, taskID).then(() => {
+      dispatch(tasksActions.removeTask(todoListID, taskID))
+    })
+  }
+}
