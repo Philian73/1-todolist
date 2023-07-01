@@ -5,11 +5,10 @@ import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import List from '@mui/material/List'
 import Typography from '@mui/material/Typography'
-import { useDispatch, useSelector } from 'react-redux'
 
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks.ts'
 import { tasksActions } from '../../store/reducers/tasksReducer.ts'
 import { todoListsActions } from '../../store/reducers/todoListsReducer.ts'
-import { AppRootStateType } from '../../store/store.ts'
 import { FilterValuesType, TaskType } from '../../types/types.ts'
 import { AddItemForm } from '../AddItemForm/AddItemForm'
 import { EditableSpan } from '../EditableSpan/EditableSpan'
@@ -23,9 +22,8 @@ type PropsType = {
   filter: FilterValuesType
 }
 export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
-  const tasks = useSelector<AppRootStateType, TaskType[]>(state => state.tasks[todoListID])
-
-  const dispatch = useDispatch()
+  const tasks = useAppSelector<TaskType[]>(state => state.tasks[todoListID])
+  const dispatch = useAppDispatch()
 
   const changeTitleTodoList = useCallback(
     (newTitle: string) => {
