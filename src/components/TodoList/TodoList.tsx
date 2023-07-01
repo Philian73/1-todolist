@@ -1,4 +1,4 @@
-import { FC, memo, useCallback } from 'react'
+import { FC, memo, useCallback, useEffect } from 'react'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import Button from '@mui/material/Button'
@@ -7,7 +7,7 @@ import List from '@mui/material/List'
 import Typography from '@mui/material/Typography'
 
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks.ts'
-import { tasksActions } from '../../store/reducers/tasksReducer.ts'
+import { getTasks, tasksActions } from '../../store/reducers/tasksReducer.ts'
 import { todoListsActions } from '../../store/reducers/todoListsReducer.ts'
 import { FilterValuesType, TaskType } from '../../types/types.ts'
 import { AddItemForm } from '../AddItemForm/AddItemForm'
@@ -24,6 +24,10 @@ type PropsType = {
 export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
   const tasks = useAppSelector<TaskType[]>(state => state.tasks[todoListID])
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(getTasks(todoListID))
+  }, [])
 
   const changeTitleTodoList = useCallback(
     (newTitle: string) => {
