@@ -1,6 +1,6 @@
 import { v1 } from 'uuid'
 
-import { TasksType } from '../../types/types.ts'
+import { TasksType, TaskType } from '../../types/types.ts'
 
 import { AddRemoveSetTodolistsType } from './todoListsReducer.ts'
 
@@ -25,6 +25,11 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksTy
     }
     case 'ADD-TODOLIST':
       return { ...state, [action.payload.ID]: [] }
+    case 'SET-TASKS':
+      return {
+        ...state,
+        [action.payload.todoListID]: action.payload.tasks,
+      }
     case 'REMOVE-TASK':
       return {
         ...state,
@@ -74,6 +79,11 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksTy
 }
 
 export const tasksActions = {
+  setTasks: (todoListID: string, tasks: TaskType[]) =>
+    ({
+      type: 'SET-TASKS',
+      payload: { todoListID, tasks },
+    } as const),
   removeTask: (todoListID: string, taskID: string) =>
     ({
       type: 'REMOVE-TASK',
