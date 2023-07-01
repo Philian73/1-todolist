@@ -7,9 +7,9 @@ import List from '@mui/material/List'
 import Typography from '@mui/material/Typography'
 
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks.ts'
-import { getTasks, tasksActions } from '../../store/reducers/tasksReducer.ts'
+import { createTask, getTasks } from '../../store/reducers/tasksReducer.ts'
 import { todoListsActions } from '../../store/reducers/todoListsReducer.ts'
-import { FilterValuesType, TaskType } from '../../types/types.ts'
+import { FilterValuesType, TaskStatuses, TaskType } from '../../types/types.ts'
 import { AddItemForm } from '../AddItemForm/AddItemForm'
 import { EditableSpan } from '../EditableSpan/EditableSpan'
 
@@ -35,13 +35,14 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
     },
     [dispatch, todoListID]
   )
+
   const removeTodoList = useCallback(() => {
     dispatch(todoListsActions.removeTodoList(todoListID))
   }, [dispatch, todoListID])
 
   const addTask = useCallback(
     (title: string) => {
-      dispatch(tasksActions.addTask(todoListID, title))
+      dispatch(createTask(todoListID, title))
     },
     [dispatch, todoListID]
   )
@@ -50,9 +51,9 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
   const getTasksForRender = (tasks: TaskType[], filterValue: FilterValuesType): TaskType[] => {
     switch (filterValue) {
       case 'active':
-        return tasks.filter(task => !task.isDone)
+        return tasks.filter(task => task.status === TaskStatuses.New)
       case 'completed':
-        return tasks.filter(task => task.isDone)
+        return tasks.filter(task => task.status === TaskStatuses.Completed)
       default:
         return tasks
     }
