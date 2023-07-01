@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 
 import { todoListsAPI } from '../../api/todoListsAPI.ts'
-import { TasksType, TaskType } from '../../types/types.ts'
+import { TaskStatuses, TasksType, TaskType } from '../../types/types.ts'
 
 import { AddRemoveSetTodolistsType } from './todoListsReducer.ts'
 
@@ -65,7 +65,7 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksTy
           task.id === action.payload.taskID
             ? {
                 ...task,
-                isDone: action.payload.newStatus,
+                status: action.payload.newStatus,
               }
             : task
         ),
@@ -96,7 +96,7 @@ export const tasksActions = {
       type: 'CHANGE-TITLE-TASK',
       payload: { todoListID, taskID, newTitle },
     } as const),
-  changeStatusTask: (todoListID: string, taskID: string, newStatus: boolean) =>
+  changeStatusTask: (todoListID: string, taskID: string, newStatus: TaskStatuses) =>
     ({
       type: 'CHANGE-STATUS-TASK',
       payload: { todoListID, taskID, newStatus },
