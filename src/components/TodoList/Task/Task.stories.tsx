@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 
 import { ReduxStoreProviderDecorator } from '../../../store/decorators/ReduxStoreProviderDecorator.tsx'
 import { AppRootStateType } from '../../../store/store.ts'
-import { TaskType } from '../../../types/types.ts'
+import { TaskStatuses, TaskType } from '../../../types/types.ts'
 import { EditableSpan } from '../../EditableSpan/EditableSpan.tsx'
 
 import { Task } from './Task.tsx'
@@ -38,7 +38,11 @@ const TaskWithStoryBook: typeof Task = ({ todoListID, task }) => {
         </IconButton>
       }
     >
-      <Checkbox size="small" checked={task.isDone} onChange={changeStatusTask} />
+      <Checkbox
+        size="small"
+        checked={task.status === TaskStatuses.Completed}
+        onChange={changeStatusTask}
+      />
       <EditableSpan value={task.title} onChange={changeTitleTask} />
     </ListItem>
   )
@@ -50,7 +54,18 @@ const meta = {
   tags: ['autodocs'],
   args: {
     todoListID: 'todoListID_1',
-    task: { id: 'taskID_1', title: 'Title task', isDone: false },
+    task: {
+      id: 'taskID_1',
+      title: 'Title task',
+      status: 0,
+      description: null,
+      priority: 0,
+      order: 0,
+      startDate: null,
+      deadline: null,
+      addedDate: new Date().toISOString(),
+      todoListId: 'todoListID_1',
+    },
   },
 } satisfies Meta<typeof Task>
 
@@ -65,7 +80,18 @@ export const IsNotDone: Story = {
 
 export const IsDone: Story = {
   args: {
-    task: { id: 'taskID_1', title: 'Title task', isDone: true },
+    task: {
+      id: 'taskID_1',
+      title: 'Title task',
+      status: 2,
+      description: null,
+      priority: 0,
+      order: 0,
+      startDate: null,
+      deadline: null,
+      addedDate: new Date().toISOString(),
+      todoListId: 'todoListID_1',
+    },
   },
   render: args => {
     return <TaskWithStoryBook {...args} />
