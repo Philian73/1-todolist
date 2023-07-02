@@ -38,6 +38,6 @@ export const todoListsAPI = {
         }>
       >,
       UpdateTaskModelType
-    >(`todo-lists/${todoListID}/tasks/${taskID}`, { ...model })
+    >(`todo-lists/${todoListID}/tasks/${taskID}`, model)
   },
 }
