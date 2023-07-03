@@ -10,20 +10,20 @@ import { useSelector } from 'react-redux'
 
 import { ReduxStoreProviderDecorator } from '../../../store/decorators/ReduxStoreProviderDecorator.tsx'
 import { AppRootStateType } from '../../../store/store.ts'
-import { TaskStatuses, TaskType } from '../../../types/types.ts'
+import { TaskPriorities, TaskStatuses, TaskType } from '../../../types/types.ts'
 import { EditableSpan } from '../../EditableSpan/EditableSpan.tsx'
 
 import { Task } from './Task.tsx'
 
-const TaskWithStoryBook: typeof Task = ({ todoListID, task }) => {
+const TaskWithStoryBook: typeof Task = ({ task }) => {
   const removeTask = () => {
-    action('Remove Button clicked changed inside Task')(todoListID, task.id)
+    action('Remove Button clicked changed inside Task')(task.todoListId, task.id)
   }
   const changeTitleTask = (title: string) => {
-    action('Title changed inside Task')(todoListID, task.id, title)
+    action('Title changed inside Task')(task.todoListId, task.id, title)
   }
   const changeStatusTask = (e: ChangeEvent<HTMLInputElement>) => {
-    action('Status changed inside Task')(todoListID, task.id, e.currentTarget.checked)
+    action('Status changed inside Task')(task.todoListId, task.id, e.currentTarget.checked)
   }
 
   return (
@@ -53,13 +53,12 @@ const meta = {
   component: Task,
   tags: ['autodocs'],
   args: {
-    todoListID: 'todoListID_1',
     task: {
       id: 'taskID_1',
       title: 'Title task',
-      status: 0,
+      status: TaskStatuses.New,
       description: null,
-      priority: 0,
+      priority: TaskPriorities.Low,
       order: 0,
       startDate: null,
       deadline: null,
@@ -83,9 +82,9 @@ export const IsDone: Story = {
     task: {
       id: 'taskID_1',
       title: 'Title task',
-      status: 2,
+      status: TaskStatuses.Completed,
       description: null,
-      priority: 0,
+      priority: TaskPriorities.Low,
       order: 0,
       startDate: null,
       deadline: null,
@@ -102,7 +101,7 @@ const BaseWrap = () => {
   const todoListID = 'todoListID_1'
   const task = useSelector<AppRootStateType, TaskType>(state => state.tasks[todoListID][1])
 
-  return task ? <Task todoListID={todoListID} task={task} /> : <span>Список пуст</span>
+  return task ? <Task task={task} /> : <span>Список пуст</span>
 }
 
 export const Base: Story = {
