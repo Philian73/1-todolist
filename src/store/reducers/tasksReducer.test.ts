@@ -1,4 +1,4 @@
-import { TasksType } from '../../types/types.ts'
+import { TaskPriorities, TaskStatuses, TasksType } from '../../types/types.ts'
 
 import { tasksActions, tasksReducer } from './tasksReducer.ts'
 import { todoListsActions } from './todoListsReducer.ts'
@@ -17,36 +17,36 @@ describe('tasksReducer', () => {
         {
           id: '1',
           title: 'CSS',
-          status: 0,
+          status: TaskStatuses.New,
           addedDate: new Date().toISOString(),
           deadline: null,
           description: null,
           startDate: new Date().toISOString(),
-          priority: 1,
+          priority: TaskPriorities.Low,
           order: -2,
           todoListId: todoListID_1,
         },
         {
           id: '2',
           title: 'JS',
-          status: 2,
+          status: TaskStatuses.Completed,
           addedDate: new Date().toISOString(),
           deadline: null,
           description: null,
           startDate: new Date().toISOString(),
-          priority: 1,
+          priority: TaskPriorities.Low,
           order: -1,
           todoListId: todoListID_1,
         },
         {
           id: '3',
           title: 'React',
-          status: 0,
+          status: TaskStatuses.New,
           addedDate: new Date().toISOString(),
           deadline: null,
           description: null,
           startDate: new Date().toISOString(),
-          priority: 1,
+          priority: TaskPriorities.Low,
           order: 0,
           todoListId: todoListID_1,
         },
@@ -55,36 +55,36 @@ describe('tasksReducer', () => {
         {
           id: '1',
           title: 'bread',
-          status: 0,
+          status: TaskStatuses.New,
           addedDate: new Date().toISOString(),
           deadline: null,
           description: null,
           startDate: new Date().toISOString(),
-          priority: 1,
+          priority: TaskPriorities.Low,
           order: -2,
           todoListId: todoListID_2,
         },
         {
           id: '2',
           title: 'milk',
-          status: 2,
+          status: TaskStatuses.Completed,
           addedDate: new Date().toISOString(),
           deadline: null,
           description: null,
           startDate: new Date().toISOString(),
-          priority: 1,
+          priority: TaskPriorities.Low,
           order: -1,
           todoListId: todoListID_2,
         },
         {
           id: '3',
           title: 'tea',
-          status: 0,
+          status: TaskStatuses.New,
           addedDate: new Date().toISOString(),
           deadline: null,
           description: null,
           startDate: new Date().toISOString(),
-          priority: 1,
+          priority: TaskPriorities.Low,
           order: 0,
           todoListId: todoListID_2,
         },
@@ -108,12 +108,12 @@ describe('tasksReducer', () => {
     const action = tasksActions.addTask({
       id: 'test-id',
       title: newTaskTitle,
-      status: 0,
+      status: TaskStatuses.New,
       addedDate: new Date().toISOString(),
       deadline: null,
       description: null,
       startDate: null,
-      priority: 1,
+      priority: TaskPriorities.Low,
       order: -3,
       todoListId: todoListID_2,
     })
@@ -123,7 +123,7 @@ describe('tasksReducer', () => {
     expect(endState[todoListID_2]).toHaveLength(4)
     expect(endState[todoListID_2][0].id).toBeDefined()
     expect(endState[todoListID_2][0].title).toBe(newTaskTitle)
-    expect(endState[todoListID_2][0].status).toBe(0)
+    expect(endState[todoListID_2][0].status).toBe(TaskStatuses.New)
   })
 
   it('title of specified task should be changed', () => {
@@ -137,11 +137,11 @@ describe('tasksReducer', () => {
   })
 
   it('status of specified task should be changed', () => {
-    const action = tasksActions.changeTask(todoListID_2, '2', { status: 0 })
+    const action = tasksActions.changeTask(todoListID_2, '2', { status: TaskStatuses.New })
     const endState = tasksReducer(initialState, action)
 
-    expect(endState[todoListID_1][1].status).toBe(2)
-    expect(endState[todoListID_2][1].status).toBe(0)
+    expect(endState[todoListID_1][1].status).toBe(TaskStatuses.Completed)
+    expect(endState[todoListID_2][1].status).toBe(TaskStatuses.New)
   })
 
   it('property with todolistId should be deleted', () => {
