@@ -3,6 +3,7 @@ import { ReactNode } from 'react'
 import { Provider } from 'react-redux'
 import { combineReducers, legacy_createStore } from 'redux'
 
+import { TaskPriorities, TaskStatuses } from '../../types/types.ts'
 import { tasksReducer } from '../reducers/tasksReducer.ts'
 import { todoListsReducer } from '../reducers/todoListsReducer.ts'
 import { AppRootStateType } from '../store.ts'
@@ -29,9 +30,9 @@ const initialState = {
       {
         id: 'some-task-id-1',
         title: 'HTML&CSS',
-        status: 2,
+        status: TaskStatuses.Completed,
         description: null,
-        priority: 0,
+        priority: TaskPriorities.Low,
         order: -1,
         startDate: null,
         deadline: null,
@@ -41,9 +42,9 @@ const initialState = {
       {
         id: 'some-task-id-2',
         title: 'JS',
-        status: 0,
+        status: TaskStatuses.New,
         description: null,
-        priority: 0,
+        priority: TaskPriorities.Low,
         order: 0,
         startDate: null,
         deadline: null,
@@ -55,9 +56,9 @@ const initialState = {
       {
         id: 'some-task-id-3',
         title: 'Milk',
-        status: 0,
+        status: TaskStatuses.New,
         description: null,
-        priority: 0,
+        priority: TaskPriorities.Low,
         order: -1,
         startDate: null,
         deadline: null,
@@ -67,9 +68,9 @@ const initialState = {
       {
         id: 'some-task-id-4',
         title: 'React Book',
-        status: 2,
+        status: TaskStatuses.Completed,
         description: null,
-        priority: 0,
+        priority: TaskPriorities.Low,
         order: 0,
         startDate: null,
         deadline: null,
