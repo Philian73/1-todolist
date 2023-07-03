@@ -8,7 +8,7 @@ import { tasksReducer } from '../reducers/tasksReducer.ts'
 import { todoListsReducer } from '../reducers/todoListsReducer.ts'
 import { AppRootStateType } from '../store.ts'
 
-const initialState = {
+const initialState: AppRootStateType = {
   todoLists: [
     {
       id: 'todoListID_1',
@@ -86,7 +86,7 @@ const rootReducer = combineReducers({
   todoLists: todoListsReducer,
 })
 
-const storyBookStore = legacy_createStore(rootReducer, initialState as AppRootStateType)
+const storyBookStore = legacy_createStore(rootReducer, initialState)
 
 export const ReduxStoreProviderDecorator = (storyFn: () => ReactNode) => {
   return <Provider store={storyBookStore}>{storyFn()}</Provider>
