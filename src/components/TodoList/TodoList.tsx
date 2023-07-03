@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useEffect } from 'react'
+import { FC, MouseEvent, memo, useCallback, useEffect } from 'react'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import Button from '@mui/material/Button'
@@ -28,6 +28,15 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
   useEffect(() => {
     dispatch(getTasks(todoListID))
   }, [])
+
+  const changeFilter = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      dispatch(
+        todoListsActions.changeFilterTodoList(todoListID, e.currentTarget.name as FilterValuesType)
+      )
+    },
+    [dispatch, todoListID]
+  )
 
   const changeTitleTodoList = useCallback(
     (newTitle: string) => {
@@ -75,29 +84,32 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
       <List>{tasksMap}</List>
       <div className={s.todoListControls}>
         <Button
+          name="all"
           size="small"
           variant={getFilterClasses('all')}
           color="inherit"
           disableElevation
-          onClick={() => dispatch(todoListsActions.changeFilterTodoList(todoListID, 'all'))}
+          onClick={changeFilter}
         >
           All
         </Button>
         <Button
+          name="active"
           size="small"
           variant={getFilterClasses('active')}
           color="primary"
           disableElevation
-          onClick={() => dispatch(todoListsActions.changeFilterTodoList(todoListID, 'active'))}
+          onClick={changeFilter}
         >
           Active
         </Button>
         <Button
+          name="completed"
           size="small"
           variant={getFilterClasses('completed')}
           color="secondary"
           disableElevation
-          onClick={() => dispatch(todoListsActions.changeFilterTodoList(todoListID, 'completed'))}
+          onClick={changeFilter}
         >
           Completed
         </Button>
