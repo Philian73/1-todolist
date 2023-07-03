@@ -11,32 +11,31 @@ import { TaskStatuses, TaskType } from '../../../types/types.ts'
 import { EditableSpan } from '../../EditableSpan/EditableSpan.tsx'
 
 type PropsType = {
-  todoListID: string
   task: TaskType
 }
-export const Task: FC<PropsType> = memo(({ todoListID, task }) => {
+export const Task: FC<PropsType> = memo(({ task }) => {
   const dispatch = useAppDispatch()
 
   const removeTask = useCallback(() => {
-    dispatch(deleteTask(todoListID, task.id))
-  }, [dispatch, todoListID, task.id])
+    dispatch(deleteTask(task.todoListId, task.id))
+  }, [dispatch, task.todoListId, task.id])
 
   const changeStatusTask = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       dispatch(
-        updateTask(todoListID, task.id, {
+        updateTask(task.todoListId, task.id, {
           status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New,
         })
       )
     },
-    [dispatch, todoListID, task.id]
+    [dispatch, task.todoListId, task.id]
   )
 
   const changeTitleTask = useCallback(
     (newTitle: string) => {
-      dispatch(updateTask(todoListID, task.id, { title: newTitle }))
+      dispatch(updateTask(task.todoListId, task.id, { title: newTitle }))
     },
-    [dispatch, todoListID, task.id]
+    [dispatch, task.todoListId, task.id]
   )
 
   return (

@@ -69,7 +69,7 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
   }
 
   const tasksMap = getTasksForRender(tasks, filter).map(task => {
-    return <Task key={task.id} todoListID={todoListID} task={task} />
+    return <Task key={task.id} task={task} />
   })
 
   return (
