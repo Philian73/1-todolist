@@ -174,4 +174,18 @@ describe('tasksReducer', () => {
     expect(keys).toHaveLength(3)
     expect(endState[newKey]).toEqual([])
   })
+
+  it('empty arrays should be added when we set todoLists', () => {
+    const action = todoListsActions.setTodoLists([
+      { id: todoListID_1, title: 'some-title-1', addedDate: new Date().toISOString(), order: -1 },
+      { id: todoListID_2, title: 'some-title-2', addedDate: new Date().toISOString(), order: 0 },
+    ])
+    const endState = tasksReducer({}, action)
+
+    const keys = Object.keys(endState)
+
+    expect(keys).toHaveLength(2)
+    expect(endState[todoListID_1]).toStrictEqual([])
+    expect(endState[todoListID_2]).toStrictEqual([])
+  })
 })

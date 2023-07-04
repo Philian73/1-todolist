@@ -73,4 +73,11 @@ describe('todoListsReducer', () => {
     expect(endState[0].filter).toBe('all')
     expect(endState[1].filter).toBe(newTodoListFilter)
   })
+
+  it('todoLists should be set to the state', () => {
+    const action = todoListsActions.setTodoLists(initialState)
+    const endState = todoListsReducer([], action)
+
+    expect(endState).toHaveLength(2)
+  })
 })
