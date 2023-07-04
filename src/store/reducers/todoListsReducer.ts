@@ -108,4 +108,12 @@ export const todoListsThunks = {
       })
     }
   },
+
+  updateTitleTodoList(ID: string, title: string) {
+    return (dispatch: Dispatch) => {
+      todoListsAPI.updateTitleTodoList(ID, title).then(() => {
+        dispatch(todoListsActions.updateTitleTodoList(ID, title))
+      })
+    }
+  },
 }
