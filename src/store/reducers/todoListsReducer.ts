@@ -102,4 +102,11 @@ export const todoListsThunks = {
       })
     }
   },
+  deleteTodoList(ID: string) {
+    return (dispatch: Dispatch) => {
+      todoListsAPI.deleteTodoList(ID).then(() => {
+        dispatch(todoListsActions.deleteTodoList(ID))
+      })
+    }
+  },
 }
