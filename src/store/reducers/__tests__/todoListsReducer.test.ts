@@ -41,7 +41,12 @@ describe('todoListsReducer', () => {
   it('correct todolist should be added', () => {
     const newTodoListTitle = 'New TodoList'
 
-    const action = todoListsActions.createTodoList(newTodoListTitle)
+    const action = todoListsActions.createTodoList({
+      id: 'some-id',
+      title: newTodoListTitle,
+      order: 0,
+      addedDate: new Date().toISOString(),
+    })
     const endState = todoListsReducer(initialState, action)
 
     expect(endState).toHaveLength(3)

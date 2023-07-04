@@ -156,7 +156,12 @@ describe('tasksReducer', () => {
   })
 
   it('new array should be added when new todolist is added', () => {
-    const action = todoListsActions.createTodoList('New TodoList')
+    const action = todoListsActions.createTodoList({
+      id: 'some-id',
+      title: 'some-title',
+      order: 0,
+      addedDate: new Date().toISOString(),
+    })
     const endState = tasksReducer(initialState, action)
 
     const keys = Object.keys(endState)
