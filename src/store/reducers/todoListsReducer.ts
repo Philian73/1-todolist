@@ -1,5 +1,4 @@
 import { Dispatch } from 'redux'
-import { v1 } from 'uuid'
 
 import { todoListsAPI } from '../../api/todoListsAPI.ts'
 import { FilterValuesType, TodoListDomainType, TodoListType } from '../../types/types.ts'
@@ -24,16 +23,7 @@ export const todoListsReducer = (
     case 'DELETE-TODOLIST':
       return state.filter(todoList => todoList.id !== action.payload.ID)
     case 'CREATE-TODOLIST':
-      return [
-        {
-          id: action.payload.ID,
-          title: action.payload.title,
-          filter: 'all',
-          addedDate: new Date().toISOString(),
-          order: 0,
-        },
-        ...state,
-      ]
+      return [{ ...action.payload.todoList, filter: 'all' }, ...state]
     case 'UPDATE-TITLE-TODOLIST':
       return state.map(todoList =>
         todoList.id === action.payload.ID
@@ -72,10 +62,10 @@ export const todoListsActions = {
     } as const
   },
 
-  createTodoList(title: string) {
+  createTodoList(todoList: TodoListType) {
     return {
       type: 'CREATE-TODOLIST',
-      payload: { ID: v1(), title },
+      payload: { todoList },
     } as const
   },
 
@@ -102,10 +92,19 @@ export const todoListsThunks = {
       })
     }
   },
+
   deleteTodoList(ID: string) {
     return (dispatch: Dispatch) => {
       todoListsAPI.deleteTodoList(ID).then(() => {
         dispatch(todoListsActions.deleteTodoList(ID))
+      })
+    }
+  },
+
+  createTodoList(title: string) {
+    return (dispatch: Dispatch) => {
+      todoListsAPI.createTodoList(title).then(response => {
+        dispatch(todoListsActions.createTodoList(response.data.data.item))
       })
     }
   },
