@@ -1,9 +1,8 @@
 import { describe, beforeEach, it, expect } from 'vitest'
 
-import { TaskPriorities, TaskStatuses, TasksType } from '../../types/types.ts'
-
-import { tasksActions, tasksReducer } from './tasksReducer.ts'
-import { todoListsActions } from './todoListsReducer.ts'
+import { TaskPriorities, TaskStatuses, TasksType } from '../../../types/types.ts'
+import { tasksActions, tasksReducer } from '../tasksReducer.ts'
+import { todoListsActions } from '../todoListsReducer.ts'
 
 describe('tasksReducer', () => {
   let todoListID_1: string
