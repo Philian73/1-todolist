@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography'
 
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks.ts'
 import { tasksThunks } from '../../store/reducers/tasksReducer.ts'
-import { todoListsActions } from '../../store/reducers/todoListsReducer.ts'
+import { todoListsActions, todoListsThunks } from '../../store/reducers/todoListsReducer.ts'
 import { FilterValuesType, TaskStatuses, TaskType } from '../../types/types.ts'
 import { AddItemForm } from '../AddItemForm/AddItemForm'
 import { EditableSpan } from '../EditableSpan/EditableSpan'
@@ -46,7 +46,7 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
   )
 
   const deleteTodoList = useCallback(() => {
-    dispatch(todoListsActions.deleteTodoList(todoListID))
+    dispatch(todoListsThunks.deleteTodoList(todoListID))
   }, [dispatch, todoListID])
 
   const createTask = useCallback(
