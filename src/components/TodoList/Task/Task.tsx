@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton'
 import ListItem from '@mui/material/ListItem'
 
 import { useAppDispatch } from '../../../hooks/hooks.ts'
-import { deleteTask, updateTask } from '../../../store/reducers/tasksReducer.ts'
+import { tasksThunks } from '../../../store/reducers/tasksReducer.ts'
 import { TaskStatuses, TaskType } from '../../../types/types.ts'
 import { EditableSpan } from '../../EditableSpan/EditableSpan.tsx'
 
@@ -16,14 +16,14 @@ type PropsType = {
 export const Task: FC<PropsType> = memo(({ task }) => {
   const dispatch = useAppDispatch()
 
-  const removeTask = useCallback(() => {
-    dispatch(deleteTask(task.todoListId, task.id))
+  const deleteTask = useCallback(() => {
+    dispatch(tasksThunks.deleteTask(task.todoListId, task.id))
   }, [dispatch, task.todoListId, task.id])
 
-  const changeStatusTask = useCallback(
+  const updateStatusTask = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       dispatch(
-        updateTask(task.todoListId, task.id, {
+        tasksThunks.updateTask(task.todoListId, task.id, {
           status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New,
         })
       )
@@ -31,9 +31,9 @@ export const Task: FC<PropsType> = memo(({ task }) => {
     [dispatch, task.todoListId, task.id]
   )
 
-  const changeTitleTask = useCallback(
-    (newTitle: string) => {
-      dispatch(updateTask(task.todoListId, task.id, { title: newTitle }))
+  const updateTitleTask = useCallback(
+    (title: string) => {
+      dispatch(tasksThunks.updateTask(task.todoListId, task.id, { title }))
     },
     [dispatch, task.todoListId, task.id]
   )
@@ -45,7 +45,7 @@ export const Task: FC<PropsType> = memo(({ task }) => {
       disablePadding
       disableGutters
       secondaryAction={
-        <IconButton size="small" onClick={removeTask}>
+        <IconButton size="small" onClick={deleteTask}>
           <DeleteForeverIcon fontSize="small" />
         </IconButton>
       }
@@ -53,9 +53,9 @@ export const Task: FC<PropsType> = memo(({ task }) => {
       <Checkbox
         size="small"
         checked={task.status === TaskStatuses.Completed}
-        onChange={changeStatusTask}
+        onChange={updateStatusTask}
       />
-      <EditableSpan value={task.title} onChange={changeTitleTask} />
+      <EditableSpan value={task.title} onChange={updateTitleTask} />
     </ListItem>
   )
 })

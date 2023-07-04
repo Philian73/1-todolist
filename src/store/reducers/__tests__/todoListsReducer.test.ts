@@ -31,7 +31,7 @@ describe('todoListsReducer', () => {
   })
 
   it('correct todolist should be removed', () => {
-    const action = todoListsActions.removeTodoList(todoListID_1)
+    const action = todoListsActions.deleteTodoList(todoListID_1)
     const endState = todoListsReducer(initialState, action)
 
     expect(endState).toHaveLength(1)
@@ -41,7 +41,7 @@ describe('todoListsReducer', () => {
   it('correct todolist should be added', () => {
     const newTodoListTitle = 'New TodoList'
 
-    const action = todoListsActions.addTodoList(newTodoListTitle)
+    const action = todoListsActions.createTodoList(newTodoListTitle)
     const endState = todoListsReducer(initialState, action)
 
     expect(endState).toHaveLength(3)
@@ -52,7 +52,7 @@ describe('todoListsReducer', () => {
   it("correct todolist should change it's name", () => {
     const newTitleTodoList = 'New TodoList'
 
-    const action = todoListsActions.changeTitleTodoList(todoListID_2, newTitleTodoList)
+    const action = todoListsActions.updateTitleTodoList(todoListID_2, newTitleTodoList)
     const endState = todoListsReducer(initialState, action)
 
     expect(endState[0].title).toBe('What to learn')
@@ -62,7 +62,7 @@ describe('todoListsReducer', () => {
   it('correct filter of todolist should be changed', () => {
     const newTodoListFilter: FilterValuesType = 'completed'
 
-    const action = todoListsActions.changeFilterTodoList(todoListID_2, newTodoListFilter)
+    const action = todoListsActions.updateFilterTodoList(todoListID_2, newTodoListFilter)
     const endState = todoListsReducer(initialState, action)
 
     expect(endState[0].filter).toBe('all')

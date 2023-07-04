@@ -10,7 +10,7 @@ import { AddItemForm } from './components/AddItemForm/AddItemForm'
 import { ButtonAppBar } from './components/ButtonAppBar/ButtonAppBar.tsx'
 import { TodoList } from './components/TodoList/TodoList'
 import { useAppDispatch, useAppSelector } from './hooks/hooks.ts'
-import { getTodoLists, todoListsActions } from './store/reducers/todoListsReducer.ts'
+import { todoListsActions, todoListsThunks } from './store/reducers/todoListsReducer.ts'
 import { TodoListDomainType } from './types/types.ts'
 
 const App = () => {
@@ -18,12 +18,12 @@ const App = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(getTodoLists())
+    dispatch(todoListsThunks.getTodoLists())
   }, [])
 
-  const addTodoList = useCallback(
+  const createTodoList = useCallback(
     (title: string) => {
-      dispatch(todoListsActions.addTodoList(title))
+      dispatch(todoListsActions.createTodoList(title))
     },
     [dispatch]
   )
@@ -43,7 +43,7 @@ const App = () => {
       <ButtonAppBar />
       <Container fixed>
         <Grid container style={{ padding: '20px' }}>
-          <AddItemForm addItem={addTodoList} />
+          <AddItemForm addItem={createTodoList} />
         </Grid>
         <Grid container spacing={3}>
           {todoListsMap}

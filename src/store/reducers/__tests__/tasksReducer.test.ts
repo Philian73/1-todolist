@@ -94,7 +94,7 @@ describe('tasksReducer', () => {
   })
 
   it('correct task should be deleted from correct array', () => {
-    const action = tasksActions.removeTask(todoListID_2, '2')
+    const action = tasksActions.deleteTask(todoListID_2, '2')
     const endState = tasksReducer(initialState, action)
 
     expect(endState[todoListID_1]).toHaveLength(3)
@@ -106,7 +106,7 @@ describe('tasksReducer', () => {
   it('correct task should be added to correct array', () => {
     const newTaskTitle = 'New Task'
 
-    const action = tasksActions.addTask({
+    const action = tasksActions.createTask({
       id: 'test-id',
       title: newTaskTitle,
       status: TaskStatuses.New,
@@ -130,7 +130,7 @@ describe('tasksReducer', () => {
   it('title of specified task should be changed', () => {
     const newTitleTask = 'New Title'
 
-    const action = tasksActions.changeTask(todoListID_2, '2', { title: newTitleTask })
+    const action = tasksActions.updateTask(todoListID_2, '2', { title: newTitleTask })
     const endState = tasksReducer(initialState, action)
 
     expect(endState[todoListID_1][1].title).toBe('JS')
@@ -138,7 +138,7 @@ describe('tasksReducer', () => {
   })
 
   it('status of specified task should be changed', () => {
-    const action = tasksActions.changeTask(todoListID_2, '2', { status: TaskStatuses.New })
+    const action = tasksActions.updateTask(todoListID_2, '2', { status: TaskStatuses.New })
     const endState = tasksReducer(initialState, action)
 
     expect(endState[todoListID_1][1].status).toBe(TaskStatuses.Completed)
@@ -146,7 +146,7 @@ describe('tasksReducer', () => {
   })
 
   it('property with todolistId should be deleted', () => {
-    const action = todoListsActions.removeTodoList(todoListID_2)
+    const action = todoListsActions.deleteTodoList(todoListID_2)
     const endState = tasksReducer(initialState, action)
 
     const keys = Object.keys(endState)
@@ -156,7 +156,7 @@ describe('tasksReducer', () => {
   })
 
   it('new array should be added when new todolist is added', () => {
-    const action = todoListsActions.addTodoList('New TodoList')
+    const action = todoListsActions.createTodoList('New TodoList')
     const endState = tasksReducer(initialState, action)
 
     const keys = Object.keys(endState)

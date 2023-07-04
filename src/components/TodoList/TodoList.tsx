@@ -7,7 +7,7 @@ import List from '@mui/material/List'
 import Typography from '@mui/material/Typography'
 
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks.ts'
-import { createTask, getTasks } from '../../store/reducers/tasksReducer.ts'
+import { tasksThunks } from '../../store/reducers/tasksReducer.ts'
 import { todoListsActions } from '../../store/reducers/todoListsReducer.ts'
 import { FilterValuesType, TaskStatuses, TaskType } from '../../types/types.ts'
 import { AddItemForm } from '../AddItemForm/AddItemForm'
@@ -26,32 +26,32 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(getTasks(todoListID))
+    dispatch(tasksThunks.getTasks(todoListID))
   }, [])
 
-  const changeFilter = useCallback(
+  const updateFilterTodoList = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       dispatch(
-        todoListsActions.changeFilterTodoList(todoListID, e.currentTarget.name as FilterValuesType)
+        todoListsActions.updateFilterTodoList(todoListID, e.currentTarget.name as FilterValuesType)
       )
     },
     [dispatch, todoListID]
   )
 
-  const changeTitleTodoList = useCallback(
+  const updateTitleTodoList = useCallback(
     (newTitle: string) => {
-      dispatch(todoListsActions.changeTitleTodoList(todoListID, newTitle))
+      dispatch(todoListsActions.updateTitleTodoList(todoListID, newTitle))
     },
     [dispatch, todoListID]
   )
 
-  const removeTodoList = useCallback(() => {
-    dispatch(todoListsActions.removeTodoList(todoListID))
+  const deleteTodoList = useCallback(() => {
+    dispatch(todoListsActions.deleteTodoList(todoListID))
   }, [dispatch, todoListID])
 
-  const addTask = useCallback(
+  const createTask = useCallback(
     (title: string) => {
-      dispatch(createTask(todoListID, title))
+      dispatch(tasksThunks.createTask(todoListID, title))
     },
     [dispatch, todoListID]
   )
@@ -75,12 +75,12 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
   return (
     <div className={s.todoList}>
       <Typography fontSize="x-large" variant="h2" fontWeight="bold" sx={{ mb: '15px', ml: '5px' }}>
-        <EditableSpan value={title} onChange={changeTitleTodoList} />
-        <IconButton sx={{ ml: '15px' }} onClick={removeTodoList}>
+        <EditableSpan value={title} onChange={updateTitleTodoList} />
+        <IconButton sx={{ ml: '15px' }} onClick={deleteTodoList}>
           <DeleteForeverIcon />
         </IconButton>
       </Typography>
-      <AddItemForm addItem={addTask} />
+      <AddItemForm addItem={createTask} />
       <List>{tasksMap}</List>
       <div className={s.todoListControls}>
         <Button
@@ -89,7 +89,7 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
           variant={getFilterClasses('all')}
           color="inherit"
           disableElevation
-          onClick={changeFilter}
+          onClick={updateFilterTodoList}
         >
           All
         </Button>
@@ -99,7 +99,7 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
           variant={getFilterClasses('active')}
           color="primary"
           disableElevation
-          onClick={changeFilter}
+          onClick={updateFilterTodoList}
         >
           Active
         </Button>
@@ -109,7 +109,7 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
           variant={getFilterClasses('completed')}
           color="secondary"
           disableElevation
-          onClick={changeFilter}
+          onClick={updateFilterTodoList}
         >
           Completed
         </Button>
