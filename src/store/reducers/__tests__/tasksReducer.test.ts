@@ -188,4 +188,19 @@ describe('tasksReducer', () => {
     expect(endState[todoListID_1]).toStrictEqual([])
     expect(endState[todoListID_2]).toStrictEqual([])
   })
+
+  it('tasks should be added for todoList', () => {
+    const action = tasksActions.setTasks(todoListID_1, initialState[todoListID_1])
+
+    const endState = tasksReducer(
+      {
+        [todoListID_1]: [],
+        [todoListID_2]: [],
+      },
+      action
+    )
+
+    expect(endState[todoListID_1]).toHaveLength(3)
+    expect(endState[todoListID_2]).toHaveLength(0)
+  })
 })
