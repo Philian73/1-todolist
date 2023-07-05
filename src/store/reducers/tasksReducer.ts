@@ -81,7 +81,7 @@ export const tasksActions = {
     } as const
   },
 
-  updateTask(todoListID: string, taskID: string, model: Partial<UpdateTaskModelType>) {
+  updateTask(todoListID: string, taskID: string, model: UpdateTaskModelType) {
     return {
       type: 'UPDATE-TASK',
       payload: { todoListID, taskID, model },
