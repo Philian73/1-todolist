@@ -1,6 +1,6 @@
 import { test, expect } from 'vitest'
 
-import { TasksType, TodoListDomainType } from '../../../types'
+import { TasksType, TodoListDomainType } from '../../../app/types'
 import { tasksReducer } from '../tasksReducer.ts'
 import { todoListsActions, todoListsReducer } from '../todoListsReducer.ts'
 

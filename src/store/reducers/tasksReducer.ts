@@ -1,8 +1,8 @@
 import { Dispatch } from 'redux'
 
 import { todoListsAPI } from '../../api/todoListsAPI.ts'
-import { TasksType, TaskType, UpdateTaskModelType } from '../../types'
-import { AppRootStateType } from '../store.ts'
+import { AppRootStateType } from '../../app/store/store.ts'
+import { TasksType, TaskType, UpdateTaskModelType } from '../../app/types'
 
 import { SetDeleteCreateTodoListsActionsType } from './todoListsReducer.ts'
 

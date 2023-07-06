@@ -6,10 +6,10 @@ import IconButton from '@mui/material/IconButton'
 import List from '@mui/material/List'
 import Typography from '@mui/material/Typography'
 
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks.ts'
+import { useAppDispatch, useAppSelector } from '../../app/hooks/hooks.ts'
+import { FilterValuesType, TaskStatuses, TaskType } from '../../app/types'
 import { tasksThunks } from '../../store/reducers/tasksReducer.ts'
 import { todoListsActions, todoListsThunks } from '../../store/reducers/todoListsReducer.ts'
-import { FilterValuesType, TaskStatuses, TaskType } from '../../types'
 import { AddItemForm } from '../AddItemForm/AddItemForm'
 import { EditableSpan } from '../EditableSpan/EditableSpan'
 

@@ -5,9 +5,9 @@ import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import ListItem from '@mui/material/ListItem'
 
-import { useAppDispatch } from '../../../hooks/hooks.ts'
+import { useAppDispatch } from '../../../app/hooks/hooks.ts'
+import { TaskStatuses, TaskType } from '../../../app/types'
 import { tasksThunks } from '../../../store/reducers/tasksReducer.ts'
-import { TaskStatuses, TaskType } from '../../../types'
 import { EditableSpan } from '../../EditableSpan/EditableSpan.tsx'
 
 type PropsType = {

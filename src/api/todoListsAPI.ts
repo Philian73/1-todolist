@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios'
 
-import { TaskType, TodoListType, UpdateTaskModelType } from '../types'
+import { TaskType, TodoListType, UpdateTaskModelType } from '../app/types'
 
 import { instance, ResponseType } from './api.ts'
 
