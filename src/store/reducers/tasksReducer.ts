@@ -6,13 +6,7 @@ import { AppRootStateType } from '../store.ts'
 
 import { SetDeleteCreateTodoListsActionsType } from './todoListsReducer.ts'
 
-type TasksActionsType = typeof tasksActions
-
-type ActionsType =
-  | ReturnType<TasksActionsType[keyof TasksActionsType]>
-  | SetDeleteCreateTodoListsActionsType
-
-export const initialState = {} as TasksType
+const initialState = {} as TasksType
 
 export const tasksReducer = (state = initialState, action: ActionsType): TasksType => {
   switch (action.type) {
@@ -59,6 +53,7 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksTy
   }
 }
 
+// ACTIONS
 export const tasksActions = {
   setTasks(todoListID: string, tasks: TaskType[]) {
     return {
@@ -66,21 +61,18 @@ export const tasksActions = {
       payload: { todoListID, tasks },
     } as const
   },
-
   deleteTask(todoListID: string, taskID: string) {
     return {
       type: 'DELETE-TASK',
       payload: { todoListID, taskID },
     } as const
   },
-
   createTask(task: TaskType) {
     return {
       type: 'CREATE-TASK',
       payload: { task },
     } as const
   },
-
   updateTask(todoListID: string, taskID: string, model: UpdateTaskModelType) {
     return {
       type: 'UPDATE-TASK',
@@ -89,6 +81,7 @@ export const tasksActions = {
   },
 }
 
+// THUNKS
 export const tasksThunks = {
   getTasks(todoListID: string) {
     return (dispatch: Dispatch) => {
@@ -97,7 +90,6 @@ export const tasksThunks = {
       })
     }
   },
-
   deleteTask(todoListID: string, taskID: string) {
     return (dispatch: Dispatch) => {
       todoListsAPI.deleteTask(todoListID, taskID).then(() => {
@@ -105,7 +97,6 @@ export const tasksThunks = {
       })
     }
   },
-
   createTask(todoListID: string, title: string) {
     return (dispatch: Dispatch) => {
       todoListsAPI.createTask(todoListID, title).then(response => {
@@ -113,7 +104,6 @@ export const tasksThunks = {
       })
     }
   },
-
   updateTask(todoListID: string, taskID: string, data: Partial<UpdateTaskModelType>) {
     return (dispatch: Dispatch, getState: () => AppRootStateType) => {
       const task = getState().tasks[todoListID].find(task => task.id === taskID)
@@ -136,3 +126,10 @@ export const tasksThunks = {
     }
   },
 }
+
+// TYPES
+type TasksActionsType = typeof tasksActions
+
+type ActionsType =
+  | ReturnType<TasksActionsType[keyof TasksActionsType]>
+  | SetDeleteCreateTodoListsActionsType

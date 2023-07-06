@@ -3,14 +3,6 @@ import { Dispatch } from 'redux'
 import { todoListsAPI } from '../../api/todoListsAPI.ts'
 import { FilterValuesType, TodoListDomainType, TodoListType } from '../../types/types.ts'
 
-type TodoListsActionsType = typeof todoListsActions
-
-export type SetDeleteCreateTodoListsActionsType = ReturnType<
-  TodoListsActionsType['createTodoList' | 'deleteTodoList' | 'setTodoLists']
->
-
-type ActionsType = ReturnType<TodoListsActionsType[keyof TodoListsActionsType]>
-
 const initialState = [] as TodoListDomainType[]
 
 export const todoListsReducer = (
@@ -47,6 +39,7 @@ export const todoListsReducer = (
   }
 }
 
+// ACTIONS
 export const todoListsActions = {
   setTodoLists(todoLists: TodoListType[]) {
     return {
@@ -54,28 +47,24 @@ export const todoListsActions = {
       payload: { todoLists },
     } as const
   },
-
   deleteTodoList(ID: string) {
     return {
       type: 'DELETE-TODOLIST',
       payload: { ID },
     } as const
   },
-
   createTodoList(todoList: TodoListType) {
     return {
       type: 'CREATE-TODOLIST',
       payload: { todoList },
     } as const
   },
-
   updateTitleTodoList(ID: string, title: string) {
     return {
       type: 'UPDATE-TITLE-TODOLIST',
       payload: { ID, title },
     } as const
   },
-
   updateFilterTodoList(ID: string, filter: FilterValuesType) {
     return {
       type: 'UPDATE-FILTER-TODOLIST',
@@ -84,6 +73,7 @@ export const todoListsActions = {
   },
 }
 
+// THUNKS
 export const todoListsThunks = {
   getTodoLists() {
     return (dispatch: Dispatch) => {
@@ -92,7 +82,6 @@ export const todoListsThunks = {
       })
     }
   },
-
   deleteTodoList(ID: string) {
     return (dispatch: Dispatch) => {
       todoListsAPI.deleteTodoList(ID).then(() => {
@@ -100,7 +89,6 @@ export const todoListsThunks = {
       })
     }
   },
-
   createTodoList(title: string) {
     return (dispatch: Dispatch) => {
       todoListsAPI.createTodoList(title).then(response => {
@@ -108,7 +96,6 @@ export const todoListsThunks = {
       })
     }
   },
-
   updateTitleTodoList(ID: string, title: string) {
     return (dispatch: Dispatch) => {
       todoListsAPI.updateTitleTodoList(ID, title).then(() => {
@@ -117,3 +104,12 @@ export const todoListsThunks = {
     }
   },
 }
+
+// TYPES
+type TodoListsActionsType = typeof todoListsActions
+
+export type SetDeleteCreateTodoListsActionsType = ReturnType<
+  TodoListsActionsType['createTodoList' | 'deleteTodoList' | 'setTodoLists']
+>
+
+type ActionsType = ReturnType<TodoListsActionsType[keyof TodoListsActionsType]>
