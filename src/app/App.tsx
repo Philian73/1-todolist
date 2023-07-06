@@ -6,11 +6,12 @@ import Paper from '@mui/material/Paper'
 
 import './styles/App.css'
 
-import { AddItemForm } from './components/AddItemForm/AddItemForm'
-import { ButtonAppBar } from './components/ButtonAppBar/ButtonAppBar.tsx'
-import { TodoList } from './components/TodoList/TodoList'
+import { AddItemForm } from '../components/AddItemForm/AddItemForm.tsx'
+import { ButtonAppBar } from '../components/ButtonAppBar/ButtonAppBar.tsx'
+import { TodoList } from '../components/TodoList/TodoList.tsx'
+import { todoListsThunks } from '../store/reducers/todoListsReducer.ts'
+
 import { useAppDispatch, useAppSelector } from './hooks/hooks.ts'
-import { todoListsThunks } from './store/reducers/todoListsReducer.ts'
 import { TodoListDomainType } from './types'
 
 const App = () => {

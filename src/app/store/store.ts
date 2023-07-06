@@ -1,8 +1,8 @@
 import { AnyAction, applyMiddleware, combineReducers, compose, legacy_createStore } from 'redux'
 import thunk, { ThunkDispatch } from 'redux-thunk'
 
-import { tasksReducer } from './reducers/tasksReducer.ts'
-import { todoListsReducer } from './reducers/todoListsReducer.ts'
+import { tasksReducer } from '../../store/reducers/tasksReducer.ts'
+import { todoListsReducer } from '../../store/reducers/todoListsReducer.ts'
 
 declare global {
   interface Window {
