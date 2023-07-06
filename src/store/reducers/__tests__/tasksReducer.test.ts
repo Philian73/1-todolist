@@ -1,6 +1,6 @@
 import { describe, beforeEach, it, expect } from 'vitest'
 
-import { TaskPriorities, TaskStatuses, TasksType } from '../../../types/types.ts'
+import { TaskPriorities, TaskStatuses, TasksType } from '../../../types'
 import { tasksActions, tasksReducer } from '../tasksReducer.ts'
 import { todoListsActions } from '../todoListsReducer.ts'
 

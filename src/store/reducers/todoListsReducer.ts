@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 
 import { todoListsAPI } from '../../api/todoListsAPI.ts'
-import { FilterValuesType, TodoListDomainType, TodoListType } from '../../types/types.ts'
+import { FilterValuesType, TodoListDomainType, TodoListType } from '../../types'
 
 const initialState = [] as TodoListDomainType[]
 

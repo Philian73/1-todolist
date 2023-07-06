@@ -11,7 +11,7 @@ import { ButtonAppBar } from './components/ButtonAppBar/ButtonAppBar.tsx'
 import { TodoList } from './components/TodoList/TodoList'
 import { useAppDispatch, useAppSelector } from './hooks/hooks.ts'
 import { todoListsThunks } from './store/reducers/todoListsReducer.ts'
-import { TodoListDomainType } from './types/types.ts'
+import { TodoListDomainType } from './types'
 
 const App = () => {
   const todoLists = useAppSelector<TodoListDomainType[]>(state => state.todoLists)

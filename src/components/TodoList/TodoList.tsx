@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks.ts'
 import { tasksThunks } from '../../store/reducers/tasksReducer.ts'
 import { todoListsActions, todoListsThunks } from '../../store/reducers/todoListsReducer.ts'
-import { FilterValuesType, TaskStatuses, TaskType } from '../../types/types.ts'
+import { FilterValuesType, TaskStatuses, TaskType } from '../../types'
 import { AddItemForm } from '../AddItemForm/AddItemForm'
 import { EditableSpan } from '../EditableSpan/EditableSpan'
 

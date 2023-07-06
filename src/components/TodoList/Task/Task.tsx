@@ -7,7 +7,7 @@ import ListItem from '@mui/material/ListItem'
 
 import { useAppDispatch } from '../../../hooks/hooks.ts'
 import { tasksThunks } from '../../../store/reducers/tasksReducer.ts'
-import { TaskStatuses, TaskType } from '../../../types/types.ts'
+import { TaskStatuses, TaskType } from '../../../types'
 import { EditableSpan } from '../../EditableSpan/EditableSpan.tsx'
 
 type PropsType = {
