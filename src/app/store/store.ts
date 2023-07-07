@@ -1,8 +1,9 @@
 import { AnyAction, applyMiddleware, combineReducers, compose, legacy_createStore } from 'redux'
-import thunk, { ThunkDispatch } from 'redux-thunk'
+import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { tasksReducer } from '../../features/Tasks/model/tasksReducer.ts'
 import { todoListsReducer } from '../../features/TodoLists/model/todoListsReducer.ts'
+import { appReducer } from '../model/appReducer.ts'
 
 declare global {
   interface Window {
@@ -13,8 +14,15 @@ declare global {
 export type AppRootStateType = ReturnType<typeof rootReducer>
 
 export type AppDispatchType = ThunkDispatch<AppRootStateType, unknown, AnyAction>
+export type AppThunkType<ReturnType = void> = ThunkAction<
+  ReturnType,
+  AppRootStateType,
+  unknown,
+  AnyAction
+>
 
 const rootReducer = combineReducers({
+  app: appReducer,
   tasks: tasksReducer,
   todoLists: todoListsReducer,
 })
