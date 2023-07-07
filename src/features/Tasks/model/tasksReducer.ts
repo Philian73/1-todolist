@@ -7,30 +7,30 @@ const initialState = {} as TasksType
 
 export const tasksReducer = (state = initialState, action: ActionsType): TasksType => {
   switch (action.type) {
-    case 'SET-TODOLISTS':
+    case 'TODOLISTS/SET-TODOLISTS':
       return action.payload.todoLists.reduce((acc, todoList) => ({ ...acc, [todoList.id]: [] }), {})
-    case 'DELETE-TODOLIST': {
+    case 'TODOLISTS/DELETE-TODOLIST': {
       const stateCopy = { ...state }
 
       delete stateCopy[action.payload.ID]
 
       return stateCopy
     }
-    case 'CREATE-TODOLIST':
+    case 'TODOLISTS/CREATE-TODOLIST':
       return { ...state, [action.payload.todoList.id]: [] }
-    case 'SET-TASKS':
+    case 'TASKS/SET-TASKS':
       return {
         ...state,
         [action.payload.todoListID]: action.payload.tasks,
       }
-    case 'DELETE-TASK':
+    case 'TASKS/DELETE-TASK':
       return {
         ...state,
         [action.payload.todoListID]: state[action.payload.todoListID].filter(
           task => task.id !== action.payload.taskID
         ),
       }
-    case 'CREATE-TASK':
+    case 'TASKS/CREATE-TASK':
       return {
         ...state,
         [action.payload.task.todoListId]: [
@@ -38,7 +38,7 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksTy
           ...state[action.payload.task.todoListId],
         ],
       }
-    case 'UPDATE-TASK':
+    case 'TASKS/UPDATE-TASK':
       return {
         ...state,
         [action.payload.todoListID]: state[action.payload.todoListID].map(task =>

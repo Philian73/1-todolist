@@ -3,25 +3,25 @@ import { TaskType, UpdateTaskModelType } from './types.ts'
 export const tasksActions = {
   setTasks(todoListID: string, tasks: TaskType[]) {
     return {
-      type: 'SET-TASKS',
+      type: 'TASKS/SET-TASKS',
       payload: { todoListID, tasks },
     } as const
   },
   deleteTask(todoListID: string, taskID: string) {
     return {
-      type: 'DELETE-TASK',
+      type: 'TASKS/DELETE-TASK',
       payload: { todoListID, taskID },
     } as const
   },
   createTask(task: TaskType) {
     return {
-      type: 'CREATE-TASK',
+      type: 'TASKS/CREATE-TASK',
       payload: { task },
     } as const
   },
   updateTask(todoListID: string, taskID: string, model: Partial<UpdateTaskModelType>) {
     return {
-      type: 'UPDATE-TASK',
+      type: 'TASKS/UPDATE-TASK',
       payload: { todoListID, taskID, model },
     } as const
   },
