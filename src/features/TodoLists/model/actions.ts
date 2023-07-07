@@ -32,3 +32,10 @@ export const todoListsActions = {
     } as const
   },
 }
+
+// TYPES
+export type TodoListsActionsType = typeof todoListsActions
+
+export type SetDeleteCreateTodoListsActionsType = ReturnType<
+  TodoListsActionsType['createTodoList' | 'deleteTodoList' | 'setTodoLists']
+>

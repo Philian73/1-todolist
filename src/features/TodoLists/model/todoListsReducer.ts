@@ -1,4 +1,4 @@
-import { todoListsActions } from './actions.ts'
+import { TodoListsActionsType } from './actions.ts'
 import { TodoListDomainType } from './types.ts'
 
 const initialState = [] as TodoListDomainType[]
@@ -38,10 +38,4 @@ export const todoListsReducer = (
 }
 
 // TYPES
-type TodoListsActionsType = typeof todoListsActions
-
-export type SetDeleteCreateTodoListsActionsType = ReturnType<
-  TodoListsActionsType['createTodoList' | 'deleteTodoList' | 'setTodoLists']
->
-
 type ActionsType = ReturnType<TodoListsActionsType[keyof TodoListsActionsType]>
