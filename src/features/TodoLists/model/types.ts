@@ -8,3 +8,7 @@ export type TodoListType = {
 }
 
 export type TodoListDomainType = TodoListType & { filter: FilterValuesType }
+
+export type UpdateTodoListDomainType = Partial<
+  Omit<TodoListDomainType, 'id' | 'addedDate' | 'order'>
+>
