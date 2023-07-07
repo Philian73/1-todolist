@@ -5,10 +5,10 @@ import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import ListItem from '@mui/material/ListItem'
 
-import { useAppDispatch } from '../../../app/hooks/hooks.ts'
-import { TaskStatuses, TaskType } from '../../../app/types'
-import { tasksThunks } from '../../../store/reducers/tasksReducer.ts'
-import { EditableSpan } from '../../EditableSpan/EditableSpan.tsx'
+import { useAppDispatch } from '../../../../app/hooks/hooks.ts'
+import { EditableSpan } from '../../../../components/EditableSpan/EditableSpan.tsx'
+import { tasksThunks } from '../../model/thunks.ts'
+import { TaskStatuses, TaskType } from '../../model/types.ts'
 
 type PropsType = {
   task: TaskType

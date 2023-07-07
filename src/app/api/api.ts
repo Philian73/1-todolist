@@ -1,12 +1,12 @@
 import axios from 'axios'
 
-import { KEY } from './key.ts'
+import { API_KEY } from './API_KEY.ts'
 
 export const instance = axios.create({
   baseURL: 'https://social-network.samuraijs.com/api/1.1/',
   withCredentials: true,
   headers: {
-    'API-KEY': KEY,
+    'API-KEY': API_KEY,
   },
 })
 

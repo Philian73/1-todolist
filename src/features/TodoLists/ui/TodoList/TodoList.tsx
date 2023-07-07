@@ -1,19 +1,19 @@
-import { FC, MouseEvent, memo, useCallback, useEffect } from 'react'
+import { FC, MouseEvent, memo, useCallback } from 'react'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
-import List from '@mui/material/List'
 import Typography from '@mui/material/Typography'
 
-import { useAppDispatch, useAppSelector } from '../../app/hooks/hooks.ts'
-import { FilterValuesType, TaskStatuses, TaskType } from '../../app/types'
-import { tasksThunks } from '../../store/reducers/tasksReducer.ts'
-import { todoListsActions, todoListsThunks } from '../../store/reducers/todoListsReducer.ts'
-import { AddItemForm } from '../AddItemForm/AddItemForm'
-import { EditableSpan } from '../EditableSpan/EditableSpan'
+import { useAppDispatch } from '../../../../app/hooks/hooks.ts'
+import { AddItemForm } from '../../../../components/AddItemForm/AddItemForm.tsx'
+import { EditableSpan } from '../../../../components/EditableSpan/EditableSpan.tsx'
+import { tasksThunks } from '../../../Tasks/model/thunks.ts'
+import { Tasks } from '../../../Tasks/Tasks.tsx'
+import { todoListsActions } from '../../model/actions.ts'
+import { todoListsThunks } from '../../model/thunks.ts'
+import { FilterValuesType } from '../../model/types.ts'
 
-import { Task } from './Task/Task.tsx'
 import s from './TodoList.module.css'
 
 type PropsType = {
@@ -22,12 +22,7 @@ type PropsType = {
   filter: FilterValuesType
 }
 export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
-  const tasks = useAppSelector<TaskType[]>(state => state.tasks[todoListID])
   const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch(tasksThunks.getTasks(todoListID))
-  }, [])
 
   const updateFilterTodoList = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
@@ -57,20 +52,6 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
   )
 
   const getFilterClasses = (value: FilterValuesType) => (filter === value ? 'outlined' : 'text')
-  const getTasksForRender = (tasks: TaskType[], filterValue: FilterValuesType): TaskType[] => {
-    switch (filterValue) {
-      case 'active':
-        return tasks.filter(task => task.status === TaskStatuses.New)
-      case 'completed':
-        return tasks.filter(task => task.status === TaskStatuses.Completed)
-      default:
-        return tasks
-    }
-  }
-
-  const tasksMap = getTasksForRender(tasks, filter).map(task => {
-    return <Task key={task.id} task={task} />
-  })
 
   return (
     <div className={s.todoList}>
@@ -81,7 +62,7 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
         </IconButton>
       </Typography>
       <AddItemForm addItem={createTask} />
-      <List>{tasksMap}</List>
+      <Tasks todoListID={todoListID} filter={filter} />
       <div className={s.todoListControls}>
         <Button
           name="all"
