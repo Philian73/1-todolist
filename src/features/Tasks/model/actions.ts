@@ -26,3 +26,6 @@ export const tasksActions = {
     } as const
   },
 }
+
+// TYPES
+export type TasksActionsType = typeof tasksActions

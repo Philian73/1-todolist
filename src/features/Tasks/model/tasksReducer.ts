@@ -1,6 +1,6 @@
-import { SetDeleteCreateTodoListsActionsType } from '../../TodoLists/model/todoListsReducer.ts'
+import { SetDeleteCreateTodoListsActionsType } from '../../TodoLists/model/actions.ts'
 
-import { tasksActions } from './actions.ts'
+import { TasksActionsType } from './actions.ts'
 import { TasksType } from './types.ts'
 
 const initialState = {} as TasksType
@@ -51,8 +51,6 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksTy
 }
 
 // TYPES
-type TasksActionsType = typeof tasksActions
-
 type ActionsType =
   | ReturnType<TasksActionsType[keyof TasksActionsType]>
   | SetDeleteCreateTodoListsActionsType
