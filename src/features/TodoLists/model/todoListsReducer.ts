@@ -14,24 +14,6 @@ export const todoListsReducer = (
       return state.filter(todoList => todoList.id !== action.payload.ID)
     case 'CREATE-TODOLIST':
       return [{ ...action.payload.todoList, filter: 'all' }, ...state]
-    case 'UPDATE-TITLE-TODOLIST':
-      return state.map(todoList =>
-        todoList.id === action.payload.ID
-          ? {
-              ...todoList,
-              title: action.payload.title,
-            }
-          : todoList
-      )
-    case 'UPDATE-FILTER-TODOLIST':
-      return state.map(todoList =>
-        todoList.id === action.payload.ID
-          ? {
-              ...todoList,
-              filter: action.payload.filter,
-            }
-          : todoList
-      )
     case 'UPDATE-TODOLIST':
       return state.map(todoList =>
         todoList.id === action.payload.ID ? { ...todoList, ...action.payload.data } : todoList
