@@ -17,3 +17,9 @@ export type ResponseType<D = {}> = {
   fieldsErrors: string[]
   data: D
 }
+
+export enum APIResultCodes {
+  SUCCESS = 0,
+  ERROR = 1,
+  CAPTCHA_ERROR = 10,
+}
