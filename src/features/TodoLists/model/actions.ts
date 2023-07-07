@@ -1,4 +1,4 @@
-import { FilterValuesType, TodoListType } from './types.ts'
+import { FilterValuesType, TodoListType, UpdateTodoListDomainType } from './types.ts'
 
 export const todoListsActions = {
   setTodoLists(todoLists: TodoListType[]) {
@@ -29,6 +29,12 @@ export const todoListsActions = {
     return {
       type: 'UPDATE-FILTER-TODOLIST',
       payload: { ID, filter },
+    } as const
+  },
+  updateTodoList(ID: string, data: UpdateTodoListDomainType) {
+    return {
+      type: 'UPDATE-TODOLIST',
+      payload: { ID, data },
     } as const
   },
 }
