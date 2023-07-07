@@ -1,11 +1,10 @@
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 
 import List from '@mui/material/List'
 
-import { useAppDispatch, useAppSelector } from '../../app/hooks/hooks.ts'
+import { useAppSelector } from '../../app/hooks/hooks.ts'
 import { FilterValuesType } from '../TodoLists/model/types.ts'
 
-import { tasksThunks } from './model/thunks.ts'
 import { TaskStatuses, TaskType } from './model/types.ts'
 import { Task } from './ui/Task/Task.tsx'
 
@@ -15,11 +14,6 @@ type PropsType = {
 }
 export const Tasks: FC<PropsType> = ({ todoListID, filter }) => {
   const tasks = useAppSelector<TaskType[]>(state => state.tasks[todoListID])
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch(tasksThunks.getTasks(todoListID))
-  }, [])
 
   const getTasksForRender = (tasks: TaskType[], filterValue: FilterValuesType): TaskType[] => {
     switch (filterValue) {
