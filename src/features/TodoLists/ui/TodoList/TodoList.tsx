@@ -27,7 +27,9 @@ export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
   const updateFilterTodoList = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       dispatch(
-        todoListsActions.updateFilterTodoList(todoListID, e.currentTarget.name as FilterValuesType)
+        todoListsActions.updateTodoList(todoListID, {
+          filter: e.currentTarget.name as FilterValuesType,
+        })
       )
     },
     [dispatch, todoListID]

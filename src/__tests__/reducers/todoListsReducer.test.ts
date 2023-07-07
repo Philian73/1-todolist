@@ -56,23 +56,23 @@ describe('todoListsReducer', () => {
   })
 
   it("correct todolist should change it's name", () => {
-    const newTitleTodoList = 'New TodoList'
+    const title = 'New TodoList'
 
-    const action = todoListsActions.updateTitleTodoList(todoListID_2, newTitleTodoList)
+    const action = todoListsActions.updateTodoList(todoListID_2, { title })
     const endState = todoListsReducer(initialState, action)
 
     expect(endState[0].title).toBe('What to learn')
-    expect(endState[1].title).toBe(newTitleTodoList)
+    expect(endState[1].title).toBe(title)
   })
 
   it('correct filter of todolist should be changed', () => {
-    const newTodoListFilter: FilterValuesType = 'completed'
+    const filter: FilterValuesType = 'completed'
 
-    const action = todoListsActions.updateFilterTodoList(todoListID_2, newTodoListFilter)
+    const action = todoListsActions.updateTodoList(todoListID_2, { filter })
     const endState = todoListsReducer(initialState, action)
 
     expect(endState[0].filter).toBe('all')
-    expect(endState[1].filter).toBe(newTodoListFilter)
+    expect(endState[1].filter).toBe(filter)
   })
 
   it('todoLists should be set to the state', () => {

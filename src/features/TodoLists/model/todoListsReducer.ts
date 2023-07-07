@@ -32,6 +32,10 @@ export const todoListsReducer = (
             }
           : todoList
       )
+    case 'UPDATE-TODOLIST':
+      return state.map(todoList =>
+        todoList.id === action.payload.ID ? { ...todoList, ...action.payload.data } : todoList
+      )
     default:
       return state
   }
