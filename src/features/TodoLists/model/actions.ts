@@ -1,4 +1,4 @@
-import { TodoListType, UpdateTodoListDomainType } from './types.ts'
+import { TodoListType, UpdateTodoListDomainModelType } from './types.ts'
 
 export const todoListsActions = {
   setTodoLists(todoLists: TodoListType[]) {
@@ -19,7 +19,7 @@ export const todoListsActions = {
       payload: { todoList },
     } as const
   },
-  updateTodoList(ID: string, data: UpdateTodoListDomainType) {
+  updateTodoList(ID: string, data: UpdateTodoListDomainModelType) {
     return {
       type: 'UPDATE-TODOLIST',
       payload: { ID, data },
