@@ -21,7 +21,10 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksTy
     case 'TASKS/SET-TASKS':
       return {
         ...state,
-        [action.payload.todoListID]: action.payload.tasks,
+        [action.payload.todoListID]: action.payload.tasks.map(task => ({
+          ...task,
+          entityStatus: 'idle',
+        })),
       }
     case 'TASKS/DELETE-TASK':
       return {
@@ -34,7 +37,7 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksTy
       return {
         ...state,
         [action.payload.task.todoListId]: [
-          action.payload.task,
+          { ...action.payload.task, entityStatus: 'idle' },
           ...state[action.payload.task.todoListId],
         ],
       }
