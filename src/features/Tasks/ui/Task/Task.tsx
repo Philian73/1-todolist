@@ -8,10 +8,10 @@ import ListItem from '@mui/material/ListItem'
 import { useAppDispatch } from '../../../../app/hooks/hooks.ts'
 import { EditableSpan } from '../../../../components/EditableSpan/EditableSpan.tsx'
 import { tasksThunks } from '../../model/thunks.ts'
-import { TaskStatuses, TaskType } from '../../model/types.ts'
+import { TaskDomainType, TaskStatuses } from '../../model/types.ts'
 
 type PropsType = {
-  task: TaskType
+  task: TaskDomainType
 }
 export const Task: FC<PropsType> = memo(({ task }) => {
   const dispatch = useAppDispatch()
@@ -38,6 +38,8 @@ export const Task: FC<PropsType> = memo(({ task }) => {
     [dispatch, task.todoListId, task.id]
   )
 
+  const disabledCondition = task.entityStatus === 'loading'
+
   return (
     <ListItem
       key={task.id}
@@ -45,17 +47,18 @@ export const Task: FC<PropsType> = memo(({ task }) => {
       disablePadding
       disableGutters
       secondaryAction={
-        <IconButton size="small" onClick={deleteTask}>
+        <IconButton disabled={disabledCondition} size="small" onClick={deleteTask}>
           <DeleteForeverIcon fontSize="small" />
         </IconButton>
       }
     >
       <Checkbox
+        disabled={disabledCondition}
         size="small"
         checked={task.status === TaskStatuses.Completed}
         onChange={updateStatusTask}
       />
-      <EditableSpan value={task.title} onChange={updateTitleTask} />
+      <EditableSpan disabled={disabledCondition} value={task.title} onChange={updateTitleTask} />
     </ListItem>
   )
 })
