@@ -1,5 +1,6 @@
+import { RequestStatusType } from '../../../app/model/types.ts'
+
 export type FilterValuesType = 'all' | 'active' | 'completed'
-export type RequestStatusTodoListType = 'idle' | 'loading'
 
 export type TodoListType = {
   id: string
@@ -10,7 +11,7 @@ export type TodoListType = {
 
 export type TodoListDomainType = TodoListType & {
   filter: FilterValuesType
-  entityStatus: RequestStatusTodoListType
+  entityStatus: RequestStatusType
 }
 
 export type UpdateTodoListDomainModelType = Partial<

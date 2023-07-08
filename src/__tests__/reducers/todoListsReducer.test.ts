@@ -20,6 +20,7 @@ describe('todoListsReducer', () => {
         order: -1,
         addedDate: new Date().toISOString(),
         filter: 'all',
+        entityStatus: 'idle',
       },
       {
         id: todoListID_2,
@@ -27,6 +28,7 @@ describe('todoListsReducer', () => {
         order: 0,
         addedDate: new Date().toISOString(),
         filter: 'all',
+        entityStatus: 'idle',
       },
     ]
   })

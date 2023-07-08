@@ -5,7 +5,7 @@ import List from '@mui/material/List'
 import { useAppSelector } from '../../app/hooks/hooks.ts'
 import { FilterValuesType } from '../TodoLists/model/types.ts'
 
-import { TaskStatuses, TaskType } from './model/types.ts'
+import { TaskDomainType, TaskStatuses } from './model/types.ts'
 import { Task } from './ui/Task/Task.tsx'
 
 type PropsType = {
@@ -13,9 +13,12 @@ type PropsType = {
   filter: FilterValuesType
 }
 export const Tasks: FC<PropsType> = ({ todoListID, filter }) => {
-  const tasks = useAppSelector<TaskType[]>(state => state.tasks[todoListID])
+  const tasks = useAppSelector<TaskDomainType[]>(state => state.tasks[todoListID])
 
-  const getTasksForRender = (tasks: TaskType[], filterValue: FilterValuesType): TaskType[] => {
+  const getTasksForRender = (
+    tasks: TaskDomainType[],
+    filterValue: FilterValuesType
+  ): TaskDomainType[] => {
     switch (filterValue) {
       case 'active':
         return tasks.filter(task => task.status === TaskStatuses.New)

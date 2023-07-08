@@ -27,6 +27,7 @@ describe('tasksReducer', () => {
           priority: TaskPriorities.Low,
           order: -2,
           todoListId: todoListID_1,
+          entityStatus: 'idle',
         },
         {
           id: '2',
@@ -39,6 +40,7 @@ describe('tasksReducer', () => {
           priority: TaskPriorities.Low,
           order: -1,
           todoListId: todoListID_1,
+          entityStatus: 'idle',
         },
         {
           id: '3',
@@ -51,6 +53,7 @@ describe('tasksReducer', () => {
           priority: TaskPriorities.Low,
           order: 0,
           todoListId: todoListID_1,
+          entityStatus: 'idle',
         },
       ],
       [todoListID_2]: [
@@ -65,6 +68,7 @@ describe('tasksReducer', () => {
           priority: TaskPriorities.Low,
           order: -2,
           todoListId: todoListID_2,
+          entityStatus: 'idle',
         },
         {
           id: '2',
@@ -77,6 +81,7 @@ describe('tasksReducer', () => {
           priority: TaskPriorities.Low,
           order: -1,
           todoListId: todoListID_2,
+          entityStatus: 'idle',
         },
         {
           id: '3',
@@ -89,6 +94,7 @@ describe('tasksReducer', () => {
           priority: TaskPriorities.Low,
           order: 0,
           todoListId: todoListID_2,
+          entityStatus: 'idle',
         },
       ],
     }
