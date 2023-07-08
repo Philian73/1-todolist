@@ -5,12 +5,15 @@ import TextField from '@mui/material/TextField'
 type PropsType = {
   value: string
   onChange: (value: string) => void
+  disabled?: boolean
 }
-export const EditableSpan: FC<PropsType> = memo(({ value, onChange }) => {
+export const EditableSpan: FC<PropsType> = memo(({ value, onChange, disabled }) => {
   const [inputValue, setInputValue] = useState('')
   const [editMode, setEditMode] = useState(false)
 
   const activateEditMode = () => {
+    if (disabled) return
+
     setEditMode(true)
     setInputValue(value)
   }
