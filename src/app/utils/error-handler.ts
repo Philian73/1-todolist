@@ -10,13 +10,10 @@ export const errorAPIHandler = <D>(data: ResponseType<D>, dispatch: AppDispatchT
 }
 
 export const handlerServerNetworkError = (error: unknown, dispatch: AppDispatchType) => {
-  const errors = error as Error | AxiosError
-
-  if (isAxiosError(error)) {
-    dispatch(appActions.setAppError(errors.message))
+  if (isAxiosError<AxiosError>(error) && error.response) {
+    dispatch(appActions.setAppError(error.response.data.message))
   } else {
-    alert(error)
+    dispatch(appActions.setAppError((error as Error).message))
   }
-
   dispatch(appActions.setAppStatus('failed'))
 }
