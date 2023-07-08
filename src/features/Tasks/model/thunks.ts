@@ -2,6 +2,7 @@ import { APIResultCodes } from '../../../app/api/api.ts'
 import { appActions } from '../../../app/model/actions.ts'
 import { AppThunkType } from '../../../app/store/store.ts'
 import { errorAPIHandler, handlerServerNetworkError } from '../../../app/utils/error-handler.ts'
+import { todoListsActions } from '../../TodoLists/model/actions.ts'
 import { tasksAPI } from '../api/tasksAPI.ts'
 
 import { tasksActions } from './actions.ts'
@@ -35,6 +36,7 @@ export const tasksThunks = {
   createTask(todoListID: string, title: string): AppThunkType {
     return async dispatch => {
       dispatch(appActions.setAppStatus('loading'))
+      dispatch(todoListsActions.updateTodoList(todoListID, { entityStatus: 'loading' }))
       try {
         const response = await tasksAPI.createTask(todoListID, title)
 
@@ -46,6 +48,8 @@ export const tasksThunks = {
         }
       } catch (error) {
         handlerServerNetworkError(error, dispatch)
+      } finally {
+        dispatch(todoListsActions.updateTodoList(todoListID, { entityStatus: 'idle' }))
       }
     }
   },

@@ -1,3 +1,5 @@
+import { RequestStatusType } from '../../../app/model/types.ts'
+
 import { TaskType, UpdateTaskModelType } from './types.ts'
 
 export const tasksActions = {
@@ -5,6 +7,12 @@ export const tasksActions = {
     return {
       type: 'TASKS/SET-TASKS',
       payload: { todoListID, tasks },
+    } as const
+  },
+  setStatusTasks(todoListID: string, entityStatus: RequestStatusType) {
+    return {
+      type: 'TASKS/SET-STATUS-TASKS',
+      payload: { todoListID, entityStatus },
     } as const
   },
   deleteTask(todoListID: string, taskID: string) {
