@@ -1,3 +1,5 @@
+import { RequestStatusType } from '../../../app/model/types.ts'
+
 export enum TaskStatuses {
   New = 0,
   InProgress = 1,
@@ -26,8 +28,12 @@ export type TaskType = {
   todoListId: string
 }
 
-export type UpdateTaskModelType = Omit<TaskType, 'id' | 'todoListId' | 'addedDate' | 'order'>
+export type TaskDomainType = TaskType & {
+  entityStatus: RequestStatusType
+}
+
+export type UpdateTaskModelType = Omit<TaskDomainType, 'id' | 'todoListId' | 'addedDate' | 'order'>
 
 export type TasksType = {
-  [key: string]: TaskType[]
+  [key: string]: TaskDomainType[]
 }
