@@ -53,20 +53,21 @@ export const TodoList: FC<PropsType> = memo(({ todoList }) => {
 
   const getFilterClasses = (value: FilterValuesType) =>
     todoList.filter === value ? 'outlined' : 'text'
+  const disabledCondition = todoList.entityStatus === 'loading'
 
   return (
     <div className={s.todoList}>
       <Typography fontSize="x-large" variant="h2" fontWeight="bold" sx={{ mb: '15px', ml: '5px' }}>
-        <EditableSpan value={todoList.title} onChange={updateTitleTodoList} />
-        <IconButton
-          disabled={todoList.entityStatus === 'loading'}
-          sx={{ ml: '15px' }}
-          onClick={deleteTodoList}
-        >
+        <EditableSpan
+          disabled={disabledCondition}
+          value={todoList.title}
+          onChange={updateTitleTodoList}
+        />
+        <IconButton disabled={disabledCondition} sx={{ ml: '15px' }} onClick={deleteTodoList}>
           <DeleteForeverIcon />
         </IconButton>
       </Typography>
-      <AddItemForm addItem={createTask} disabled={todoList.entityStatus === 'loading'} />
+      <AddItemForm addItem={createTask} disabled={disabledCondition} />
       <Tasks todoListID={todoList.id} filter={todoList.filter} />
       <div className={s.todoListControls}>
         <Button
