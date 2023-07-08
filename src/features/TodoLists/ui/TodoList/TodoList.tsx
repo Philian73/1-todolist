@@ -12,59 +12,62 @@ import { tasksThunks } from '../../../Tasks/model/thunks.ts'
 import { Tasks } from '../../../Tasks/Tasks.tsx'
 import { todoListsActions } from '../../model/actions.ts'
 import { todoListsThunks } from '../../model/thunks.ts'
-import { FilterValuesType } from '../../model/types.ts'
+import { FilterValuesType, TodoListDomainType } from '../../model/types.ts'
 
 import s from './TodoList.module.css'
 
 type PropsType = {
-  todoListID: string
-  title: string
-  filter: FilterValuesType
+  todoList: TodoListDomainType
 }
-export const TodoList: FC<PropsType> = memo(({ todoListID, title, filter }) => {
+export const TodoList: FC<PropsType> = memo(({ todoList }) => {
   const dispatch = useAppDispatch()
 
   const updateFilterTodoList = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       dispatch(
-        todoListsActions.updateTodoList(todoListID, {
+        todoListsActions.updateTodoList(todoList.id, {
           filter: e.currentTarget.name as FilterValuesType,
         })
       )
     },
-    [dispatch, todoListID]
+    [dispatch, todoList.id]
   )
 
   const updateTitleTodoList = useCallback(
     (title: string) => {
-      dispatch(todoListsThunks.updateTitleTodoList(todoListID, title))
+      dispatch(todoListsThunks.updateTitleTodoList(todoList.id, title))
     },
-    [dispatch, todoListID]
+    [dispatch, todoList.id]
   )
 
   const deleteTodoList = useCallback(() => {
-    dispatch(todoListsThunks.deleteTodoList(todoListID))
-  }, [dispatch, todoListID])
+    dispatch(todoListsThunks.deleteTodoList(todoList.id))
+  }, [dispatch, todoList.id])
 
   const createTask = useCallback(
     (title: string) => {
-      dispatch(tasksThunks.createTask(todoListID, title))
+      dispatch(tasksThunks.createTask(todoList.id, title))
     },
-    [dispatch, todoListID]
+    [dispatch, todoList.id]
   )
 
-  const getFilterClasses = (value: FilterValuesType) => (filter === value ? 'outlined' : 'text')
+  const getFilterClasses = (value: FilterValuesType) =>
+    todoList.filter === value ? 'outlined' : 'text'
 
   return (
     <div className={s.todoList}>
       <Typography fontSize="x-large" variant="h2" fontWeight="bold" sx={{ mb: '15px', ml: '5px' }}>
-        <EditableSpan value={title} onChange={updateTitleTodoList} />
-        <IconButton sx={{ ml: '15px' }} onClick={deleteTodoList}>
+        <EditableSpan value={todoList.title} onChange={updateTitleTodoList} />
+        <IconButton
+          disabled={todoList.entityStatus === 'loading'}
+          sx={{ ml: '15px' }}
+          onClick={deleteTodoList}
+        >
           <DeleteForeverIcon />
         </IconButton>
       </Typography>
-      <AddItemForm addItem={createTask} />
-      <Tasks todoListID={todoListID} filter={filter} />
+      <AddItemForm addItem={createTask} disabled={todoList.entityStatus === 'loading'} />
+      <Tasks todoListID={todoList.id} filter={todoList.filter} />
       <div className={s.todoListControls}>
         <Button
           name="all"
