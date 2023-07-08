@@ -6,8 +6,9 @@ import TextField from '@mui/material/TextField'
 
 type PropsType = {
   addItem: (title: string) => void
+  disabled?: boolean
 }
-export const AddItemForm: FC<PropsType> = memo(({ addItem }) => {
+export const AddItemForm: FC<PropsType> = memo(({ addItem, disabled }) => {
   const [title, setTitle] = useState('')
   const [error, setError] = useState<string | null>(null)
 
@@ -33,6 +34,7 @@ export const AddItemForm: FC<PropsType> = memo(({ addItem }) => {
   return (
     <div>
       <TextField
+        disabled={disabled}
         variant="outlined"
         size="small"
         label={inputPlaceholder}
@@ -42,10 +44,10 @@ export const AddItemForm: FC<PropsType> = memo(({ addItem }) => {
         onKeyDown={onKeyDownHandler}
       />
       <IconButton
+        disabled={disabled || !title.trim().length}
         color="primary"
         size="small"
         onClick={addItemCallback}
-        disabled={!title.trim().length}
       >
         <AddBoxIcon />
       </IconButton>
