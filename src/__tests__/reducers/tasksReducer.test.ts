@@ -159,6 +159,19 @@ describe('tasksReducer', () => {
     expect(endState[todoListID_2][1].status).toBe(TaskStatuses.New)
   })
 
+  it('entityStatus of specified task should be changed', () => {
+    const task = initialState[todoListID_2]['2']
+
+    const action = tasksActions.updateTask(todoListID_2, '2', {
+      ...task,
+      entityStatus: 'loading',
+    })
+    const endState = tasksReducer(initialState, action)
+
+    expect(endState[todoListID_1][1].entityStatus).toBe('idle')
+    expect(endState[todoListID_2][1].entityStatus).toBe('loading')
+  })
+
   it('property with todolistId should be deleted', () => {
     const action = todoListsActions.deleteTodoList(todoListID_2)
     const endState = tasksReducer(initialState, action)
