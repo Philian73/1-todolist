@@ -39,6 +39,8 @@ export const Task: FC<PropsType> = memo(({ task, status }) => {
     [dispatch, task.todoListId, task.id]
   )
 
+  const disabledCondition = status || task.entityStatus === 'loading'
+
   return (
     <ListItem
       key={task.id}
@@ -46,22 +48,18 @@ export const Task: FC<PropsType> = memo(({ task, status }) => {
       disablePadding
       disableGutters
       secondaryAction={
-        <IconButton
-          disabled={status || task.entityStatus === 'loading'}
-          size="small"
-          onClick={deleteTask}
-        >
+        <IconButton disabled={disabledCondition} size="small" onClick={deleteTask}>
           <DeleteForeverIcon fontSize="small" />
         </IconButton>
       }
     >
       <Checkbox
-        disabled={status || task.entityStatus === 'loading'}
+        disabled={disabledCondition}
         size="small"
         checked={task.status === TaskStatuses.Completed}
         onChange={updateStatusTask}
       />
-      <EditableSpan disabled={status} value={task.title} onChange={updateTitleTask} />
+      <EditableSpan disabled={disabledCondition} value={task.title} onChange={updateTitleTask} />
     </ListItem>
   )
 })
