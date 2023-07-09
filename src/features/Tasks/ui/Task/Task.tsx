@@ -46,13 +46,17 @@ export const Task: FC<PropsType> = memo(({ task, status }) => {
       disablePadding
       disableGutters
       secondaryAction={
-        <IconButton disabled={status} size="small" onClick={deleteTask}>
+        <IconButton
+          disabled={status || task.entityStatus === 'loading'}
+          size="small"
+          onClick={deleteTask}
+        >
           <DeleteForeverIcon fontSize="small" />
         </IconButton>
       }
     >
       <Checkbox
-        disabled={status}
+        disabled={status || task.entityStatus === 'loading'}
         size="small"
         checked={task.status === TaskStatuses.Completed}
         onChange={updateStatusTask}
