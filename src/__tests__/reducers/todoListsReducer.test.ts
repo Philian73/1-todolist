@@ -77,6 +77,13 @@ describe('todoListsReducer', () => {
     expect(endState[1].filter).toBe(filter)
   })
 
+  it('correct entityStatus of todoList should be changed', () => {
+    const action = todoListsActions.updateTodoList(todoListID_2, { entityStatus: 'loading' })
+    const endState = todoListsReducer(initialState, action)
+
+    expect(endState[1].entityStatus).toBe('loading')
+  })
+
   it('todoLists should be set to the state', () => {
     const action = todoListsActions.setTodoLists(initialState)
     const endState = todoListsReducer([], action)
