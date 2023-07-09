@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, memo } from 'react'
 
 import List from '@mui/material/List'
 
@@ -13,7 +13,7 @@ type PropsType = {
   filter: FilterValuesType
   todoListStatus: boolean
 }
-export const Tasks: FC<PropsType> = ({ todoListID, filter, todoListStatus }) => {
+export const Tasks: FC<PropsType> = memo(({ todoListID, filter, todoListStatus }) => {
   const tasks = useAppSelector<TaskDomainType[]>(state => state.tasks[todoListID])
 
   const getTasksForRender = (
@@ -35,4 +35,4 @@ export const Tasks: FC<PropsType> = ({ todoListID, filter, todoListStatus }) => 
   })
 
   return <List>{tasksMap}</List>
-}
+})
