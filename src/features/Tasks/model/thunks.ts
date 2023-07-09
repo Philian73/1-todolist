@@ -78,7 +78,7 @@ export const tasksThunks = {
           dispatch(tasksActions.updateTask(todoListID, taskID, model))
           dispatch(appActions.setAppStatus('succeeded'))
         } else {
-          errorAPIHandler(response.data, dispatch)
+          errorAPIHandler<{ item: TaskType }>(response.data, dispatch)
         }
       } catch (error) {
         handlerServerNetworkError(error, dispatch)
