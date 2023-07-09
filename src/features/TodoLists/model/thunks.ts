@@ -16,8 +16,8 @@ export const todoListsThunks = {
       try {
         const response = await todoListsAPI.getTodoLists()
 
-        dispatch(appActions.setAppStatus('succeeded'))
         dispatch(todoListsActions.setTodoLists(response.data))
+        dispatch(appActions.setAppStatus('succeeded'))
 
         response.data.forEach(todoList => {
           dispatch(tasksThunks.getTasks(todoList.id))
