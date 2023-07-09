@@ -12,8 +12,9 @@ import { TaskDomainType, TaskStatuses } from '../../model/types.ts'
 
 type PropsType = {
   task: TaskDomainType
+  status: boolean
 }
-export const Task: FC<PropsType> = memo(({ task }) => {
+export const Task: FC<PropsType> = memo(({ task, status }) => {
   const dispatch = useAppDispatch()
 
   const deleteTask = useCallback(() => {
@@ -38,8 +39,6 @@ export const Task: FC<PropsType> = memo(({ task }) => {
     [dispatch, task.todoListId, task.id]
   )
 
-  const disabledCondition = task.entityStatus === 'loading'
-
   return (
     <ListItem
       key={task.id}
@@ -47,18 +46,18 @@ export const Task: FC<PropsType> = memo(({ task }) => {
       disablePadding
       disableGutters
       secondaryAction={
-        <IconButton disabled={disabledCondition} size="small" onClick={deleteTask}>
+        <IconButton disabled={status} size="small" onClick={deleteTask}>
           <DeleteForeverIcon fontSize="small" />
         </IconButton>
       }
     >
       <Checkbox
-        disabled={disabledCondition}
+        disabled={status}
         size="small"
         checked={task.status === TaskStatuses.Completed}
         onChange={updateStatusTask}
       />
-      <EditableSpan disabled={disabledCondition} value={task.title} onChange={updateTitleTask} />
+      <EditableSpan disabled={status} value={task.title} onChange={updateTitleTask} />
     </ListItem>
   )
 })

@@ -11,8 +11,9 @@ import { Task } from './ui/Task/Task.tsx'
 type PropsType = {
   todoListID: string
   filter: FilterValuesType
+  todoListStatus: boolean
 }
-export const Tasks: FC<PropsType> = ({ todoListID, filter }) => {
+export const Tasks: FC<PropsType> = ({ todoListID, filter, todoListStatus }) => {
   const tasks = useAppSelector<TaskDomainType[]>(state => state.tasks[todoListID])
 
   const getTasksForRender = (
@@ -30,7 +31,7 @@ export const Tasks: FC<PropsType> = ({ todoListID, filter }) => {
   }
 
   const tasksMap = getTasksForRender(tasks, filter).map(task => {
-    return <Task key={task.id} task={task} />
+    return <Task key={task.id} task={task} status={todoListStatus} />
   })
 
   return <List>{tasksMap}</List>

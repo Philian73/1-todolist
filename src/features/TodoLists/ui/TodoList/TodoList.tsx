@@ -65,7 +65,7 @@ export const TodoList: FC<PropsType> = memo(({ todoList }) => {
         </IconButton>
       </Typography>
       <AddItemForm addItem={createTask} disabled={disabledCondition} />
-      <Tasks todoListID={id} filter={filter} />
+      <Tasks todoListID={id} filter={filter} todoListStatus={disabledCondition} />
       <div className={s.todoListControls}>
         <Button
           name="all"
