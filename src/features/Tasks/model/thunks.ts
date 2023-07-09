@@ -72,10 +72,14 @@ export const tasksThunks = {
           ...data,
         }
 
-        await tasksAPI.updateTask(todoListID, taskID, model)
+        const response = await tasksAPI.updateTask(todoListID, taskID, model)
 
-        dispatch(tasksActions.updateTask(todoListID, taskID, model))
-        dispatch(appActions.setAppStatus('succeeded'))
+        if (response.data.resultCode === APIResultCodes.SUCCESS) {
+          dispatch(tasksActions.updateTask(todoListID, taskID, model))
+          dispatch(appActions.setAppStatus('succeeded'))
+        } else {
+          errorAPIHandler(response.data, dispatch)
+        }
       } catch (error) {
         handlerServerNetworkError(error, dispatch)
       } finally {
