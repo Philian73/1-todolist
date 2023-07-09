@@ -2,7 +2,6 @@ import { APIResultCodes } from '../../../app/api/api.ts'
 import { appActions } from '../../../app/model/actions.ts'
 import { AppThunkType } from '../../../app/store/store.ts'
 import { errorAPIHandler, handlerServerNetworkError } from '../../../app/utils/error-handler.ts'
-import { tasksActions } from '../../Tasks/model/actions.ts'
 import { tasksThunks } from '../../Tasks/model/thunks.ts'
 import { todoListsAPI } from '../api/todoListsAPI.ts'
 
@@ -32,7 +31,6 @@ export const todoListsThunks = {
     return async dispatch => {
       dispatch(appActions.setAppStatus('loading'))
       dispatch(todoListsActions.updateTodoList(ID, { entityStatus: 'loading' }))
-      dispatch(tasksActions.setStatusTasks(ID, 'loading'))
 
       try {
         await todoListsAPI.deleteTodoList(ID)
@@ -43,7 +41,6 @@ export const todoListsThunks = {
         handlerServerNetworkError(error, dispatch)
       } finally {
         dispatch(todoListsActions.updateTodoList(ID, { entityStatus: 'idle' }))
-        dispatch(tasksActions.setStatusTasks(ID, 'idle'))
       }
     }
   },
