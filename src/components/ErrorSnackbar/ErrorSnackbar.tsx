@@ -1,27 +1,30 @@
-import { SyntheticEvent, forwardRef, useState } from 'react'
+import { SyntheticEvent, forwardRef } from 'react'
 
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 
-const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
-})
+import { useAppDispatch, useAppSelector } from '../../app/hooks/hooks.ts'
+import { appActions } from '../../app/model/actions.ts'
 
-export function ErrorSnackbar() {
-  const [open, setOpen] = useState(true)
+const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
+  <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
+))
+
+export const ErrorSnackbar = () => {
+  const error = useAppSelector<string | null>(state => state.app.error)
+  const dispatch = useAppDispatch()
 
   // @ts-ignore
   const handleClose = (event?: SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return
-    }
-    setOpen(false)
+    if (reason === 'clickaway') return
+
+    dispatch(appActions.setAppError(null))
   }
 
   return (
-    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+    <Snackbar open={!!error} autoHideDuration={6000} onClose={handleClose}>
       <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
-        Error message 😠
+        {error}
       </Alert>
     </Snackbar>
   )
