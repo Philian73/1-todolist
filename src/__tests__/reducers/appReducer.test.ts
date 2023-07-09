@@ -21,4 +21,11 @@ describe('appReducer', () => {
 
     expect(endState.error).toBe(errorMessage)
   })
+
+  it('correct status should be set', () => {
+    const action = appActions.setAppStatus('loading')
+    const endState = appReducer(initialState, action)
+
+    expect(endState.status).toBe('loading')
+  })
 })
