@@ -22,53 +22,50 @@ type PropsType = {
 export const TodoList: FC<PropsType> = memo(({ todoList }) => {
   const dispatch = useAppDispatch()
 
+  const { id, title, filter, entityStatus } = todoList
+
   const updateFilterTodoList = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       dispatch(
-        todoListsActions.updateTodoList(todoList.id, {
+        todoListsActions.updateTodoList(id, {
           filter: e.currentTarget.name as FilterValuesType,
         })
       )
     },
-    [dispatch, todoList.id]
+    [dispatch, id]
   )
 
   const updateTitleTodoList = useCallback(
     (title: string) => {
-      dispatch(todoListsThunks.updateTitleTodoList(todoList.id, title))
+      dispatch(todoListsThunks.updateTitleTodoList(id, title))
     },
-    [dispatch, todoList.id]
+    [dispatch, id]
   )
 
   const deleteTodoList = useCallback(() => {
-    dispatch(todoListsThunks.deleteTodoList(todoList.id))
-  }, [dispatch, todoList.id])
+    dispatch(todoListsThunks.deleteTodoList(id))
+  }, [dispatch, id])
 
   const createTask = useCallback(
     (title: string) => {
-      dispatch(tasksThunks.createTask(todoList.id, title))
+      dispatch(tasksThunks.createTask(id, title))
     },
-    [dispatch, todoList.id]
+    [dispatch, id]
   )
 
-  const getFilterClasses = (value: FilterValuesType) =>
-    todoList.filter === value ? 'outlined' : 'text'
-  const disabledCondition = todoList.entityStatus === 'loading'
+  const getFilterClasses = (value: FilterValuesType) => (filter === value ? 'outlined' : 'text')
+  const disabledCondition = entityStatus === 'loading'
 
   return (
     <div className={s.todoList}>
       <Typography fontSize="x-large" variant="h2" fontWeight="bold" sx={{ mb: '15px', ml: '5px' }}>
-        <EditableSpan
-          disabled={disabledCondition}
-          value={todoList.title}
-          onChange={updateTitleTodoList}
-        />
+        <EditableSpan disabled={disabledCondition} value={title} onChange={updateTitleTodoList} />
         <IconButton disabled={disabledCondition} sx={{ ml: '15px' }} onClick={deleteTodoList}>
           <DeleteForeverIcon />
         </IconButton>
       </Typography>
       <AddItemForm addItem={createTask} disabled={disabledCondition} />
-      <Tasks todoListID={todoList.id} filter={todoList.filter} />
+      <Tasks todoListID={id} filter={filter} />
       <div className={s.todoListControls}>
         <Button
           name="all"
