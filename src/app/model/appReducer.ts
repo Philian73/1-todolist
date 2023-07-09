@@ -18,5 +18,5 @@ export const appReducer = (state = initialState, action: ActionsType): InitialSt
 }
 
 // TYPES
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 type ActionsType = ReturnType<AppActionsType[keyof AppActionsType]>
