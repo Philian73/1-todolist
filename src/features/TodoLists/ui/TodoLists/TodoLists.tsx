@@ -4,13 +4,12 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 
-import { useAppDispatch, useAppSelector } from '../../app/hooks/hooks.ts'
-import { RequestStatusType } from '../../app/model/types.ts'
-import { AddItemForm } from '../../components/AddItemForm/AddItemForm.tsx'
-
-import { todoListsThunks } from './model/thunks.ts'
-import { TodoListDomainType } from './model/types.ts'
-import { TodoList } from './ui/TodoList/TodoList.tsx'
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks/hooks.ts'
+import { RequestStatusType } from '../../../../app/model/types.ts'
+import { AddItemForm } from '../../../../components/AddItemForm/AddItemForm.tsx'
+import { todoListsThunks } from '../../model/thunks.ts'
+import { TodoListDomainType } from '../../model/types.ts'
+import { TodoList } from '../TodoList/TodoList.tsx'
 
 export const TodoLists = () => {
   const status = useAppSelector<RequestStatusType>(state => state.app.status)
