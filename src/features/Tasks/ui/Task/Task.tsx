@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton'
 import ListItem from '@mui/material/ListItem'
 
 import { useAppDispatch } from '../../../../app/hooks/hooks.ts'
-import { EditableSpan } from '../../../../components/EditableSpan/EditableSpan.tsx'
+import { EditableSpan } from '../../../../components'
 import { tasksThunks } from '../../model/thunks.ts'
 import { TaskDomainType, TaskStatuses } from '../../model/types.ts'
 
