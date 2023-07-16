@@ -6,7 +6,7 @@ import Paper from '@mui/material/Paper'
 
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks/hooks.ts'
 import { RequestStatusType } from '../../../../app/model/types.ts'
-import { AddItemForm } from '../../../../components/AddItemForm/AddItemForm.tsx'
+import { AddItemForm } from '../../../../components'
 import { todoListsThunks } from '../../model/thunks.ts'
 import { TodoListDomainType } from '../../model/types.ts'
 import { TodoList } from '../TodoList/TodoList.tsx'
