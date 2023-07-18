@@ -40,9 +40,17 @@ export const Login = () => {
               <p>Password: free</p>
             </FormLabel>
             <FormGroup>
-              <TextField label="Email" margin="normal" />
-              <TextField type="password" label="Password" margin="normal" />
-              <FormControlLabel label={'Remember me'} control={<Checkbox />} />
+              <TextField label="Email" margin="normal" {...formik.getFieldProps('email')} />
+              <TextField
+                type="password"
+                label="Password"
+                margin="normal"
+                {...formik.getFieldProps('password')}
+              />
+              <FormControlLabel
+                label={'Remember me'}
+                control={<Checkbox {...formik.getFieldProps('rememberMe')} />}
+              />
               <Button type={'submit'} variant={'contained'} color={'primary'}>
                 Login
               </Button>
