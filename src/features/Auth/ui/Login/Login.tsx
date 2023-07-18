@@ -6,8 +6,18 @@ import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
+import { useFormik } from 'formik'
 
 export const Login = () => {
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
+    onSubmit: values => alert(JSON.stringify(values)),
+  })
+
   return (
     <Grid container justifyContent={'center'}>
       <Grid item justifyContent={'center'}>
