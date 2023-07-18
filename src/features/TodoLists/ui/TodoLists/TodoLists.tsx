@@ -1,6 +1,5 @@
 import { useCallback, useEffect } from 'react'
 
-import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 
@@ -39,13 +38,13 @@ export const TodoLists = () => {
   })
 
   return (
-    <Container fixed>
+    <>
       <Grid container style={{ padding: '20px' }}>
         <AddItemForm addItem={createTodoList} disabled={status === 'loading'} />
       </Grid>
       <Grid container spacing={3}>
         {todoListsMap}
       </Grid>
-    </Container>
+    </>
   )
 }
