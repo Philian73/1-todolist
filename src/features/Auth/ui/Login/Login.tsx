@@ -6,7 +6,9 @@ import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
+import * as Yup from 'yup'
 
 export const Login = () => {
   const formik = useFormik({
@@ -15,8 +17,14 @@ export const Login = () => {
       password: '',
       rememberMe: false,
     },
+    validationSchema: Yup.object({
+      email: Yup.string().email('Invalid email address').required('Required'),
+      password: Yup.string().min(4, 'Must be at least 4 characters long').required('Required'),
+    }),
     onSubmit: values => alert(JSON.stringify(values)),
   })
+
+  console.log(formik.errors)
 
   return (
     <Grid container justifyContent={'center'}>
@@ -40,18 +48,39 @@ export const Login = () => {
               <p>Password: free</p>
             </FormLabel>
             <FormGroup>
-              <TextField label="Email" margin="normal" {...formik.getFieldProps('email')} />
+              <TextField
+                label="Email"
+                margin="normal"
+                error={!!formik.errors.email}
+                {...formik.getFieldProps('email')}
+              />
+              {formik.touched.email && formik.errors.email && (
+                <Typography fontWeight={500} variant="overline" color="error">
+                  {formik.errors.email}
+                </Typography>
+              )}
               <TextField
                 type="password"
                 label="Password"
                 margin="normal"
+                error={!!formik.errors.password}
                 {...formik.getFieldProps('password')}
               />
+              {formik.touched.password && formik.errors.password && (
+                <Typography variant="overline" color="error">
+                  {formik.errors.password}
+                </Typography>
+              )}
               <FormControlLabel
-                label={'Remember me'}
-                control={<Checkbox {...formik.getFieldProps('rememberMe')} />}
+                label="Remember me"
+                control={
+                  <Checkbox
+                    {...formik.getFieldProps('rememberMe')}
+                    checked={formik.values.rememberMe}
+                  />
+                }
               />
-              <Button type={'submit'} variant={'contained'} color={'primary'}>
+              <Button disabled={!formik.isValid} type="submit" variant="contained" color="primary">
                 Login
               </Button>
             </FormGroup>
