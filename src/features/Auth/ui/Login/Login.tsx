@@ -21,10 +21,10 @@ export const Login = () => {
       email: Yup.string().email('Invalid email address').required('Required'),
       password: Yup.string().min(4, 'Must be at least 4 characters long').required('Required'),
     }),
-    onSubmit: values => alert(JSON.stringify(values)),
+    onSubmit: () => {
+      formik.resetForm()
+    },
   })
-
-  console.log(formik.errors)
 
   return (
     <Grid container justifyContent={'center'}>
@@ -51,26 +51,26 @@ export const Login = () => {
               <TextField
                 label="Email"
                 margin="normal"
-                error={!!formik.errors.email}
+                error={formik.touched.email && !!formik.errors.email}
                 {...formik.getFieldProps('email')}
               />
-              {formik.touched.email && formik.errors.email && (
+              {formik.touched.email && formik.errors.email ? (
                 <Typography fontWeight={500} variant="overline" color="error">
                   {formik.errors.email}
                 </Typography>
-              )}
+              ) : null}
               <TextField
                 type="password"
                 label="Password"
                 margin="normal"
-                error={!!formik.errors.password}
+                error={formik.touched.password && !!formik.errors.password}
                 {...formik.getFieldProps('password')}
               />
-              {formik.touched.password && formik.errors.password && (
+              {formik.touched.password && formik.errors.password ? (
                 <Typography variant="overline" color="error">
                   {formik.errors.password}
                 </Typography>
-              )}
+              ) : null}
               <FormControlLabel
                 label="Remember me"
                 control={
