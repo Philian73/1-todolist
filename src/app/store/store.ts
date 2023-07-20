@@ -1,6 +1,7 @@
 import { AnyAction, applyMiddleware, combineReducers, compose, legacy_createStore } from 'redux'
 import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
+import { authReducer } from '../../features/Auth/model/authReducer.ts'
 import { tasksReducer } from '../../features/Tasks/model/tasksReducer.ts'
 import { todoListsReducer } from '../../features/TodoLists/model/todoListsReducer.ts'
 import { appReducer } from '../model/appReducer.ts'
@@ -23,6 +24,7 @@ export type AppThunkType<ReturnType = void> = ThunkAction<
 
 const rootReducer = combineReducers({
   app: appReducer,
+  auth: authReducer,
   tasks: tasksReducer,
   todoLists: todoListsReducer,
 })
