@@ -11,6 +11,7 @@ import { useAppSelector } from '../../app/hooks/hooks.ts'
 import { RequestStatusType } from '../../app/model/types.ts'
 
 export const ButtonAppBar = () => {
+  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const status = useAppSelector<RequestStatusType>(state => state.app.status)
 
   return (
@@ -23,7 +24,7 @@ export const ButtonAppBar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             TodoList
           </Typography>
-          <Button color="inherit">Login</Button>
+          {isLoggedIn && <Button color="inherit">Log Out</Button>}
         </Toolbar>
       </AppBar>
       {status === 'loading' && (
