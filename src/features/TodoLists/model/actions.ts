@@ -25,11 +25,16 @@ export const todoListsActions = {
       payload: { ID, data },
     } as const
   },
+  clearTodoLists() {
+    return {
+      type: 'TODOLISTS/CLEAR-TODOLISTS',
+    } as const
+  },
 }
 
 // TYPES
 export type TodoListsActionsType = typeof todoListsActions
 
-export type SetDeleteCreateTodoListsActionsType = ReturnType<
-  TodoListsActionsType['createTodoList' | 'deleteTodoList' | 'setTodoLists']
+export type SetDeleteCreateClearTodoListsActionsType = ReturnType<
+  TodoListsActionsType['createTodoList' | 'deleteTodoList' | 'setTodoLists' | 'clearTodoLists']
 >

@@ -22,6 +22,8 @@ export const todoListsReducer = (
       return state.map(todoList =>
         todoList.id === action.payload.ID ? { ...todoList, ...action.payload.data } : todoList
       )
+    case 'TODOLISTS/CLEAR-TODOLISTS':
+      return []
     default:
       return state
   }

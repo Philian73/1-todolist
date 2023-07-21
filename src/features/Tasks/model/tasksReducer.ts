@@ -1,4 +1,4 @@
-import { SetDeleteCreateTodoListsActionsType } from '../../TodoLists/model/actions.ts'
+import { SetDeleteCreateClearTodoListsActionsType } from '../../TodoLists/model/actions.ts'
 
 import { TasksActionsType } from './actions.ts'
 import { TasksType } from './types.ts'
@@ -18,6 +18,8 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksTy
     }
     case 'TODOLISTS/CREATE-TODOLIST':
       return { ...state, [action.payload.todoList.id]: [] }
+    case 'TODOLISTS/CLEAR-TODOLISTS':
+      return {}
     case 'TASKS/SET-TASKS':
       return {
         ...state,
@@ -56,4 +58,4 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksTy
 // TYPES
 type ActionsType =
   | ReturnType<TasksActionsType[keyof TasksActionsType]>
-  | SetDeleteCreateTodoListsActionsType
+  | SetDeleteCreateClearTodoListsActionsType
