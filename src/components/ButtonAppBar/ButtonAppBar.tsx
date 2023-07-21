@@ -7,12 +7,17 @@ import LinearProgress from '@mui/material/LinearProgress'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 
-import { useAppSelector } from '../../app/hooks/hooks.ts'
+import { useAppDispatch, useAppSelector } from '../../app/hooks/hooks.ts'
 import { RequestStatusType } from '../../app/model/types.ts'
+import { authThunks } from '../../features/Auth/model/thunks.ts'
 
 export const ButtonAppBar = () => {
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const status = useAppSelector<RequestStatusType>(state => state.app.status)
+
+  const dispatch = useAppDispatch()
+
+  const logout = () => dispatch(authThunks.logout())
 
   return (
     <Box sx={{ flexGrow: 1, position: 'relative' }}>
@@ -24,7 +29,11 @@ export const ButtonAppBar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             TodoList
           </Typography>
-          {isLoggedIn && <Button color="inherit">Log Out</Button>}
+          {isLoggedIn && (
+            <Button color="inherit" onClick={logout}>
+              Log Out
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
       {status === 'loading' && (
