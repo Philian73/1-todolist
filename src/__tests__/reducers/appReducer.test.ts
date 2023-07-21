@@ -8,6 +8,7 @@ describe('appReducer', () => {
 
   beforeEach(() => {
     initialState = {
+      isInitialized: false,
       status: 'idle',
       error: null,
     }
@@ -27,5 +28,12 @@ describe('appReducer', () => {
     const endState = appReducer(initialState, action)
 
     expect(endState.status).toBe('loading')
+  })
+
+  it('correct isInitialized should be set', () => {
+    const action = appActions.setAppIsInitialized(true)
+    const endState = appReducer(initialState, action)
+
+    expect(endState.isInitialized).toBeTruthy()
   })
 })
