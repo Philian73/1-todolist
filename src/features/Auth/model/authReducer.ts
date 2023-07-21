@@ -13,5 +13,5 @@ export const authReducer = (state = initialState, action: ActionsType): InitialS
   }
 }
 
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 type ActionsType = ReturnType<AuthActionsType[keyof AuthActionsType]>
