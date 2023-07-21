@@ -13,6 +13,12 @@ export const appActions = {
       payload: { error },
     } as const
   },
+  setAppIsInitialized(value: boolean) {
+    return {
+      type: 'APP/SET-IS-INITIALIZED',
+      payload: { value },
+    } as const
+  },
 }
 
 // TYPES

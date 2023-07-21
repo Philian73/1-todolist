@@ -2,6 +2,7 @@ import { AppActionsType } from './actions.ts'
 import { RequestStatusType } from './types.ts'
 
 const initialState = {
+  isInitialized: false,
   status: 'idle' as RequestStatusType,
   error: null as string | null,
 }
@@ -12,6 +13,8 @@ export const appReducer = (state = initialState, action: ActionsType): InitialSt
       return { ...state, status: action.payload.status }
     case 'APP/SET-ERROR':
       return { ...state, error: action.payload.error }
+    case 'APP/SET-IS-INITIALIZED':
+      return { ...state, isInitialized: action.payload.value }
     default:
       return state
   }
