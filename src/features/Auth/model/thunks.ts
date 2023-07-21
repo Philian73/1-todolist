@@ -2,6 +2,7 @@ import { APIResultCodes } from '../../../app/api/api.ts'
 import { appActions } from '../../../app/model/actions.ts'
 import { AppThunkType } from '../../../app/store/store.ts'
 import { errorAPIHandler, handlerServerNetworkError } from '../../../app/utils/error-handler.ts'
+import { todoListsActions } from '../../TodoLists/model/actions.ts'
 import { authAPI } from '../api/authAPI.ts'
 
 import { authActions } from './actions.ts'
@@ -56,6 +57,7 @@ export const authThunks = {
         if (response.data.resultCode === APIResultCodes.SUCCESS) {
           dispatch(authActions.setIsLoggedIn(false))
           dispatch(appActions.setAppStatus('succeeded'))
+          dispatch(todoListsActions.clearTodoLists())
         } else {
           errorAPIHandler(response.data, dispatch)
         }
