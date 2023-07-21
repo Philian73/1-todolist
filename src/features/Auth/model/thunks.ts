@@ -46,4 +46,22 @@ export const authThunks = {
       }
     }
   },
+  logout(): AppThunkType {
+    return async dispatch => {
+      dispatch(appActions.setAppStatus('loading'))
+
+      try {
+        const response = await authAPI.logout()
+
+        if (response.data.resultCode === APIResultCodes.SUCCESS) {
+          dispatch(authActions.setIsLoggedIn(false))
+          dispatch(appActions.setAppStatus('succeeded'))
+        } else {
+          errorAPIHandler(response.data, dispatch)
+        }
+      } catch (error) {
+        handlerServerNetworkError(error, dispatch)
+      }
+    }
+  },
 }
