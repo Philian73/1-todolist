@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react'
 
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
+import { Navigate } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks/hooks.ts'
 import { RequestStatusType } from '../../../../app/model/types.ts'
@@ -11,12 +12,15 @@ import { TodoListDomainType } from '../../model/types.ts'
 import { TodoList } from '../TodoList/TodoList.tsx'
 
 export const TodoLists = () => {
+  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const status = useAppSelector<RequestStatusType>(state => state.app.status)
-
   const todoLists = useAppSelector<TodoListDomainType[]>(state => state.todoLists)
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
+    if (!isLoggedIn) return
+
     dispatch(todoListsThunks.getTodoLists())
   }, [])
 
@@ -37,7 +41,7 @@ export const TodoLists = () => {
     )
   })
 
-  return (
+  return isLoggedIn ? (
     <>
       <Grid container style={{ padding: '20px' }}>
         <AddItemForm addItem={createTodoList} disabled={status === 'loading'} />
@@ -46,5 +50,7 @@ export const TodoLists = () => {
         {todoListsMap}
       </Grid>
     </>
+  ) : (
+    <Navigate to="/login" />
   )
 }
