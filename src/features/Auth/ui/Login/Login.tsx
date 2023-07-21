@@ -8,9 +8,16 @@ import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useFormik } from 'formik'
+import { Navigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks/hooks.ts'
+import { authThunks } from '../../model/thunks.ts'
+
 export const Login = () => {
+  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+  const dispatch = useAppDispatch()
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -22,11 +29,12 @@ export const Login = () => {
       password: Yup.string().min(4, 'Must be at least 4 characters long').required('Required'),
     }),
     onSubmit: () => {
+      dispatch(authThunks.login(formik.values))
       formik.resetForm()
     },
   })
 
-  return (
+  return !isLoggedIn ? (
     <Grid container justifyContent={'center'}>
       <Grid item justifyContent={'center'}>
         <form onSubmit={formik.handleSubmit}>
@@ -88,5 +96,7 @@ export const Login = () => {
         </form>
       </Grid>
     </Grid>
+  ) : (
+    <Navigate to="/" />
   )
 }
