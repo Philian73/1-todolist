@@ -1,26 +1,11 @@
-import { AnyAction, applyMiddleware, combineReducers, compose, legacy_createStore } from 'redux'
-import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk'
+import { configureStore } from '@reduxjs/toolkit'
+import { AnyAction, combineReducers } from 'redux'
+import { ThunkAction } from 'redux-thunk'
 
 import { appReducer } from 'app/model/appReducer.ts'
 import { authReducer } from 'features/Auth/model/authReducer.ts'
 import { tasksReducer } from 'features/Tasks/model/tasksReducer.ts'
 import { todoListsReducer } from 'features/TodoLists/model/todoListsReducer.ts'
-
-declare global {
-  interface Window {
-    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose
-  }
-}
-
-export type AppRootStateType = ReturnType<typeof rootReducer>
-
-export type AppDispatchType = ThunkDispatch<AppRootStateType, unknown, AnyAction>
-export type AppThunkType<ReturnType = void> = ThunkAction<
-  ReturnType,
-  AppRootStateType,
-  unknown,
-  AnyAction
->
 
 const rootReducer = combineReducers({
   app: appReducer,
@@ -29,6 +14,17 @@ const rootReducer = combineReducers({
   todoLists: todoListsReducer,
 })
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+export const store = configureStore({
+  reducer: rootReducer,
+})
 
-export const store = legacy_createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
+// TYPES
+export type AppRootStateType = ReturnType<typeof store.getState>
+
+export type AppDispatchType = typeof store.dispatch
+export type AppThunkType<ReturnType = void> = ThunkAction<
+  ReturnType,
+  AppRootStateType,
+  unknown,
+  AnyAction
+>
