@@ -1,4 +1,4 @@
-import { RequestStatusType } from '../../../app/model/types.ts'
+import { RequestStatusType } from 'app/model/types.ts'
 
 export enum TaskStatuses {
   New = 0,

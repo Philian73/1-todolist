@@ -5,10 +5,11 @@ import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import ListItem from '@mui/material/ListItem'
 
+import { tasksThunks } from '../../model/[deprecated]/thunks.ts'
+import { TaskDomainType, TaskStatuses } from '../../model/types.ts'
+
 import { useAppDispatch } from 'common/hooks'
 import { EditableSpan } from 'common/ui'
-import { tasksThunks } from 'features/Tasks/model/[deprecated]/thunks.ts'
-import { TaskDomainType, TaskStatuses } from 'features/Tasks/model/types.ts'
 
 type PropsType = {
   task: TaskDomainType

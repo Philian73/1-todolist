@@ -1,1 +1,1 @@
-export * from './EditableSpan'
+export * from './EditableSpan/EditableSpan.tsx'

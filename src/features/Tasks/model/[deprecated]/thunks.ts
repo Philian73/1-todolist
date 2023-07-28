@@ -1,10 +1,12 @@
+import { TaskType, UpdateTaskModelType } from '../types.ts'
+
+import { tasksActions } from './actions.ts'
+
 import { appActions } from 'app/model/[deprecated]/actions.ts'
 import { AppThunkType } from 'app/store.ts'
 import { APIResultCodes } from 'common/api'
-import { errorAPIHandler, handlerServerNetworkError } from 'common/utils/error-handling'
+import { errorAPIHandler, handlerServerNetworkError } from 'common/utils'
 import { tasksAPI } from 'features/Tasks/api'
-import { tasksActions } from 'features/Tasks/model/[deprecated]/actions.ts'
-import { TaskType, UpdateTaskModelType } from 'features/Tasks/model/types.ts'
 import { todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
 
 export const tasksThunks = {

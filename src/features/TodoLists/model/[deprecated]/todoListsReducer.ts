@@ -1,5 +1,6 @@
-import { TodoListsActionsType } from 'features/TodoLists/model/[deprecated]/actions.ts'
-import { TodoListDomainType } from 'features/TodoLists/model/types.ts'
+import { TodoListDomainType } from '../types.ts'
+
+import { TodoListsActionsType } from './actions.ts'
 
 const initialState = [] as TodoListDomainType[]
 

@@ -1,7 +1,8 @@
 import { AxiosResponse } from 'axios'
 
+import { LoginParamsType, UserDate } from '../model/types.ts'
+
 import { instance, ResponseType } from 'common/api'
-import { LoginParamsType, UserDate } from 'features/Auth/model/types.ts'
 
 export const authAPI = {
   me() {

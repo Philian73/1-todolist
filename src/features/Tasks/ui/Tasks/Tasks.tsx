@@ -2,9 +2,10 @@ import { FC, memo } from 'react'
 
 import List from '@mui/material/List'
 
+import { TaskDomainType, TaskStatuses } from '../../model/types.ts'
+
 import { useAppSelector } from 'common/hooks'
-import { TaskDomainType, TaskStatuses } from 'features/Tasks/model/types.ts'
-import { Task } from 'features/Tasks/ui'
+import { Task } from 'features/Tasks'
 import { FilterValuesType } from 'features/TodoLists/model/types.ts'
 
 type PropsType = {

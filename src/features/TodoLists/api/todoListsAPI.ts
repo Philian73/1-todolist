@@ -1,7 +1,8 @@
 import { AxiosResponse } from 'axios'
 
+import { TodoListType } from '../model/types.ts'
+
 import { instance, ResponseType } from 'common/api'
-import { TodoListType } from 'features/TodoLists/model/types.ts'
 
 export const todoListsAPI = {
   getTodoLists() {
