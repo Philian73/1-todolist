@@ -1,1 +1,1 @@
-export { TodoLists } from './ui/TodoLists/TodoLists.tsx'
+export { TodoLists } from './ui'
