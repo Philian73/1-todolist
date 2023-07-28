@@ -1,7 +1,7 @@
 import { describe, beforeEach, it, expect } from 'vitest'
 
-import { appActions } from 'app/model/[deprecated]/actions.ts'
-import { appReducer, InitialStateType } from 'app/model/[deprecated]/appReducer.ts'
+import { appActions } from './actions.ts'
+import { appReducer, InitialStateType } from './appReducer.ts'
 
 describe('appReducer', () => {
   let initialState: InitialStateType

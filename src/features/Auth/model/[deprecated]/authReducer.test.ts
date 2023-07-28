@@ -1,7 +1,7 @@
 import { describe, beforeEach, it, expect } from 'vitest'
 
-import { authActions } from 'features/Auth/model/[deprecated]/actions.ts'
-import { authReducer, InitialStateType } from 'features/Auth/model/[deprecated]/authReducer.ts'
+import { authActions } from './actions.ts'
+import { authReducer, InitialStateType } from './authReducer.ts'
 
 describe('authReducer', () => {
   let initialState: InitialStateType
