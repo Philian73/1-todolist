@@ -7,9 +7,11 @@ import LinearProgress from '@mui/material/LinearProgress'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 
-import { useAppDispatch, useAppSelector } from '../../app/hooks/hooks.ts'
 import { RequestStatusType } from '../../app/model/types.ts'
 import { authThunks } from '../../features/Auth/model/thunks.ts'
+
+import { useAppDispatch } from 'common/hooks/useAppDispatch.ts'
+import { useAppSelector } from 'common/hooks/useAppSelector.ts'
 
 export const ButtonAppBar = () => {
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)

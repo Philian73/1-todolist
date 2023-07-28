@@ -5,7 +5,6 @@ import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 
-import { useAppDispatch } from '../../../../app/hooks/hooks.ts'
 import { AddItemForm, EditableSpan } from '../../../../components'
 import { Tasks } from '../../../Tasks'
 import { tasksThunks } from '../../../Tasks/model/thunks.ts'
@@ -14,6 +13,8 @@ import { todoListsThunks } from '../../model/thunks.ts'
 import { FilterValuesType, TodoListDomainType } from '../../model/types.ts'
 
 import s from './TodoList.module.css'
+
+import { useAppDispatch } from 'common/hooks/useAppDispatch.ts'
 
 type PropsType = {
   todoList: TodoListDomainType

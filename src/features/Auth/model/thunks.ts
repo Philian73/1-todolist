@@ -4,10 +4,11 @@ import { authAPI } from '../api/authAPI.ts'
 import { authActions } from './slice.ts'
 import { LoginParamsType } from './types.ts'
 
-import { APIResultCodes } from 'app/api/api.ts'
 import { appActions } from 'app/model/actions.ts'
-import { AppThunkType } from 'app/store/store.ts'
-import { errorAPIHandler, handlerServerNetworkError } from 'app/utils/error-handler.ts'
+import { AppThunkType } from 'app/store.ts'
+import { APIResultCodes } from 'common/api/api.ts'
+import { errorAPIHandler } from 'common/utils/error-handling/errorAPIHandler.ts'
+import { handlerServerNetworkError } from 'common/utils/error-handling/handlerServerNetworkError.ts'
 
 export const authThunks = {
   me(): AppThunkType {

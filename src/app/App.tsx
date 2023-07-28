@@ -1,5 +1,3 @@
-import './styles/App.css'
-
 import { useEffect } from 'react'
 
 import CircularProgress from '@mui/material/CircularProgress'
@@ -12,7 +10,8 @@ import { Login } from '../features/Auth'
 import { authThunks } from '../features/Auth/model/thunks.ts'
 import { TodoLists } from '../features/TodoLists'
 
-import { useAppDispatch, useAppSelector } from './hooks/hooks.ts'
+import { useAppDispatch } from 'common/hooks/useAppDispatch.ts'
+import { useAppSelector } from 'common/hooks/useAppSelector.ts'
 
 const App = () => {
   const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
