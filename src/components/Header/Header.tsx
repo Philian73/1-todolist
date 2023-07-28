@@ -13,7 +13,7 @@ import { authThunks } from '../../features/Auth/model/thunks.ts'
 import { useAppDispatch } from 'common/hooks/useAppDispatch.ts'
 import { useAppSelector } from 'common/hooks/useAppSelector.ts'
 
-export const ButtonAppBar = () => {
+export const Header = () => {
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
   const status = useAppSelector<RequestStatusType>(state => state.app.status)
 
