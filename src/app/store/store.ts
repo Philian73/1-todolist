@@ -3,7 +3,7 @@ import { AnyAction, combineReducers } from 'redux'
 import { ThunkAction } from 'redux-thunk'
 
 import { appReducer } from 'app/model/appReducer.ts'
-import { authReducer } from 'features/Auth/model/authReducer.ts'
+import { authReducer } from 'features/Auth/model/slice.ts'
 import { tasksReducer } from 'features/Tasks/model/tasksReducer.ts'
 import { todoListsReducer } from 'features/TodoLists/model/todoListsReducer.ts'
 
