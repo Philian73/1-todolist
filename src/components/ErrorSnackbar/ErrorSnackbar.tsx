@@ -3,8 +3,7 @@ import { SyntheticEvent, forwardRef } from 'react'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 
-import { appActions } from '../../app/model/actions.ts'
-
+import { appActions } from 'app/model/actions.ts'
 import { useAppDispatch } from 'common/hooks/useAppDispatch.ts'
 import { useAppSelector } from 'common/hooks/useAppSelector.ts'
 
@@ -16,7 +15,6 @@ export const ErrorSnackbar = () => {
   const error = useAppSelector<string | null>(state => state.app.error)
   const dispatch = useAppDispatch()
 
-  // @ts-ignore
   const handleClose = (event?: SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') return
 
