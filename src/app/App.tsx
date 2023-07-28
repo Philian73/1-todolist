@@ -5,7 +5,7 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import { ButtonAppBar, ErrorSnackbar } from '../components'
+import { Header, ErrorSnackbar } from '../components'
 import { Login } from '../features/Auth'
 import { authThunks } from '../features/Auth/model/thunks.ts'
 import { TodoLists } from '../features/TodoLists'
@@ -25,7 +25,7 @@ const App = () => {
   return isInitialized ? (
     <div className="App">
       <ErrorSnackbar />
-      <ButtonAppBar />
+      <Header />
       <Container fixed>
         <Routes>
           <Route path="/" element={<TodoLists />} />
