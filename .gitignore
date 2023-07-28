@@ -22,4 +22,4 @@ build-ssr
 *.njsproj
 *.sln
 *.sw?
-/src/app/api/API_KEY.ts
+/src/common/api/API_KEY.ts
