@@ -1,4 +1,4 @@
-import { TaskType, UpdateTaskModelType } from './types.ts'
+import { TaskType, UpdateTaskModelType } from 'features/Tasks/model/types.ts'
 
 export const tasksActions = {
   setTasks(todoListID: string, tasks: TaskType[]) {

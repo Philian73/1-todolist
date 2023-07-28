@@ -1,7 +1,6 @@
-import { SetDeleteCreateClearTodoListsActionsType } from '../../TodoLists/model/actions.ts'
-
-import { TasksActionsType } from './actions.ts'
-import { TasksType } from './types.ts'
+import { TasksActionsType } from 'features/Tasks/model/[deprecated]/actions.ts'
+import { TasksType } from 'features/Tasks/model/types.ts'
+import { SetDeleteCreateClearTodoListsActionsType } from 'features/TodoLists/model/[deprecated]/actions.ts'
 
 const initialState = {} as TasksType
 

@@ -7,11 +7,9 @@ import LinearProgress from '@mui/material/LinearProgress'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 
-import { RequestStatusType } from '../../app/model/types.ts'
-import { authThunks } from '../../features/Auth/model/thunks.ts'
-
-import { useAppDispatch } from 'common/hooks/useAppDispatch.ts'
-import { useAppSelector } from 'common/hooks/useAppSelector.ts'
+import { RequestStatusType } from 'app/model/types.ts'
+import { useAppDispatch, useAppSelector } from 'common/hooks'
+import { authThunks } from 'features/Auth/model/[deprecated]/thunks.ts'
 
 export const Header = () => {
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)

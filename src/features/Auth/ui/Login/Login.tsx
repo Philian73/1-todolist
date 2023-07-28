@@ -11,10 +11,8 @@ import { useFormik } from 'formik'
 import { Navigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
-import { authThunks } from '../../model/thunks.ts'
-
-import { useAppDispatch } from 'common/hooks/useAppDispatch.ts'
-import { useAppSelector } from 'common/hooks/useAppSelector.ts'
+import { useAppDispatch, useAppSelector } from 'common/hooks'
+import { authThunks } from 'features/Auth/model/[deprecated]/thunks.ts'
 
 export const Login = () => {
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)

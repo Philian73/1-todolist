@@ -1,14 +1,11 @@
-import { todoListsActions } from '../../TodoLists/model/actions.ts'
-import { authAPI } from '../api/authAPI.ts'
-
-import { authActions } from './slice.ts'
-import { LoginParamsType } from './types.ts'
-
-import { appActions } from 'app/model/actions.ts'
+import { appActions } from 'app/model/[deprecated]/actions.ts'
 import { AppThunkType } from 'app/store.ts'
-import { APIResultCodes } from 'common/api/api.ts'
-import { errorAPIHandler } from 'common/utils/error-handling/errorAPIHandler.ts'
-import { handlerServerNetworkError } from 'common/utils/error-handling/handlerServerNetworkError.ts'
+import { APIResultCodes } from 'common/api'
+import { errorAPIHandler, handlerServerNetworkError } from 'common/utils/error-handling'
+import { authAPI } from 'features/Auth/api'
+import { authActions } from 'features/Auth/model/slice.ts'
+import { LoginParamsType } from 'features/Auth/model/types.ts'
+import { todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
 
 export const authThunks = {
   me(): AppThunkType {

@@ -1,4 +1,4 @@
-import { AuthActionsType } from './actions.ts'
+import { AuthActionsType } from 'features/Auth/model/[deprecated]/actions.ts'
 
 const initialState = {
   isLoggedIn: false,

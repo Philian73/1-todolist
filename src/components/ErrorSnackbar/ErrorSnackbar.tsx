@@ -3,9 +3,8 @@ import { SyntheticEvent, forwardRef } from 'react'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 
-import { appActions } from 'app/model/actions.ts'
-import { useAppDispatch } from 'common/hooks/useAppDispatch.ts'
-import { useAppSelector } from 'common/hooks/useAppSelector.ts'
+import { appActions } from 'app/model/[deprecated]/actions.ts'
+import { useAppDispatch, useAppSelector } from 'common/hooks'
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
   <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />

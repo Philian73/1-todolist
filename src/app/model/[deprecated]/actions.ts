@@ -1,4 +1,4 @@
-import { RequestStatusType } from './types.ts'
+import { RequestStatusType } from 'app/model/types.ts'
 
 export const appActions = {
   setAppStatus(status: RequestStatusType) {

@@ -1,14 +1,11 @@
-import { appActions } from '../../../app/model/actions.ts'
-import { tasksThunks } from '../../Tasks/model/thunks.ts'
-import { todoListsAPI } from '../api/todoListsAPI.ts'
-
-import { todoListsActions } from './actions.ts'
-import { TodoListType } from './types.ts'
-
+import { appActions } from 'app/model/[deprecated]/actions.ts'
 import { AppThunkType } from 'app/store.ts'
-import { APIResultCodes } from 'common/api/api.ts'
-import { errorAPIHandler } from 'common/utils/error-handling/errorAPIHandler.ts'
-import { handlerServerNetworkError } from 'common/utils/error-handling/handlerServerNetworkError.ts'
+import { APIResultCodes } from 'common/api'
+import { errorAPIHandler, handlerServerNetworkError } from 'common/utils/error-handling'
+import { tasksThunks } from 'features/Tasks/model/[deprecated]/thunks.ts'
+import { todoListsAPI } from 'features/TodoLists/api'
+import { todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
+import { TodoListType } from 'features/TodoLists/model/types.ts'
 
 export const todoListsThunks = {
   getTodoLists(): AppThunkType {

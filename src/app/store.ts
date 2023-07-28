@@ -1,11 +1,10 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore, ThunkAction } from '@reduxjs/toolkit'
 import { AnyAction, combineReducers } from 'redux'
-import { ThunkAction } from 'redux-thunk'
 
-import { appReducer } from 'app/model/appReducer.ts'
+import { appReducer } from 'app/model/[deprecated]/appReducer.ts'
 import { authReducer } from 'features/Auth/model/slice.ts'
-import { tasksReducer } from 'features/Tasks/model/tasksReducer.ts'
-import { todoListsReducer } from 'features/TodoLists/model/todoListsReducer.ts'
+import { tasksReducer } from 'features/Tasks/model/[deprecated]/tasksReducer.ts'
+import { todoListsReducer } from 'features/TodoLists/model/[deprecated]/todoListsReducer.ts'
 
 const rootReducer = combineReducers({
   app: appReducer,

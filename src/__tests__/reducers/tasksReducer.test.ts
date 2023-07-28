@@ -1,9 +1,9 @@
 import { describe, beforeEach, it, expect } from 'vitest'
 
-import { tasksActions } from '../../features/Tasks/model/actions.ts'
-import { tasksReducer } from '../../features/Tasks/model/tasksReducer.ts'
-import { TaskPriorities, TaskStatuses, TasksType } from '../../features/Tasks/model/types.ts'
-import { todoListsActions } from '../../features/TodoLists/model/actions.ts'
+import { tasksActions } from 'features/Tasks/model/[deprecated]/actions.ts'
+import { tasksReducer } from 'features/Tasks/model/[deprecated]/tasksReducer.ts'
+import { TaskPriorities, TaskStatuses, TasksType } from 'features/Tasks/model/types.ts'
+import { todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
 
 describe('tasksReducer', () => {
   let todoListID_1: string

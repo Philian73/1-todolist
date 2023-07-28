@@ -5,13 +5,11 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import { Header, ErrorSnackbar } from '../components'
-import { Login } from '../features/Auth'
-import { authThunks } from '../features/Auth/model/thunks.ts'
-import { TodoLists } from '../features/TodoLists'
-
-import { useAppDispatch } from 'common/hooks/useAppDispatch.ts'
-import { useAppSelector } from 'common/hooks/useAppSelector.ts'
+import { useAppDispatch, useAppSelector } from 'common/hooks'
+import { ErrorSnackbar, Header } from 'components'
+import { Login } from 'features/Auth'
+import { authThunks } from 'features/Auth/model/[deprecated]/thunks.ts'
+import { TodoLists } from 'features/TodoLists'
 
 const App = () => {
   const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)

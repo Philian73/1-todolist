@@ -1,7 +1,7 @@
 import { AxiosError, isAxiosError } from 'axios'
 import { Dispatch } from 'redux'
 
-import { appActions } from 'app/model/actions.ts'
+import { appActions } from 'app/model/[deprecated]/actions.ts'
 
 export const handlerServerNetworkError = (error: unknown, dispatch: Dispatch) => {
   if (isAxiosError<AxiosError>(error)) {
