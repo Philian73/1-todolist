@@ -11,20 +11,22 @@ export const EditableSpan: FC<PropsType> = memo(({ value, onChange, disabled }) 
   const [inputValue, setInputValue] = useState('')
   const [editMode, setEditMode] = useState(false)
 
-  const activateEditMode = () => {
+  const toggleEditMode = () => {
     if (disabled) return
 
-    setEditMode(true)
-    setInputValue(value)
-  }
-  const activateViewMode = () => {
-    onChange(inputValue)
-    setEditMode(false)
+    if (value !== inputValue) {
+      editMode ? onChange(inputValue) : setInputValue(value)
+    }
+
+    setEditMode(!editMode)
   }
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.currentTarget.value)
-  const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) =>
-    e.key === 'Enter' && activateViewMode()
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.currentTarget.value)
+  }
+  const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    e.key === 'Enter' && toggleEditMode()
+  }
   const onFocusHandler = (e: FocusEvent<HTMLInputElement>) => e.target.select()
 
   return editMode ? (
@@ -34,11 +36,11 @@ export const EditableSpan: FC<PropsType> = memo(({ value, onChange, disabled }) 
       value={inputValue}
       autoFocus
       onChange={onChangeHandler}
-      onBlur={activateViewMode}
+      onBlur={toggleEditMode}
       onKeyDown={onKeyDownHandler}
       onFocus={onFocusHandler}
     />
   ) : (
-    <span onDoubleClick={activateEditMode}>{value}</span>
+    <span onDoubleClick={toggleEditMode}>{value}</span>
   )
 })
