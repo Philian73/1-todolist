@@ -1,9 +1,9 @@
 import { describe, beforeEach, it, expect } from 'vitest'
 
-import { appActions } from './actions.ts'
-import { appReducer, InitialStateType } from './appReducer.ts'
+import { _appActions } from './actions.ts'
+import { _appReducer, InitialStateType } from './appReducer.ts'
 
-describe('appReducer', () => {
+describe('_appReducer', () => {
   let initialState: InitialStateType
 
   beforeEach(() => {
@@ -17,22 +17,22 @@ describe('appReducer', () => {
   it('correct error message should be set', () => {
     const errorMessage = 'some-error'
 
-    const action = appActions.setAppError(errorMessage)
-    const endState = appReducer(initialState, action)
+    const action = _appActions.setAppError(errorMessage)
+    const endState = _appReducer(initialState, action)
 
     expect(endState.error).toBe(errorMessage)
   })
 
   it('correct status should be set', () => {
-    const action = appActions.setAppStatus('loading')
-    const endState = appReducer(initialState, action)
+    const action = _appActions.setAppStatus('loading')
+    const endState = _appReducer(initialState, action)
 
     expect(endState.status).toBe('loading')
   })
 
   it('correct isInitialized should be set', () => {
-    const action = appActions.setAppIsInitialized(true)
-    const endState = appReducer(initialState, action)
+    const action = _appActions.setAppIsInitialized(true)
+    const endState = _appReducer(initialState, action)
 
     expect(endState.isInitialized).toBeTruthy()
   })

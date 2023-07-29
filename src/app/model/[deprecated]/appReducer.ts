@@ -7,7 +7,7 @@ const initialState = {
   error: null as string | null,
 }
 
-export const appReducer = (state = initialState, action: ActionsType): InitialStateType => {
+export const _appReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case 'APP/SET-STATUS':
       return { ...state, status: action.payload.status }

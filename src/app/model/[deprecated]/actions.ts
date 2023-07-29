@@ -1,6 +1,6 @@
-import { RequestStatusType } from 'app/model/types.ts'
+import { RequestStatusType } from '../types.ts'
 
-export const appActions = {
+export const _appActions = {
   setAppStatus(status: RequestStatusType) {
     return {
       type: 'APP/SET-STATUS',
@@ -22,4 +22,4 @@ export const appActions = {
 }
 
 // TYPES
-export type AppActionsType = typeof appActions
+export type AppActionsType = typeof _appActions
