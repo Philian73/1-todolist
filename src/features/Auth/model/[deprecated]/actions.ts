@@ -1,4 +1,4 @@
-export const authActions = {
+export const _authActions = {
   setIsLoggedIn(value: boolean) {
     return {
       type: 'LOGIN/SET-IS-LOGGED-IN',
@@ -7,4 +7,4 @@ export const authActions = {
   },
 }
 
-export type AuthActionsType = typeof authActions
+export type AuthActionsType = typeof _authActions

@@ -1,6 +1,6 @@
 import { LoginParamsType } from '../types.ts'
 
-import { authActions } from './actions.ts'
+import { _authActions } from './actions.ts'
 
 import { appActions } from 'app/model/[deprecated]/actions.ts'
 import { AppThunkType } from 'app/store.ts'
@@ -9,7 +9,7 @@ import { errorAPIHandler, handlerServerNetworkError } from 'common/utils'
 import { authAPI } from 'features/Auth/api'
 import { todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
 
-export const authThunks = {
+export const _authThunks = {
   me(): AppThunkType {
     return async dispatch => {
       dispatch(appActions.setAppStatus('loading'))
@@ -18,7 +18,7 @@ export const authThunks = {
         const response = await authAPI.me()
 
         if (response.data.resultCode === APIResultCodes.SUCCESS) {
-          dispatch(authActions.setIsLoggedIn({ isLoggedIn: true }))
+          dispatch(_authActions.setIsLoggedIn(true))
           dispatch(appActions.setAppStatus('succeeded'))
         } else {
           errorAPIHandler(response.data, dispatch)
@@ -38,7 +38,7 @@ export const authThunks = {
         const response = await authAPI.login(data)
 
         if (response.data.resultCode === APIResultCodes.SUCCESS) {
-          dispatch(authActions.setIsLoggedIn({ isLoggedIn: true }))
+          dispatch(_authActions.setIsLoggedIn(true))
           dispatch(appActions.setAppStatus('succeeded'))
         } else {
           errorAPIHandler(response.data, dispatch)
@@ -56,7 +56,7 @@ export const authThunks = {
         const response = await authAPI.logout()
 
         if (response.data.resultCode === APIResultCodes.SUCCESS) {
-          dispatch(authActions.setIsLoggedIn({ isLoggedIn: false }))
+          dispatch(_authActions.setIsLoggedIn(false))
           dispatch(appActions.setAppStatus('succeeded'))
           dispatch(todoListsActions.clearTodoLists())
         } else {

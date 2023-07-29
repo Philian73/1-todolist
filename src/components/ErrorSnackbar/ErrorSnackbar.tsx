@@ -14,6 +14,7 @@ export const ErrorSnackbar = () => {
   const error = useAppSelector<string | null>(state => state.app.error)
   const dispatch = useAppDispatch()
 
+  // @ts-ignore
   const handleClose = (event?: SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') return
 

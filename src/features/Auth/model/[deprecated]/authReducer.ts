@@ -4,7 +4,7 @@ const initialState = {
   isLoggedIn: false,
 }
 
-export const authReducer = (state = initialState, action: ActionsType): InitialStateType => {
+export const _authReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case 'LOGIN/SET-IS-LOGGED-IN':
       return { ...state, isLoggedIn: action.payload.value }

@@ -8,7 +8,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from 'common/hooks'
 import { ErrorSnackbar, Header } from 'components'
 import { Login } from 'features/Auth'
-import { authThunks } from 'features/Auth/model/[deprecated]/thunks.ts'
+import { authThunks } from 'features/Auth/model/slice.ts'
 import { TodoLists } from 'features/TodoLists'
 
 const App = () => {

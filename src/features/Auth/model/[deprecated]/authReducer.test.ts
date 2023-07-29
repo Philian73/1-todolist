@@ -1,7 +1,7 @@
 import { describe, beforeEach, it, expect } from 'vitest'
 
-import { authActions } from './actions.ts'
-import { authReducer, InitialStateType } from './authReducer.ts'
+import { _authActions } from './actions.ts'
+import { _authReducer, InitialStateType } from './authReducer.ts'
 
 describe('authReducer', () => {
   let initialState: InitialStateType
@@ -13,8 +13,8 @@ describe('authReducer', () => {
   })
 
   it('correct isLoggedIn should be set', () => {
-    const action = authActions.setIsLoggedIn(true)
-    const endState = authReducer(initialState, action)
+    const action = _authActions.setIsLoggedIn(true)
+    const endState = _authReducer(initialState, action)
 
     expect(endState.isLoggedIn).toBeTruthy()
   })

@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography'
 
 import { RequestStatusType } from 'app/model/types.ts'
 import { useAppDispatch, useAppSelector } from 'common/hooks'
-import { authThunks } from 'features/Auth/model/[deprecated]/thunks.ts'
+import { authThunks } from 'features/Auth/model/slice.ts'
 
 export const Header = () => {
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
