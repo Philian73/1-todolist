@@ -2,7 +2,7 @@ import { TaskType, UpdateTaskModelType } from '../types.ts'
 
 import { tasksActions } from './actions.ts'
 
-import { appActions } from 'app/model/[deprecated]/actions.ts'
+import { appActions } from 'app/model/slice.ts'
 import { AppThunkType } from 'app/store.ts'
 import { APIResultCodes } from 'common/api'
 import { errorAPIHandler, handlerServerNetworkError } from 'common/utils'
@@ -19,14 +19,14 @@ export const tasksThunks = {
   },
   deleteTask(todoListID: string, taskID: string): AppThunkType {
     return async dispatch => {
-      dispatch(appActions.setAppStatus('loading'))
+      dispatch(appActions.setAppStatus({ status: 'loading' }))
       dispatch(tasksActions.updateTask(todoListID, taskID, { entityStatus: 'loading' }))
 
       try {
         await tasksAPI.deleteTask(todoListID, taskID)
 
         dispatch(tasksActions.deleteTask(todoListID, taskID))
-        dispatch(appActions.setAppStatus('succeeded'))
+        dispatch(appActions.setAppStatus({ status: 'succeeded' }))
       } catch (error) {
         handlerServerNetworkError(error, dispatch)
       } finally {
@@ -36,14 +36,14 @@ export const tasksThunks = {
   },
   createTask(todoListID: string, title: string): AppThunkType {
     return async dispatch => {
-      dispatch(appActions.setAppStatus('loading'))
+      dispatch(appActions.setAppStatus({ status: 'loading' }))
       dispatch(todoListsActions.updateTodoList(todoListID, { entityStatus: 'loading' }))
       try {
         const response = await tasksAPI.createTask(todoListID, title)
 
         if (response.data.resultCode === APIResultCodes.SUCCESS) {
           dispatch(tasksActions.createTask(response.data.data.item))
-          dispatch(appActions.setAppStatus('succeeded'))
+          dispatch(appActions.setAppStatus({ status: 'succeeded' }))
         } else {
           errorAPIHandler<{ item: TaskType }>(response.data, dispatch)
         }
@@ -56,7 +56,7 @@ export const tasksThunks = {
   },
   updateTask(todoListID: string, taskID: string, data: Partial<UpdateTaskModelType>): AppThunkType {
     return async (dispatch, getState) => {
-      dispatch(appActions.setAppStatus('loading'))
+      dispatch(appActions.setAppStatus({ status: 'loading' }))
       dispatch(tasksActions.updateTask(todoListID, taskID, { entityStatus: 'loading' }))
 
       try {
@@ -77,7 +77,7 @@ export const tasksThunks = {
 
         if (response.data.resultCode === APIResultCodes.SUCCESS) {
           dispatch(tasksActions.updateTask(todoListID, taskID, model))
-          dispatch(appActions.setAppStatus('succeeded'))
+          dispatch(appActions.setAppStatus({ status: 'succeeded' }))
         } else {
           errorAPIHandler<{ item: TaskType }>(response.data, dispatch)
         }

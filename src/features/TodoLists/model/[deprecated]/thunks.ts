@@ -3,7 +3,7 @@ import { TodoListType } from '../types.ts'
 
 import { todoListsActions } from './actions.ts'
 
-import { appActions } from 'app/model/[deprecated]/actions.ts'
+import { appActions } from 'app/model/slice.ts'
 import { AppThunkType } from 'app/store.ts'
 import { APIResultCodes } from 'common/api'
 import { errorAPIHandler, handlerServerNetworkError } from 'common/utils'
@@ -12,13 +12,13 @@ import { tasksThunks } from 'features/Tasks/model/[deprecated]/thunks.ts'
 export const todoListsThunks = {
   getTodoLists(): AppThunkType {
     return async dispatch => {
-      dispatch(appActions.setAppStatus('loading'))
+      dispatch(appActions.setAppStatus({ status: 'loading' }))
 
       try {
         const response = await todoListsAPI.getTodoLists()
 
         dispatch(todoListsActions.setTodoLists(response.data))
-        dispatch(appActions.setAppStatus('succeeded'))
+        dispatch(appActions.setAppStatus({ status: 'succeeded' }))
 
         response.data.forEach(todoList => {
           dispatch(tasksThunks.getTasks(todoList.id))
@@ -30,14 +30,14 @@ export const todoListsThunks = {
   },
   deleteTodoList(ID: string): AppThunkType {
     return async dispatch => {
-      dispatch(appActions.setAppStatus('loading'))
+      dispatch(appActions.setAppStatus({ status: 'loading' }))
       dispatch(todoListsActions.updateTodoList(ID, { entityStatus: 'loading' }))
 
       try {
         await todoListsAPI.deleteTodoList(ID)
 
         dispatch(todoListsActions.deleteTodoList(ID))
-        dispatch(appActions.setAppStatus('succeeded'))
+        dispatch(appActions.setAppStatus({ status: 'succeeded' }))
       } catch (error) {
         handlerServerNetworkError(error, dispatch)
       } finally {
@@ -47,14 +47,14 @@ export const todoListsThunks = {
   },
   createTodoList(title: string): AppThunkType {
     return async dispatch => {
-      dispatch(appActions.setAppStatus('loading'))
+      dispatch(appActions.setAppStatus({ status: 'loading' }))
 
       try {
         const response = await todoListsAPI.createTodoList(title)
 
         if (response.data.resultCode === APIResultCodes.SUCCESS) {
           dispatch(todoListsActions.createTodoList(response.data.data.item))
-          dispatch(appActions.setAppStatus('succeeded'))
+          dispatch(appActions.setAppStatus({ status: 'succeeded' }))
         } else {
           errorAPIHandler<{ item: TodoListType }>(response.data, dispatch)
         }
@@ -65,7 +65,7 @@ export const todoListsThunks = {
   },
   updateTitleTodoList(ID: string, title: string): AppThunkType {
     return async dispatch => {
-      dispatch(appActions.setAppStatus('loading'))
+      dispatch(appActions.setAppStatus({ status: 'loading' }))
       dispatch(todoListsActions.updateTodoList(ID, { entityStatus: 'loading' }))
 
       try {
@@ -73,7 +73,7 @@ export const todoListsThunks = {
 
         if (response.data.resultCode === APIResultCodes.SUCCESS) {
           dispatch(todoListsActions.updateTodoList(ID, { title }))
-          dispatch(appActions.setAppStatus('succeeded'))
+          dispatch(appActions.setAppStatus({ status: 'succeeded' }))
         } else {
           errorAPIHandler(response.data, dispatch)
         }

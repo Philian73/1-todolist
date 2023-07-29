@@ -2,7 +2,7 @@ import { LoginParamsType } from '../types.ts'
 
 import { _authActions } from './actions.ts'
 
-import { appActions } from 'app/model/[deprecated]/actions.ts'
+import { _appActions } from 'app/model/[deprecated]/actions.ts'
 import { AppThunkType } from 'app/store.ts'
 import { APIResultCodes } from 'common/api'
 import { errorAPIHandler, handlerServerNetworkError } from 'common/utils'
@@ -12,34 +12,34 @@ import { todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.
 export const _authThunks = {
   me(): AppThunkType {
     return async dispatch => {
-      dispatch(appActions.setAppStatus('loading'))
+      dispatch(_appActions.setAppStatus('loading'))
 
       try {
         const response = await authAPI.me()
 
         if (response.data.resultCode === APIResultCodes.SUCCESS) {
           dispatch(_authActions.setIsLoggedIn(true))
-          dispatch(appActions.setAppStatus('succeeded'))
+          dispatch(_appActions.setAppStatus('succeeded'))
         } else {
           errorAPIHandler(response.data, dispatch)
         }
       } catch (error) {
         handlerServerNetworkError(error, dispatch)
       } finally {
-        dispatch(appActions.setAppIsInitialized(true))
+        dispatch(_appActions.setAppIsInitialized(true))
       }
     }
   },
   login(data: LoginParamsType): AppThunkType {
     return async dispatch => {
-      dispatch(appActions.setAppStatus('loading'))
+      dispatch(_appActions.setAppStatus('loading'))
 
       try {
         const response = await authAPI.login(data)
 
         if (response.data.resultCode === APIResultCodes.SUCCESS) {
           dispatch(_authActions.setIsLoggedIn(true))
-          dispatch(appActions.setAppStatus('succeeded'))
+          dispatch(_appActions.setAppStatus('succeeded'))
         } else {
           errorAPIHandler(response.data, dispatch)
         }
@@ -50,14 +50,14 @@ export const _authThunks = {
   },
   logout(): AppThunkType {
     return async dispatch => {
-      dispatch(appActions.setAppStatus('loading'))
+      dispatch(_appActions.setAppStatus('loading'))
 
       try {
         const response = await authAPI.logout()
 
         if (response.data.resultCode === APIResultCodes.SUCCESS) {
           dispatch(_authActions.setIsLoggedIn(false))
-          dispatch(appActions.setAppStatus('succeeded'))
+          dispatch(_appActions.setAppStatus('succeeded'))
           dispatch(todoListsActions.clearTodoLists())
         } else {
           errorAPIHandler(response.data, dispatch)
