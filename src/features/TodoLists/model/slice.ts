@@ -13,6 +13,11 @@ const slice = createSlice({
         state.push({ ...todoList, filter: 'all', entityStatus: 'idle' })
       })
     },
+    deleteTodoList(state, action: PayloadAction<{ ID: string }>) {
+      const index = state.findIndex(todoList => todoList.id === action.payload.ID)
+
+      if (index !== -1) state.splice(index, 1)
+    },
   },
 })
 
