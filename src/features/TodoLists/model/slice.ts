@@ -1,13 +1,19 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { TodoListDomainType } from './types.ts'
+import { TodoListDomainType, TodoListType } from './types.ts'
 
 const initialState: TodoListsInitialStateType = []
 
 const slice = createSlice({
   name: '@@todoLists',
   initialState,
-  reducers: {},
+  reducers: {
+    setTodoLists(state, action: PayloadAction<{ todoLists: TodoListType[] }>) {
+      action.payload.todoLists.forEach(todoList => {
+        state.push({ ...todoList, filter: 'all', entityStatus: 'idle' })
+      })
+    },
+  },
 })
 
 export const todoListsReducer = slice.reducer
