@@ -1,6 +1,6 @@
 import { TodoListType, UpdateTodoListDomainModelType } from '../types.ts'
 
-export const todoListsActions = {
+export const _todoListsActions = {
   setTodoLists(todoLists: TodoListType[]) {
     return {
       type: 'TODOLISTS/SET-TODOLISTS',
@@ -33,7 +33,7 @@ export const todoListsActions = {
 }
 
 // TYPES
-export type TodoListsActionsType = typeof todoListsActions
+export type TodoListsActionsType = typeof _todoListsActions
 
 export type SetDeleteCreateClearTodoListsActionsType = ReturnType<
   TodoListsActionsType['createTodoList' | 'deleteTodoList' | 'setTodoLists' | 'clearTodoLists']

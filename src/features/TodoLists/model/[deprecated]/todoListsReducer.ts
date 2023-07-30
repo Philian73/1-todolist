@@ -4,7 +4,7 @@ import { TodoListsActionsType } from './actions.ts'
 
 const initialState = [] as TodoListDomainType[]
 
-export const todoListsReducer = (
+export const _todoListsReducer = (
   state = initialState,
   action: ActionsType
 ): TodoListDomainType[] => {
