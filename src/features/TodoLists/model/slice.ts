@@ -2,7 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { FilterValuesType, TodoListDomainType, TodoListType } from './types.ts'
 
+import { appActions } from 'app/model/slice.ts'
 import { RequestStatusType } from 'app/model/types.ts'
+import { AppThunkType } from 'app/store.ts'
+import { APIResultCodes } from 'common/api'
+import { errorAPIHandler, handlerServerNetworkError } from 'common/utils'
+import { tasksThunks } from 'features/Tasks/model/[deprecated]/thunks.ts'
+import { todoListsAPI } from 'features/TodoLists/api'
 
 const initialState: TodoListsInitialStateType = []
 
@@ -46,7 +52,82 @@ const slice = createSlice({
 
 export const todoListsReducer = slice.reducer
 export const todoListsActions = slice.actions
-export const todoListsThunks = {}
+export const todoListsThunks = {
+  getTodoLists(): AppThunkType {
+    return async dispatch => {
+      dispatch(appActions.setAppStatus({ status: 'loading' }))
+
+      try {
+        const response = await todoListsAPI.getTodoLists()
+
+        dispatch(todoListsActions.setTodoLists({ todoLists: response.data }))
+        dispatch(appActions.setAppStatus({ status: 'succeeded' }))
+
+        response.data.forEach(todoList => {
+          dispatch(tasksThunks.getTasks(todoList.id))
+        })
+      } catch (error) {
+        handlerServerNetworkError(error, dispatch)
+      }
+    }
+  },
+  deleteTodoList(ID: string): AppThunkType {
+    return async dispatch => {
+      dispatch(appActions.setAppStatus({ status: 'loading' }))
+      dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'loading' }))
+
+      try {
+        await todoListsAPI.deleteTodoList(ID)
+
+        dispatch(todoListsActions.deleteTodoList({ ID }))
+        dispatch(appActions.setAppStatus({ status: 'succeeded' }))
+      } catch (error) {
+        handlerServerNetworkError(error, dispatch)
+      } finally {
+        dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'idle' }))
+      }
+    }
+  },
+  createTodoList(title: string): AppThunkType {
+    return async dispatch => {
+      dispatch(appActions.setAppStatus({ status: 'loading' }))
+
+      try {
+        const response = await todoListsAPI.createTodoList(title)
+
+        if (response.data.resultCode === APIResultCodes.SUCCESS) {
+          dispatch(todoListsActions.createTodoList({ todoList: response.data.data.item }))
+          dispatch(appActions.setAppStatus({ status: 'succeeded' }))
+        } else {
+          errorAPIHandler<{ item: TodoListType }>(response.data, dispatch)
+        }
+      } catch (error) {
+        handlerServerNetworkError(error, dispatch)
+      }
+    }
+  },
+  updateTitleTodoList(ID: string, title: string): AppThunkType {
+    return async dispatch => {
+      dispatch(appActions.setAppStatus({ status: 'loading' }))
+      dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'loading' }))
+
+      try {
+        const response = await todoListsAPI.updateTitleTodoList(ID, title)
+
+        if (response.data.resultCode === APIResultCodes.SUCCESS) {
+          dispatch(todoListsActions.updateTitleTodoList({ ID, title }))
+          dispatch(appActions.setAppStatus({ status: 'succeeded' }))
+        } else {
+          errorAPIHandler(response.data, dispatch)
+        }
+      } catch (error) {
+        handlerServerNetworkError(error, dispatch)
+      } finally {
+        dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'idle' }))
+      }
+    }
+  },
+}
 
 // TYPES
 export type TodoListsInitialStateType = TodoListDomainType[]
