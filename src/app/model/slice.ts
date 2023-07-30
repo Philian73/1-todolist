@@ -2,12 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { RequestStatusType } from './types.ts'
 
-export type AppInitialStateType = {
-  isInitialized: boolean
-  status: RequestStatusType
-  error: string | null
-}
-
 const initialState: AppInitialStateType = {
   isInitialized: false,
   status: 'idle',
@@ -32,3 +26,10 @@ const slice = createSlice({
 
 export const appReducer = slice.reducer
 export const appActions = slice.actions
+
+// TYPES
+export type AppInitialStateType = {
+  isInitialized: boolean
+  status: RequestStatusType
+  error: string | null
+}
