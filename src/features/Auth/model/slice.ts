@@ -8,7 +8,7 @@ import { authAPI } from 'features/Auth/api'
 import { LoginParamsType } from 'features/Auth/model/types.ts'
 import { todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
 
-const initialState = {
+const initialState: AuthInitialStateType = {
   isLoggedIn: false,
 }
 
@@ -82,4 +82,9 @@ export const authThunks = {
       }
     }
   },
+}
+
+// TYPES
+export type AuthInitialStateType = {
+  isLoggedIn: boolean
 }
