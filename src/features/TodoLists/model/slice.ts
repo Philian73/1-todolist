@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { FilterValuesType, TodoListDomainType, TodoListType } from './types.ts'
 
+import { RequestStatusType } from 'app/model/types.ts'
+
 const initialState: TodoListsInitialStateType = []
 
 const slice = createSlice({
@@ -30,6 +32,14 @@ const slice = createSlice({
       const index = state.findIndex(todoList => todoList.id === action.payload.ID)
 
       if (index !== -1) state[index].filter = action.payload.filter
+    },
+    updateEntityStatusTodoList(
+      state,
+      action: PayloadAction<{ ID: string; entityStatus: RequestStatusType }>
+    ) {
+      const index = state.findIndex(todoList => todoList.id === action.payload.ID)
+
+      if (index !== -1) state[index].entityStatus = action.payload.entityStatus
     },
   },
 })
