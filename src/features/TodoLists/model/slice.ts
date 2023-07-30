@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import { TodoListDomainType } from './types.ts'
 
-const initialState = [] as TodoListsInitialStateType
+const initialState: TodoListsInitialStateType = []
 
 const slice = createSlice({
   name: '@@todoLists',
