@@ -18,6 +18,9 @@ const slice = createSlice({
 
       if (index !== -1) state.splice(index, 1)
     },
+    createTodoList(state, action: PayloadAction<{ todoList: TodoListType }>) {
+      state.unshift({ ...action.payload.todoList, filter: 'all', entityStatus: 'idle' })
+    },
   },
 })
 
