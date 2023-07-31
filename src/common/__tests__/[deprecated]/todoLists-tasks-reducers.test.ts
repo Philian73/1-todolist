@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 
-import { tasksReducer } from 'features/Tasks/model/[deprecated]/tasksReducer.ts'
+import { _tasksReducer } from 'features/Tasks/model/[deprecated]/tasksReducer.ts'
 import { TaskPriorities, TaskStatuses, TasksType } from 'features/Tasks/model/types.ts'
 import { _todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
 import { _todoListsReducer } from 'features/TodoLists/model/[deprecated]/todoListsReducer.ts'
@@ -17,7 +17,7 @@ test('ids should be equals', () => {
     addedDate: new Date().toISOString(),
   })
 
-  const endTasksState = tasksReducer(initialTasksState, action)
+  const endTasksState = _tasksReducer(initialTasksState, action)
   const endTodoListsState = _todoListsReducer(initialTodoListsState, action)
 
   const keys = Object.keys(endTasksState)
@@ -59,7 +59,7 @@ test('TodoLists and their tasks should been cleared', () => {
 
   const action = _todoListsActions.clearTodoLists()
 
-  const endTasksState = tasksReducer(initialTasksState, action)
+  const endTasksState = _tasksReducer(initialTasksState, action)
   const endTodoListsState = _todoListsReducer(initialTodoListsState, action)
 
   const keys = Object.keys(endTasksState)

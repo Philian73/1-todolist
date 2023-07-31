@@ -6,7 +6,7 @@ import { SetDeleteCreateClearTodoListsActionsType } from 'features/TodoLists/mod
 
 const initialState = {} as TasksType
 
-export const tasksReducer = (state = initialState, action: ActionsType): TasksType => {
+export const _tasksReducer = (state = initialState, action: ActionsType): TasksType => {
   switch (action.type) {
     case 'TODOLISTS/SET-TODOLISTS':
       return action.payload.todoLists.reduce((acc, todoList) => ({ ...acc, [todoList.id]: [] }), {})

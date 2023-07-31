@@ -1,6 +1,6 @@
 import { TaskType, UpdateTaskModelType } from '../types.ts'
 
-export const tasksActions = {
+export const _tasksActions = {
   setTasks(todoListID: string, tasks: TaskType[]) {
     return {
       type: 'TASKS/SET-TASKS',
@@ -28,4 +28,4 @@ export const tasksActions = {
 }
 
 // TYPES
-export type TasksActionsType = typeof tasksActions
+export type TasksActionsType = typeof _tasksActions

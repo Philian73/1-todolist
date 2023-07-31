@@ -7,7 +7,7 @@ import { appActions } from 'app/model/slice.ts'
 import { AppThunkType } from 'app/store.ts'
 import { APIResultCodes } from 'common/api'
 import { errorAPIHandler, handlerServerNetworkError } from 'common/utils'
-import { tasksThunks } from 'features/Tasks/model/[deprecated]/thunks.ts'
+import { tasksThunks } from 'features/Tasks/model/slice.ts'
 
 export const _todoListsThunks = {
   getTodoLists(): AppThunkType {

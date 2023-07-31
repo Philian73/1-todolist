@@ -2,12 +2,12 @@ import { describe, beforeEach, it, expect } from 'vitest'
 
 import { TaskPriorities, TaskStatuses, TasksType } from '../types.ts'
 
-import { tasksActions } from './actions.ts'
-import { tasksReducer } from './tasksReducer.ts'
+import { _tasksActions } from './actions.ts'
+import { _tasksReducer } from './tasksReducer.ts'
 
 import { _todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
 
-describe('tasksReducer', () => {
+describe('_tasksReducer', () => {
   let todoListID_1: string
   let todoListID_2: string
   let initialState: TasksType
@@ -103,8 +103,8 @@ describe('tasksReducer', () => {
   })
 
   it('correct task should be deleted from correct array', () => {
-    const action = tasksActions.deleteTask(todoListID_2, '2')
-    const endState = tasksReducer(initialState, action)
+    const action = _tasksActions.deleteTask(todoListID_2, '2')
+    const endState = _tasksReducer(initialState, action)
 
     expect(endState[todoListID_1]).toHaveLength(3)
     expect(endState[todoListID_2]).toHaveLength(2)
@@ -115,7 +115,7 @@ describe('tasksReducer', () => {
   it('correct task should be added to correct array', () => {
     const newTaskTitle = 'New Task'
 
-    const action = tasksActions.createTask({
+    const action = _tasksActions.createTask({
       id: 'test-id',
       title: newTaskTitle,
       status: TaskStatuses.New,
@@ -127,7 +127,7 @@ describe('tasksReducer', () => {
       order: -3,
       todoListId: todoListID_2,
     })
-    const endState = tasksReducer(initialState, action)
+    const endState = _tasksReducer(initialState, action)
 
     expect(endState[todoListID_1]).toHaveLength(3)
     expect(endState[todoListID_2]).toHaveLength(4)
@@ -141,8 +141,8 @@ describe('tasksReducer', () => {
 
     const task = initialState[todoListID_2]['2']
 
-    const action = tasksActions.updateTask(todoListID_2, '2', { ...task, title: newTitleTask })
-    const endState = tasksReducer(initialState, action)
+    const action = _tasksActions.updateTask(todoListID_2, '2', { ...task, title: newTitleTask })
+    const endState = _tasksReducer(initialState, action)
 
     expect(endState[todoListID_1][1].title).toBe('JS')
     expect(endState[todoListID_2][1].title).toBe(newTitleTask)
@@ -151,11 +151,11 @@ describe('tasksReducer', () => {
   it('status of specified task should be changed', () => {
     const task = initialState[todoListID_2]['2']
 
-    const action = tasksActions.updateTask(todoListID_2, '2', {
+    const action = _tasksActions.updateTask(todoListID_2, '2', {
       ...task,
       status: TaskStatuses.New,
     })
-    const endState = tasksReducer(initialState, action)
+    const endState = _tasksReducer(initialState, action)
 
     expect(endState[todoListID_1][1].status).toBe(TaskStatuses.Completed)
     expect(endState[todoListID_2][1].status).toBe(TaskStatuses.New)
@@ -164,11 +164,11 @@ describe('tasksReducer', () => {
   it('entityStatus of specified task should be changed', () => {
     const task = initialState[todoListID_2]['2']
 
-    const action = tasksActions.updateTask(todoListID_2, '2', {
+    const action = _tasksActions.updateTask(todoListID_2, '2', {
       ...task,
       entityStatus: 'loading',
     })
-    const endState = tasksReducer(initialState, action)
+    const endState = _tasksReducer(initialState, action)
 
     expect(endState[todoListID_1][1].entityStatus).toBe('idle')
     expect(endState[todoListID_2][1].entityStatus).toBe('loading')
@@ -176,7 +176,7 @@ describe('tasksReducer', () => {
 
   it('property with todolistId should be deleted', () => {
     const action = _todoListsActions.deleteTodoList(todoListID_2)
-    const endState = tasksReducer(initialState, action)
+    const endState = _tasksReducer(initialState, action)
 
     const keys = Object.keys(endState)
 
@@ -191,7 +191,7 @@ describe('tasksReducer', () => {
       order: 0,
       addedDate: new Date().toISOString(),
     })
-    const endState = tasksReducer(initialState, action)
+    const endState = _tasksReducer(initialState, action)
 
     const keys = Object.keys(endState)
     const newKey = keys.find(key => key !== todoListID_1 && key !== todoListID_2)
@@ -209,7 +209,7 @@ describe('tasksReducer', () => {
       { id: todoListID_1, title: 'some-title-1', addedDate: new Date().toISOString(), order: -1 },
       { id: todoListID_2, title: 'some-title-2', addedDate: new Date().toISOString(), order: 0 },
     ])
-    const endState = tasksReducer({}, action)
+    const endState = _tasksReducer({}, action)
 
     const keys = Object.keys(endState)
 
@@ -219,9 +219,9 @@ describe('tasksReducer', () => {
   })
 
   it('tasks should be added for todoList', () => {
-    const action = tasksActions.setTasks(todoListID_1, initialState[todoListID_1])
+    const action = _tasksActions.setTasks(todoListID_1, initialState[todoListID_1])
 
-    const endState = tasksReducer(
+    const endState = _tasksReducer(
       {
         [todoListID_1]: [],
         [todoListID_2]: [],
