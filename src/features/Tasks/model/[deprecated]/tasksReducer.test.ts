@@ -5,7 +5,7 @@ import { TaskPriorities, TaskStatuses, TasksType } from '../types.ts'
 import { tasksActions } from './actions.ts'
 import { tasksReducer } from './tasksReducer.ts'
 
-import { todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
+import { _todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
 
 describe('tasksReducer', () => {
   let todoListID_1: string
@@ -175,7 +175,7 @@ describe('tasksReducer', () => {
   })
 
   it('property with todolistId should be deleted', () => {
-    const action = todoListsActions.deleteTodoList(todoListID_2)
+    const action = _todoListsActions.deleteTodoList(todoListID_2)
     const endState = tasksReducer(initialState, action)
 
     const keys = Object.keys(endState)
@@ -185,7 +185,7 @@ describe('tasksReducer', () => {
   })
 
   it('new array should be added when new todolist is added', () => {
-    const action = todoListsActions.createTodoList({
+    const action = _todoListsActions.createTodoList({
       id: 'some-id',
       title: 'some-title',
       order: 0,
@@ -205,7 +205,7 @@ describe('tasksReducer', () => {
   })
 
   it('empty arrays should be added when we set todoLists', () => {
-    const action = todoListsActions.setTodoLists([
+    const action = _todoListsActions.setTodoLists([
       { id: todoListID_1, title: 'some-title-1', addedDate: new Date().toISOString(), order: -1 },
       { id: todoListID_2, title: 'some-title-2', addedDate: new Date().toISOString(), order: 0 },
     ])

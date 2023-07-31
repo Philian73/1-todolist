@@ -7,7 +7,7 @@ import { AppThunkType } from 'app/store.ts'
 import { APIResultCodes } from 'common/api'
 import { errorAPIHandler, handlerServerNetworkError } from 'common/utils'
 import { tasksAPI } from 'features/Tasks/api'
-import { todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
+import { _todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
 
 export const tasksThunks = {
   getTasks(todoListID: string): AppThunkType {
@@ -37,7 +37,7 @@ export const tasksThunks = {
   createTask(todoListID: string, title: string): AppThunkType {
     return async dispatch => {
       dispatch(appActions.setAppStatus({ status: 'loading' }))
-      dispatch(todoListsActions.updateTodoList(todoListID, { entityStatus: 'loading' }))
+      dispatch(_todoListsActions.updateTodoList(todoListID, { entityStatus: 'loading' }))
       try {
         const response = await tasksAPI.createTask(todoListID, title)
 
@@ -50,7 +50,7 @@ export const tasksThunks = {
       } catch (error) {
         handlerServerNetworkError(error, dispatch)
       } finally {
-        dispatch(todoListsActions.updateTodoList(todoListID, { entityStatus: 'idle' }))
+        dispatch(_todoListsActions.updateTodoList(todoListID, { entityStatus: 'idle' }))
       }
     }
   },

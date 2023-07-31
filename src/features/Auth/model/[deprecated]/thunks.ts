@@ -7,7 +7,7 @@ import { AppThunkType } from 'app/store.ts'
 import { APIResultCodes } from 'common/api'
 import { errorAPIHandler, handlerServerNetworkError } from 'common/utils'
 import { authAPI } from 'features/Auth/api'
-import { todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
+import { _todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
 
 export const _authThunks = {
   me(): AppThunkType {
@@ -58,7 +58,7 @@ export const _authThunks = {
         if (response.data.resultCode === APIResultCodes.SUCCESS) {
           dispatch(_authActions.setIsLoggedIn(false))
           dispatch(_appActions.setAppStatus('succeeded'))
-          dispatch(todoListsActions.clearTodoLists())
+          dispatch(_todoListsActions.clearTodoLists())
         } else {
           errorAPIHandler(response.data, dispatch)
         }
