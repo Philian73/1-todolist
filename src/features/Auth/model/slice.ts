@@ -6,7 +6,7 @@ import { APIResultCodes } from 'common/api'
 import { errorAPIHandler, handlerServerNetworkError } from 'common/utils'
 import { authAPI } from 'features/Auth/api'
 import { LoginParamsType } from 'features/Auth/model/types.ts'
-import { todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
+import { todoListsActions } from 'features/TodoLists/model/slice.ts'
 
 const initialState: AuthInitialStateType = {
   isLoggedIn: false,
