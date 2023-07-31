@@ -4,13 +4,12 @@ import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import { Navigate } from 'react-router-dom'
 
-import { todoListsThunks } from '../../model/[deprecated]/thunks.ts'
-import { TodoListDomainType } from '../../model/types.ts'
-
 import { RequestStatusType } from 'app/model/types.ts'
 import { useAppSelector, useAppDispatch } from 'common/hooks'
 import { AddItemForm } from 'components'
 import { TodoList } from 'features/TodoLists'
+import { todoListsThunks } from 'features/TodoLists/model/slice.ts'
+import { TodoListDomainType } from 'features/TodoLists/model/types.ts'
 
 export const TodoLists = () => {
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
