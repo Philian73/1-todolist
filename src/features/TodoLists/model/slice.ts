@@ -64,11 +64,12 @@ export const todoListsThunks = {
         const response = await todoListsAPI.getTodoLists()
 
         dispatch(todoListsActions.setTodoLists({ todoLists: response.data }))
-        dispatch(appActions.setAppStatus({ status: 'succeeded' }))
 
-        response.data.forEach(todoList => {
-          dispatch(tasksThunks.getTasks(todoList.id))
-        })
+        for (const todoList of response.data) {
+          await dispatch(tasksThunks.getTasks(todoList.id))
+        }
+
+        dispatch(appActions.setAppStatus({ status: 'succeeded' }))
       } catch (error) {
         handlerServerNetworkError(error, dispatch)
       }
