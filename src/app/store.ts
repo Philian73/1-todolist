@@ -3,7 +3,7 @@ import { AnyAction, combineReducers } from 'redux'
 
 import { appReducer } from 'app/model/slice.ts'
 import { authReducer } from 'features/Auth/model/slice.ts'
-import { tasksReducer } from 'features/Tasks/model/[deprecated]/tasksReducer.ts'
+import { tasksReducer } from 'features/Tasks/model/slice.ts'
 import { todoListsReducer } from 'features/TodoLists/model/slice.ts'
 
 const rootReducer = combineReducers({

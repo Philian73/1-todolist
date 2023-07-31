@@ -11,7 +11,7 @@ import { useAppDispatch } from 'common/hooks'
 import { EditableSpan } from 'common/ui'
 import { AddItemForm } from 'components'
 import { Tasks } from 'features/Tasks'
-import { tasksThunks } from 'features/Tasks/model/[deprecated]/thunks.ts'
+import { tasksThunks } from 'features/Tasks/model/slice.ts'
 import { todoListsActions, todoListsThunks } from 'features/TodoLists/model/slice.ts'
 import { FilterValuesType, TodoListDomainType } from 'features/TodoLists/model/types.ts'
 
