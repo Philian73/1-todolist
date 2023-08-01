@@ -6,6 +6,7 @@ import { TaskDomainType, TaskStatuses } from '../../model/types.ts'
 
 import { useAppSelector } from 'common/hooks'
 import { Task } from 'features/Tasks'
+import { tasksSelectors } from 'features/Tasks/model/selectors.ts'
 import { FilterValuesType } from 'features/TodoLists/model/types.ts'
 
 type PropsType = {
@@ -14,7 +15,7 @@ type PropsType = {
   todoListStatus: boolean
 }
 export const Tasks: FC<PropsType> = memo(({ todoListID, filter, todoListStatus }) => {
-  const tasks = useAppSelector<TaskDomainType[]>(state => state.tasks[todoListID])
+  const tasks = useAppSelector(tasksSelectors.selectTasksByTodoListID(todoListID))
 
   const getTasksForRender = (
     tasks: TaskDomainType[],
