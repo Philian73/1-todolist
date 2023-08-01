@@ -3,6 +3,7 @@ import { SyntheticEvent, forwardRef } from 'react'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 
+import { appSelectors } from 'app/model/selectors.ts'
 import { appActions } from 'app/model/slice.ts'
 import { useAppDispatch, useAppSelector } from 'common/hooks'
 
@@ -11,7 +12,7 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
 ))
 
 export const ErrorSnackbar = () => {
-  const error = useAppSelector<string | null>(state => state.app.error)
+  const error = useAppSelector(appSelectors.selectError)
   const dispatch = useAppDispatch()
 
   // @ts-ignore
