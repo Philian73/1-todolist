@@ -9,10 +9,11 @@ import Typography from '@mui/material/Typography'
 
 import { appSelectors } from 'app/model/selectors.ts'
 import { useAppDispatch, useAppSelector } from 'common/hooks'
+import { authSelectors } from 'features/Auth/model/selectors.ts'
 import { authThunks } from 'features/Auth/model/slice.ts'
 
 export const Header = () => {
-  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+  const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn)
   const status = useAppSelector(appSelectors.selectStatus)
 
   const dispatch = useAppDispatch()

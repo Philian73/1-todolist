@@ -7,12 +7,13 @@ import { Navigate } from 'react-router-dom'
 import { appSelectors } from 'app/model/selectors.ts'
 import { useAppSelector, useAppDispatch } from 'common/hooks'
 import { AddItemForm } from 'components'
+import { authSelectors } from 'features/Auth/model/selectors.ts'
 import { TodoList } from 'features/TodoLists'
 import { todoListsThunks } from 'features/TodoLists/model/slice.ts'
 import { TodoListDomainType } from 'features/TodoLists/model/types.ts'
 
 export const TodoLists = () => {
-  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
+  const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn)
   const status = useAppSelector(appSelectors.selectStatus)
   const todoLists = useAppSelector<TodoListDomainType[]>(state => state.todoLists)
 
