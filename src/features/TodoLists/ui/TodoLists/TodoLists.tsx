@@ -9,13 +9,13 @@ import { useAppSelector, useAppDispatch } from 'common/hooks'
 import { AddItemForm } from 'components'
 import { authSelectors } from 'features/Auth/model/selectors.ts'
 import { TodoList } from 'features/TodoLists'
+import { todoListsSelectors } from 'features/TodoLists/model/selectors.ts'
 import { todoListsThunks } from 'features/TodoLists/model/slice.ts'
-import { TodoListDomainType } from 'features/TodoLists/model/types.ts'
 
 export const TodoLists = () => {
   const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn)
   const status = useAppSelector(appSelectors.selectStatus)
-  const todoLists = useAppSelector<TodoListDomainType[]>(state => state.todoLists)
+  const todoLists = useAppSelector(todoListsSelectors.selectTodoLists)
 
   const dispatch = useAppDispatch()
 
