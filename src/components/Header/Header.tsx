@@ -13,7 +13,7 @@ import { authSelectors } from 'features/Auth/model/selectors.ts'
 import { authThunks } from 'features/Auth/model/slice.ts'
 
 export const Header = () => {
-  const isLoggedIn = useAppSelector(authSelectors.selectIsLoggedIn)
+  const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)
   const status = useAppSelector(appSelectors.status)
 
   const dispatch = useAppDispatch()
