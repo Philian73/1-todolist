@@ -1,5 +1,5 @@
 import { AppRootStateType } from 'app/store.ts'
 
 export const todoListsSelectors = {
-  selectTodoLists: (state: AppRootStateType) => state.todoLists,
+  todoLists: (state: AppRootStateType) => state.todoLists,
 }

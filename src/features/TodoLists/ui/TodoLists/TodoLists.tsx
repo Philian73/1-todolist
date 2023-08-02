@@ -15,7 +15,7 @@ import { todoListsThunks } from 'features/TodoLists/model/slice.ts'
 export const TodoLists = () => {
   const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)
   const status = useAppSelector(appSelectors.status)
-  const todoLists = useAppSelector(todoListsSelectors.selectTodoLists)
+  const todoLists = useAppSelector(todoListsSelectors.todoLists)
 
   const dispatch = useAppDispatch()
 
