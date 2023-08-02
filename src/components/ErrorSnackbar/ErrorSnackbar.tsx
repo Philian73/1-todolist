@@ -12,7 +12,7 @@ const Alert = forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
 ))
 
 export const ErrorSnackbar = () => {
-  const error = useAppSelector(appSelectors.selectError)
+  const error = useAppSelector(appSelectors.error)
   const dispatch = useAppDispatch()
 
   // @ts-ignore

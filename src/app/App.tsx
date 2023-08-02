@@ -13,7 +13,7 @@ import { authThunks } from 'features/Auth/model/slice.ts'
 import { TodoLists } from 'features/TodoLists'
 
 const App = () => {
-  const isInitialized = useAppSelector(appSelectors.selectIsInitialized)
+  const isInitialized = useAppSelector(appSelectors.isInitialized)
 
   const dispatch = useAppDispatch()
 
