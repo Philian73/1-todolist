@@ -6,11 +6,11 @@ import { AppRootStateType } from 'app/store.ts'
 import { FilterValuesType } from 'features/TodoLists/model/types.ts'
 
 export const tasksSelectors = {
-  selectTasksByTodoListID(todoListID: string) {
+  tasksByTodoListID(todoListID: string) {
     return (state: AppRootStateType) => state.tasks[todoListID]
   },
-  selectFilteredTasksByTodoListID(todoListID: string, filter: FilterValuesType) {
-    return createSelector(this.selectTasksByTodoListID(todoListID), tasks => {
+  filteredTasksByTodoListID(todoListID: string, filter: FilterValuesType) {
+    return createSelector(this.tasksByTodoListID(todoListID), tasks => {
       switch (filter) {
         case 'active':
           return tasks.filter(task => task.status === TaskStatuses.New)

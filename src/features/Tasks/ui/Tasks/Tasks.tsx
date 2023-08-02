@@ -13,7 +13,7 @@ type PropsType = {
   todoListStatus: boolean
 }
 export const Tasks: FC<PropsType> = memo(({ todoListID, filter, todoListStatus }) => {
-  const tasks = useAppSelector(tasksSelectors.selectFilteredTasksByTodoListID(todoListID, filter))
+  const tasks = useAppSelector(tasksSelectors.filteredTasksByTodoListID(todoListID, filter))
 
   const tasksMap = tasks.map(task => {
     return <Task key={task.id} task={task} status={todoListStatus} />
