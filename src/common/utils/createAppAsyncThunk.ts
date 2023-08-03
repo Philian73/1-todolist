@@ -6,4 +6,4 @@ export const createAppAsyncThunk = createAsyncThunk.withTypes<{
   state: AppRootStateType
   dispatch: AppDispatchType
   rejectValue: null
-}>
+}>()
