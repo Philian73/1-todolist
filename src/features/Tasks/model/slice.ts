@@ -62,9 +62,7 @@ const slice = createSlice({
       .addCase(todoListsActions.createTodoList, (state, action) => {
         state[action.payload.todoList.id] = []
       })
-      .addCase(todoListsActions.clearTodoLists, state => {
-        Object.keys(state).forEach(key => delete state[key])
-      })
+      .addCase(todoListsActions.clearTodoLists, () => ({}))
   },
 })
 
