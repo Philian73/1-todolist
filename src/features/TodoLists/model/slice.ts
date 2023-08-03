@@ -56,7 +56,7 @@ const slice = createSlice({
 export const todoListsReducer = slice.reducer
 export const todoListsActions = slice.actions
 export const todoListsThunks = {
-  getTodoLists(): AppThunkType {
+  fetchTodoLists(): AppThunkType {
     return async dispatch => {
       dispatch(appActions.setAppStatus({ status: 'loading' }))
 

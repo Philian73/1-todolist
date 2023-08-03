@@ -22,7 +22,7 @@ export const TodoLists = () => {
   useEffect(() => {
     if (!isLoggedIn) return
 
-    dispatch(todoListsThunks.getTodoLists())
+    dispatch(todoListsThunks.fetchTodoLists())
   }, [])
 
   const createTodoList = useCallback(
