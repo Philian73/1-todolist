@@ -66,7 +66,7 @@ export const todoListsThunks = {
         dispatch(todoListsActions.setTodoLists({ todoLists: response.data }))
 
         for (const todoList of response.data) {
-          await dispatch(tasksThunks.getTasks(todoList.id))
+          await dispatch(tasksThunks.fetchTasks(todoList.id))
         }
 
         dispatch(appActions.setAppStatus({ status: 'succeeded' }))

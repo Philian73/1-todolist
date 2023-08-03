@@ -69,7 +69,7 @@ const slice = createSlice({
 export const tasksReducer = slice.reducer
 export const tasksActions = slice.actions
 export const tasksThunks = {
-  getTasks(todoListID: string): AppThunkType {
+  fetchTasks(todoListID: string): AppThunkType {
     return async dispatch => {
       const response = await tasksAPI.getTasks(todoListID)
 
