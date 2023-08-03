@@ -7,7 +7,7 @@ import { appActions } from 'app/model/slice.ts'
 import { AppThunkType } from 'app/store.ts'
 import { APIResultCodes } from 'common/api'
 import { errorAPIHandler, handlerServerNetworkError } from 'common/utils'
-import { tasksThunks } from 'features/Tasks/model/slice.ts'
+import { _tasksThunks } from 'features/Tasks/model/[deprecated]/thunks.ts'
 
 export const _todoListsThunks = {
   getTodoLists(): AppThunkType {
@@ -21,7 +21,7 @@ export const _todoListsThunks = {
         dispatch(appActions.setAppStatus({ status: 'succeeded' }))
 
         response.data.forEach(todoList => {
-          dispatch(tasksThunks.getTasks(todoList.id))
+          dispatch(_tasksThunks.getTasks(todoList.id))
         })
       } catch (error) {
         handlerServerNetworkError(error, dispatch)
