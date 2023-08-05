@@ -76,7 +76,7 @@ const fetchTasks = createAppAsyncThunk<{ todoListID: string; tasks: TaskType[] }
   '@@tasks/fetch-tasks',
   async (todoListID, { dispatch, rejectWithValue }) => {
     try {
-      const response = await tasksAPI.getTasks('todoListID')
+      const response = await tasksAPI.getTasks(todoListID)
       const tasks = response.data.items
 
       return { todoListID, tasks }
