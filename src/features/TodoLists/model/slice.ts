@@ -18,9 +18,6 @@ const slice = createSlice({
     clearTodoLists() {
       return []
     },
-    createTodoList(state, action: PayloadAction<{ todoList: TodoListType }>) {
-      state.unshift({ ...action.payload.todoList, filter: 'all', entityStatus: 'idle' })
-    },
     updateTitleTodoList(state, action: PayloadAction<{ ID: string; title: string }>) {
       const index = state.findIndex(todoList => todoList.id === action.payload.ID)
 
@@ -51,6 +48,9 @@ const slice = createSlice({
         const index = state.findIndex(todoList => todoList.id === action.payload.ID)
 
         if (index !== -1) state.splice(index, 1)
+      })
+      .addCase(createTodoList.fulfilled, (state, action) => {
+        state.unshift({ ...action.payload.todoList, filter: 'all', entityStatus: 'idle' })
       })
   },
 })
@@ -97,24 +97,32 @@ const deleteTodoList = createAppAsyncThunk<{ ID: string }, string>(
   }
 )
 
-const createTodoList = (title: string): AppThunkType => {
-  return async dispatch => {
+const createTodoList = createAppAsyncThunk<{ todoList: TodoListType }, string>(
+  '@@todoLists/create-todoList',
+  async (title, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
 
     try {
       const response = await todoListsAPI.createTodoList(title)
+      const todoList = response.data.data.item
 
       if (response.data.resultCode === APIResultCodes.SUCCESS) {
-        dispatch(todoListsActions.createTodoList({ todoList: response.data.data.item }))
         dispatch(appActions.setAppStatus({ status: 'succeeded' }))
+
+        return { todoList }
       } else {
-        errorAPIHandler<{ item: TodoListType }>(response.data, dispatch)
+        errorAPIHandler(response.data, dispatch)
+
+        return rejectWithValue(null)
       }
     } catch (error) {
       handlerServerNetworkError(error, dispatch)
+
+      return rejectWithValue(null)
     }
   }
-}
+)
+
 const updateTitleTodoList = (ID: string, title: string): AppThunkType => {
   return async dispatch => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))

@@ -49,16 +49,16 @@ const slice = createSlice({
           state[todoList.id] = []
         })
       })
+      .addCase(todoListsThunks.deleteTodoList.fulfilled, (state, action) => {
+        delete state[action.payload.ID]
+      })
+      .addCase(todoListsThunks.createTodoList.fulfilled, (state, action) => {
+        state[action.payload.todoList.id] = []
+      })
       .addCase(fetchTasks.fulfilled, (state, action) => {
         action.payload.tasks.forEach(task => {
           state[action.payload.todoListID].push({ ...task, entityStatus: 'idle' })
         })
-      })
-      .addCase(todoListsThunks.deleteTodoList.fulfilled, (state, action) => {
-        delete state[action.payload.ID]
-      })
-      .addCase(todoListsActions.createTodoList, (state, action) => {
-        state[action.payload.todoList.id] = []
       })
       .addCase(todoListsActions.clearTodoLists, () => ({}))
   },
