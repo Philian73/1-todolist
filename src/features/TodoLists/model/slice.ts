@@ -18,11 +18,6 @@ const slice = createSlice({
     clearTodoLists() {
       return []
     },
-    deleteTodoList(state, action: PayloadAction<{ ID: string }>) {
-      const index = state.findIndex(todoList => todoList.id === action.payload.ID)
-
-      if (index !== -1) state.splice(index, 1)
-    },
     createTodoList(state, action: PayloadAction<{ todoList: TodoListType }>) {
       state.unshift({ ...action.payload.todoList, filter: 'all', entityStatus: 'idle' })
     },
@@ -46,11 +41,17 @@ const slice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(fetchTodoLists.fulfilled, (state, action) => {
-      action.payload.todoLists.forEach(todoList => {
-        state.push({ ...todoList, filter: 'all', entityStatus: 'idle' })
+    builder
+      .addCase(fetchTodoLists.fulfilled, (state, action) => {
+        action.payload.todoLists.forEach(todoList => {
+          state.push({ ...todoList, filter: 'all', entityStatus: 'idle' })
+        })
       })
-    })
+      .addCase(deleteTodoList.fulfilled, (state, action) => {
+        const index = state.findIndex(todoList => todoList.id === action.payload.ID)
+
+        if (index !== -1) state.splice(index, 1)
+      })
   },
 })
 
@@ -74,23 +75,28 @@ const fetchTodoLists = createAppAsyncThunk<{ todoLists: TodoListType[] }, undefi
   }
 )
 
-const deleteTodoList = (ID: string): AppThunkType => {
-  return async dispatch => {
+const deleteTodoList = createAppAsyncThunk<{ ID: string }, string>(
+  '@@todoLists/delete-todoList',
+  async (ID, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
     dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'loading' }))
 
     try {
       await todoListsAPI.deleteTodoList(ID)
 
-      dispatch(todoListsActions.deleteTodoList({ ID }))
       dispatch(appActions.setAppStatus({ status: 'succeeded' }))
+
+      return { ID }
     } catch (error) {
       handlerServerNetworkError(error, dispatch)
+
+      return rejectWithValue(null)
     } finally {
       dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'idle' }))
     }
   }
-}
+)
+
 const createTodoList = (title: string): AppThunkType => {
   return async dispatch => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))

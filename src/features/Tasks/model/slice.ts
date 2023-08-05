@@ -54,7 +54,7 @@ const slice = createSlice({
           state[action.payload.todoListID].push({ ...task, entityStatus: 'idle' })
         })
       })
-      .addCase(todoListsActions.deleteTodoList, (state, action) => {
+      .addCase(todoListsThunks.deleteTodoList.fulfilled, (state, action) => {
         delete state[action.payload.ID]
       })
       .addCase(todoListsActions.createTodoList, (state, action) => {
