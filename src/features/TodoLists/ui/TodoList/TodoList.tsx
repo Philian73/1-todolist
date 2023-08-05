@@ -21,36 +21,36 @@ type PropsType = {
 export const TodoList: FC<PropsType> = memo(({ todoList }) => {
   const dispatch = useAppDispatch()
 
-  const { id, title, filter, entityStatus } = todoList
+  const { id: ID, title, filter, entityStatus } = todoList
 
   const updateFilterTodoList = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       dispatch(
         todoListsActions.updateFilterTodoList({
-          ID: id,
+          ID,
           filter: e.currentTarget.name as FilterValuesType,
         })
       )
     },
-    [dispatch, id]
+    [dispatch, ID]
   )
 
   const updateTitleTodoList = useCallback(
     (title: string) => {
-      dispatch(todoListsThunks.updateTitleTodoList(id, title))
+      dispatch(todoListsThunks.updateTitleTodoList({ ID, title }))
     },
-    [dispatch, id]
+    [dispatch, ID]
   )
 
   const deleteTodoList = useCallback(() => {
-    dispatch(todoListsThunks.deleteTodoList(id))
-  }, [dispatch, id])
+    dispatch(todoListsThunks.deleteTodoList(ID))
+  }, [dispatch, ID])
 
   const createTask = useCallback(
     (title: string) => {
-      dispatch(tasksThunks.createTask(id, title))
+      dispatch(tasksThunks.createTask(ID, title))
     },
-    [dispatch, id]
+    [dispatch, ID]
   )
 
   const getFilterClasses = (value: FilterValuesType) => (filter === value ? 'outlined' : 'text')
@@ -65,7 +65,7 @@ export const TodoList: FC<PropsType> = memo(({ todoList }) => {
         </IconButton>
       </Typography>
       <AddItemForm addItem={createTask} disabled={disabledCondition} />
-      <Tasks todoListID={id} filter={filter} todoListStatus={disabledCondition} />
+      <Tasks todoListID={ID} filter={filter} todoListStatus={disabledCondition} />
       <div className={s.todoListControls}>
         <Button
           name="all"
