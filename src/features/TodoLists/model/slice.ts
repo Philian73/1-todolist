@@ -7,7 +7,6 @@ import { RequestStatusType } from 'app/model/types.ts'
 import { AppThunkType } from 'app/store.ts'
 import { APIResultCodes } from 'common/api'
 import { errorAPIHandler, handlerServerNetworkError } from 'common/utils'
-import { tasksThunks } from 'features/Tasks/model/slice.ts'
 import { todoListsAPI } from 'features/TodoLists/api'
 
 const initialState: TodoListsInitialStateType = []
