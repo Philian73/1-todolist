@@ -8,7 +8,7 @@ import { appActions } from 'app/model/slice.ts'
 import { AppThunkType } from 'app/store.ts'
 import { APIResultCodes } from 'common/api'
 import { createAppAsyncThunk, errorAPIHandler, handlerServerNetworkError } from 'common/utils'
-import { todoListsActions } from 'features/TodoLists/model/slice.ts'
+import { todoListsActions, todoListsThunks } from 'features/TodoLists/model/slice.ts'
 
 const initialState: TasksInitialStateType = {}
 
@@ -44,14 +44,14 @@ const slice = createSlice({
   },
   extraReducers: builder => {
     builder
+      .addCase(todoListsThunks.fetchTodoLists.fulfilled, (state, action) => {
+        action.payload.todoLists.forEach(todoList => {
+          state[todoList.id] = []
+        })
+      })
       .addCase(fetchTasks.fulfilled, (state, action) => {
         action.payload.tasks.forEach(task => {
           state[action.payload.todoListID].push({ ...task, entityStatus: 'idle' })
-        })
-      })
-      .addCase(todoListsActions.setTodoLists, (state, action) => {
-        action.payload.todoLists.forEach(todoList => {
-          state[todoList.id] = []
         })
       })
       .addCase(todoListsActions.deleteTodoList, (state, action) => {

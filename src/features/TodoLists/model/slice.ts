@@ -6,7 +6,7 @@ import { appActions } from 'app/model/slice.ts'
 import { RequestStatusType } from 'app/model/types.ts'
 import { AppThunkType } from 'app/store.ts'
 import { APIResultCodes } from 'common/api'
-import { errorAPIHandler, handlerServerNetworkError } from 'common/utils'
+import { createAppAsyncThunk, errorAPIHandler, handlerServerNetworkError } from 'common/utils'
 import { todoListsAPI } from 'features/TodoLists/api'
 
 const initialState: TodoListsInitialStateType = []
@@ -15,11 +15,6 @@ const slice = createSlice({
   name: '@@todoLists',
   initialState,
   reducers: {
-    setTodoLists(state, action: PayloadAction<{ todoLists: TodoListType[] }>) {
-      action.payload.todoLists.forEach(todoList => {
-        state.push({ ...todoList, filter: 'all', entityStatus: 'idle' })
-      })
-    },
     clearTodoLists() {
       return []
     },
@@ -50,22 +45,35 @@ const slice = createSlice({
       if (index !== -1) state[index].entityStatus = action.payload.entityStatus
     },
   },
+  extraReducers: builder => {
+    builder.addCase(fetchTodoLists.fulfilled, (state, action) => {
+      action.payload.todoLists.forEach(todoList => {
+        state.push({ ...todoList, filter: 'all', entityStatus: 'idle' })
+      })
+    })
+  },
 })
 
-const fetchTodoLists = (): AppThunkType => {
-  return async dispatch => {
+const fetchTodoLists = createAppAsyncThunk<{ todoLists: TodoListType[] }, undefined>(
+  '@@todoLists/fetch-todoLists',
+  async (_, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
 
     try {
       const response = await todoListsAPI.getTodoLists()
+      const todoLists = response.data
 
-      dispatch(todoListsActions.setTodoLists({ todoLists: response.data }))
       dispatch(appActions.setAppStatus({ status: 'succeeded' }))
+
+      return { todoLists }
     } catch (error) {
       handlerServerNetworkError(error, dispatch)
+
+      return rejectWithValue(null)
     }
   }
-}
+)
+
 const deleteTodoList = (ID: string): AppThunkType => {
   return async dispatch => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
