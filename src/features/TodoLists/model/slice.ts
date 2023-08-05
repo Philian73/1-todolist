@@ -53,84 +53,84 @@ const slice = createSlice({
   },
 })
 
+const fetchTodoLists = (): AppThunkType => {
+  return async dispatch => {
+    dispatch(appActions.setAppStatus({ status: 'loading' }))
+
+    try {
+      const response = await todoListsAPI.getTodoLists()
+
+      dispatch(todoListsActions.setTodoLists({ todoLists: response.data }))
+      dispatch(appActions.setAppStatus({ status: 'succeeded' }))
+    } catch (error) {
+      handlerServerNetworkError(error, dispatch)
+    }
+  }
+}
+const deleteTodoList = (ID: string): AppThunkType => {
+  return async dispatch => {
+    dispatch(appActions.setAppStatus({ status: 'loading' }))
+    dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'loading' }))
+
+    try {
+      await todoListsAPI.deleteTodoList(ID)
+
+      dispatch(todoListsActions.deleteTodoList({ ID }))
+      dispatch(appActions.setAppStatus({ status: 'succeeded' }))
+    } catch (error) {
+      handlerServerNetworkError(error, dispatch)
+    } finally {
+      dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'idle' }))
+    }
+  }
+}
+const createTodoList = (title: string): AppThunkType => {
+  return async dispatch => {
+    dispatch(appActions.setAppStatus({ status: 'loading' }))
+
+    try {
+      const response = await todoListsAPI.createTodoList(title)
+
+      if (response.data.resultCode === APIResultCodes.SUCCESS) {
+        dispatch(todoListsActions.createTodoList({ todoList: response.data.data.item }))
+        dispatch(appActions.setAppStatus({ status: 'succeeded' }))
+      } else {
+        errorAPIHandler<{ item: TodoListType }>(response.data, dispatch)
+      }
+    } catch (error) {
+      handlerServerNetworkError(error, dispatch)
+    }
+  }
+}
+const updateTitleTodoList = (ID: string, title: string): AppThunkType => {
+  return async dispatch => {
+    dispatch(appActions.setAppStatus({ status: 'loading' }))
+    dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'loading' }))
+
+    try {
+      const response = await todoListsAPI.updateTitleTodoList(ID, title)
+
+      if (response.data.resultCode === APIResultCodes.SUCCESS) {
+        dispatch(todoListsActions.updateTitleTodoList({ ID, title }))
+        dispatch(appActions.setAppStatus({ status: 'succeeded' }))
+      } else {
+        errorAPIHandler(response.data, dispatch)
+      }
+    } catch (error) {
+      handlerServerNetworkError(error, dispatch)
+    } finally {
+      dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'idle' }))
+    }
+  }
+}
+
 export const todoListsReducer = slice.reducer
 export const todoListsActions = slice.actions
 export const todoListsThunks = {
-  fetchTodoLists(): AppThunkType {
-    return async dispatch => {
-      dispatch(appActions.setAppStatus({ status: 'loading' }))
-
-      try {
-        const response = await todoListsAPI.getTodoLists()
-
-        dispatch(todoListsActions.setTodoLists({ todoLists: response.data }))
-
-        for (const todoList of response.data) {
-          await dispatch(tasksThunks.fetchTasks(todoList.id))
-        }
-
-        dispatch(appActions.setAppStatus({ status: 'succeeded' }))
-      } catch (error) {
-        handlerServerNetworkError(error, dispatch)
-      }
-    }
-  },
-  deleteTodoList(ID: string): AppThunkType {
-    return async dispatch => {
-      dispatch(appActions.setAppStatus({ status: 'loading' }))
-      dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'loading' }))
-
-      try {
-        await todoListsAPI.deleteTodoList(ID)
-
-        dispatch(todoListsActions.deleteTodoList({ ID }))
-        dispatch(appActions.setAppStatus({ status: 'succeeded' }))
-      } catch (error) {
-        handlerServerNetworkError(error, dispatch)
-      } finally {
-        dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'idle' }))
-      }
-    }
-  },
-  createTodoList(title: string): AppThunkType {
-    return async dispatch => {
-      dispatch(appActions.setAppStatus({ status: 'loading' }))
-
-      try {
-        const response = await todoListsAPI.createTodoList(title)
-
-        if (response.data.resultCode === APIResultCodes.SUCCESS) {
-          dispatch(todoListsActions.createTodoList({ todoList: response.data.data.item }))
-          dispatch(appActions.setAppStatus({ status: 'succeeded' }))
-        } else {
-          errorAPIHandler<{ item: TodoListType }>(response.data, dispatch)
-        }
-      } catch (error) {
-        handlerServerNetworkError(error, dispatch)
-      }
-    }
-  },
-  updateTitleTodoList(ID: string, title: string): AppThunkType {
-    return async dispatch => {
-      dispatch(appActions.setAppStatus({ status: 'loading' }))
-      dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'loading' }))
-
-      try {
-        const response = await todoListsAPI.updateTitleTodoList(ID, title)
-
-        if (response.data.resultCode === APIResultCodes.SUCCESS) {
-          dispatch(todoListsActions.updateTitleTodoList({ ID, title }))
-          dispatch(appActions.setAppStatus({ status: 'succeeded' }))
-        } else {
-          errorAPIHandler(response.data, dispatch)
-        }
-      } catch (error) {
-        handlerServerNetworkError(error, dispatch)
-      } finally {
-        dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'idle' }))
-      }
-    }
-  },
+  fetchTodoLists,
+  deleteTodoList,
+  createTodoList,
+  updateTitleTodoList,
 }
 
 // TYPES
