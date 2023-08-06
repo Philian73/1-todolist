@@ -49,30 +49,39 @@ const deleteTask = createAppAsyncThunk<
   }
 })
 
-const createTask = (todoListID: string, title: string): AppThunkType => {
-  return async dispatch => {
+const createTask = createAppAsyncThunk<{ task: TaskType }, { todoListID: string; title: string }>(
+  '@@tasks/create-task',
+  async ({ todoListID, title }, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
     dispatch(
       todoListsActions.updateEntityStatusTodoList({ ID: todoListID, entityStatus: 'loading' })
     )
+
     try {
       const response = await tasksAPI.createTask(todoListID, title)
+      const task = response.data.data.item
 
       if (response.data.resultCode === APIResultCodes.SUCCESS) {
-        dispatch(tasksActions.createTask({ task: response.data.data.item }))
         dispatch(appActions.setAppStatus({ status: 'succeeded' }))
+
+        return { task }
       } else {
-        errorAPIHandler<{ item: TaskType }>(response.data, dispatch)
+        errorAPIHandler(response.data, dispatch)
+
+        return rejectWithValue(null)
       }
     } catch (error) {
       handlerServerNetworkError(error, dispatch)
+
+      return rejectWithValue(null)
     } finally {
       dispatch(
         todoListsActions.updateEntityStatusTodoList({ ID: todoListID, entityStatus: 'idle' })
       )
     }
   }
-}
+)
+
 const updateTask = (
   todoListID: string,
   taskID: string,
@@ -119,12 +128,6 @@ const slice = createSlice({
   name: '@@tasks',
   initialState,
   reducers: {
-    createTask(state, action: PayloadAction<{ task: TaskType }>) {
-      state[action.payload.task.todoListId].unshift({
-        ...action.payload.task,
-        entityStatus: 'idle',
-      })
-    },
     updateTask(
       state,
       action: PayloadAction<{
@@ -162,6 +165,12 @@ const slice = createSlice({
         const index = tasks.findIndex(task => task.id === action.payload.taskID)
 
         if (index !== -1) tasks.splice(index, 1)
+      })
+      .addCase(createTask.fulfilled, (state, action) => {
+        state[action.payload.task.todoListId].unshift({
+          ...action.payload.task,
+          entityStatus: 'idle',
+        })
       })
       .addCase(todoListsActions.clearTodoLists, () => ({}))
   },

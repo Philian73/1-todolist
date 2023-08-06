@@ -48,7 +48,7 @@ export const TodoList: FC<PropsType> = memo(({ todoList }) => {
 
   const createTask = useCallback(
     (title: string) => {
-      dispatch(tasksThunks.createTask(ID, title))
+      dispatch(tasksThunks.createTask({ todoListID: ID, title }))
     },
     [dispatch, ID]
   )
