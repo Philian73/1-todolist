@@ -32,7 +32,7 @@ export type TaskDomainType = TaskType & {
   entityStatus: RequestStatusType
 }
 
-export type UpdateTaskModelType = Omit<TaskDomainType, 'id' | 'todoListId' | 'addedDate' | 'order'>
+export type UpdateTaskModelType = Omit<TaskType, 'id' | 'todoListId' | 'addedDate' | 'order'>
 
 export type TasksType = {
   [key: string]: TaskDomainType[]
