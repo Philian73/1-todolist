@@ -5,7 +5,7 @@ import { tasksAPI } from '../api'
 import { TasksType, TaskType, UpdateTaskModelType } from './types.ts'
 
 import { appActions } from 'app/model/slice.ts'
-import { AppThunkType } from 'app/store.ts'
+import { RequestStatusType } from 'app/model/types.ts'
 import { APIResultCodes } from 'common/api'
 import { createAppAsyncThunk, errorAPIHandler, handlerServerNetworkError } from 'common/utils'
 import { todoListsActions, todoListsThunks } from 'features/TodoLists/model/slice.ts'
@@ -32,9 +32,7 @@ const deleteTask = createAppAsyncThunk<
   { todoListID: string; taskID: string }
 >('@@tasks/delete-task', async ({ todoListID, taskID }, { dispatch, rejectWithValue }) => {
   dispatch(appActions.setAppStatus({ status: 'loading' }))
-  dispatch(
-    tasksActions.updateEntityStatusTask({ todoListID, taskID, model: { entityStatus: 'loading' } })
-  )
+  dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, entityStatus: 'loading' }))
 
   try {
     await tasksAPI.deleteTask(todoListID, taskID)
@@ -47,9 +45,7 @@ const deleteTask = createAppAsyncThunk<
 
     return rejectWithValue(null)
   } finally {
-    dispatch(
-      tasksActions.updateEntityStatusTask({ todoListID, taskID, model: { entityStatus: 'idle' } })
-    )
+    dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, entityStatus: 'idle' }))
   }
 })
 
@@ -86,24 +82,17 @@ const createTask = createAppAsyncThunk<{ task: TaskType }, { todoListID: string;
   }
 )
 
-const updateTask = (
-  todoListID: string,
-  taskID: string,
-  data: Partial<UpdateTaskModelType>
-): AppThunkType => {
-  return async (dispatch, getState) => {
+const updateTask = createAppAsyncThunk<
+  { todoListID: string; taskID: string; data: Partial<UpdateTaskModelType> },
+  { todoListID: string; taskID: string; data: Partial<UpdateTaskModelType> }
+>(
+  '@@tasks/update-task',
+  async ({ todoListID, taskID, data }, { dispatch, getState, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
-    dispatch(
-      tasksActions.updateEntityStatusTask({
-        todoListID,
-        taskID,
-        model: { entityStatus: 'loading' },
-      })
-    )
+    dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, entityStatus: 'loading' }))
 
     try {
       const task = getState().tasks[todoListID].find(task => task.id === taskID)!
-
       const model: UpdateTaskModelType = {
         title: task.title,
         deadline: task.deadline,
@@ -111,27 +100,28 @@ const updateTask = (
         priority: task.priority,
         description: task.description,
         status: task.status,
-        entityStatus: task.entityStatus,
         ...data,
       }
-
       const response = await tasksAPI.updateTask(todoListID, taskID, model)
 
       if (response.data.resultCode === APIResultCodes.SUCCESS) {
-        dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, model }))
         dispatch(appActions.setAppStatus({ status: 'succeeded' }))
+
+        return { todoListID, taskID, data: model }
       } else {
-        errorAPIHandler<{ item: TaskType }>(response.data, dispatch)
+        errorAPIHandler(response.data, dispatch)
+
+        return rejectWithValue(null)
       }
     } catch (error) {
       handlerServerNetworkError(error, dispatch)
+
+      return rejectWithValue(null)
     } finally {
-      dispatch(
-        tasksActions.updateEntityStatusTask({ todoListID, taskID, model: { entityStatus: 'idle' } })
-      )
+      dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, entityStatus: 'idle' }))
     }
   }
-}
+)
 
 //SLICE
 const initialState: TasksInitialStateType = {}
@@ -145,13 +135,14 @@ const slice = createSlice({
       action: PayloadAction<{
         todoListID: string
         taskID: string
-        model: Partial<UpdateTaskModelType>
+        entityStatus: RequestStatusType
       }>
     ) {
       const tasks = state[action.payload.todoListID]
       const index = tasks.findIndex(task => task.id === action.payload.taskID)
 
-      if (index !== -1) tasks[index] = { ...tasks[index], ...action.payload.model }
+      if (index !== -1)
+        tasks[index] = { ...tasks[index], entityStatus: action.payload.entityStatus }
     },
   },
   extraReducers: builder => {
@@ -183,6 +174,12 @@ const slice = createSlice({
           ...action.payload.task,
           entityStatus: 'idle',
         })
+      })
+      .addCase(updateTask.fulfilled, (state, action) => {
+        const tasks = state[action.payload.todoListID]
+        const index = tasks.findIndex(task => task.id === action.payload.taskID)
+
+        if (index !== -1) tasks[index] = { ...tasks[index], ...action.payload.data }
       })
       .addCase(todoListsActions.clearTodoLists, () => ({}))
   },

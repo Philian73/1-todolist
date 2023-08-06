@@ -25,8 +25,10 @@ export const Task: FC<PropsType> = memo(({ task, status }) => {
   const updateStatusTask = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       dispatch(
-        tasksThunks.updateTask(task.todoListId, task.id, {
-          status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New,
+        tasksThunks.updateTask({
+          todoListID: task.todoListId,
+          taskID: task.id,
+          data: { status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New },
         })
       )
     },
@@ -35,7 +37,9 @@ export const Task: FC<PropsType> = memo(({ task, status }) => {
 
   const updateTitleTask = useCallback(
     (title: string) => {
-      dispatch(tasksThunks.updateTask(task.todoListId, task.id, { title }))
+      dispatch(
+        tasksThunks.updateTask({ todoListID: task.todoListId, taskID: task.id, data: { title } })
+      )
     },
     [dispatch, task.todoListId, task.id]
   )
