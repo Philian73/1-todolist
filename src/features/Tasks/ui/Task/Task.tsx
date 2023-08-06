@@ -19,7 +19,7 @@ export const Task: FC<PropsType> = memo(({ task, status }) => {
   const dispatch = useAppDispatch()
 
   const deleteTask = useCallback(() => {
-    dispatch(tasksThunks.deleteTask(task.todoListId, task.id))
+    dispatch(tasksThunks.deleteTask({ todoListID: task.todoListId, taskID: task.id }))
   }, [dispatch, task.todoListId, task.id])
 
   const updateStatusTask = useCallback(

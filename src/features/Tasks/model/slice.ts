@@ -27,23 +27,28 @@ const fetchTasks = createAppAsyncThunk<{ todoListID: string; tasks: TaskType[] }
   }
 )
 
-const deleteTask = (todoListID: string, taskID: string): AppThunkType => {
-  return async dispatch => {
-    dispatch(appActions.setAppStatus({ status: 'loading' }))
-    dispatch(tasksActions.updateTask({ todoListID, taskID, model: { entityStatus: 'loading' } }))
+const deleteTask = createAppAsyncThunk<
+  { todoListID: string; taskID: string },
+  { todoListID: string; taskID: string }
+>('@@tasks/delete-task', async ({ todoListID, taskID }, { dispatch, rejectWithValue }) => {
+  dispatch(appActions.setAppStatus({ status: 'loading' }))
+  dispatch(tasksActions.updateTask({ todoListID, taskID, model: { entityStatus: 'loading' } }))
 
-    try {
-      await tasksAPI.deleteTask(todoListID, taskID)
+  try {
+    await tasksAPI.deleteTask(todoListID, taskID)
 
-      dispatch(tasksActions.deleteTask({ todoListID, taskID }))
-      dispatch(appActions.setAppStatus({ status: 'succeeded' }))
-    } catch (error) {
-      handlerServerNetworkError(error, dispatch)
-    } finally {
-      dispatch(tasksActions.updateTask({ todoListID, taskID, model: { entityStatus: 'idle' } }))
-    }
+    dispatch(appActions.setAppStatus({ status: 'succeeded' }))
+
+    return { todoListID, taskID }
+  } catch (error) {
+    handlerServerNetworkError(error, dispatch)
+
+    return rejectWithValue(null)
+  } finally {
+    dispatch(tasksActions.updateTask({ todoListID, taskID, model: { entityStatus: 'idle' } }))
   }
-}
+})
+
 const createTask = (todoListID: string, title: string): AppThunkType => {
   return async dispatch => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
@@ -114,12 +119,6 @@ const slice = createSlice({
   name: '@@tasks',
   initialState,
   reducers: {
-    deleteTask(state, action: PayloadAction<{ todoListID: string; taskID: string }>) {
-      const tasks = state[action.payload.todoListID]
-      const index = tasks.findIndex(task => task.id === action.payload.taskID)
-
-      if (index !== -1) tasks.splice(index, 1)
-    },
     createTask(state, action: PayloadAction<{ task: TaskType }>) {
       state[action.payload.task.todoListId].unshift({
         ...action.payload.task,
@@ -157,6 +156,12 @@ const slice = createSlice({
         action.payload.tasks.forEach(task => {
           state[action.payload.todoListID].push({ ...task, entityStatus: 'idle' })
         })
+      })
+      .addCase(deleteTask.fulfilled, (state, action) => {
+        const tasks = state[action.payload.todoListID]
+        const index = tasks.findIndex(task => task.id === action.payload.taskID)
+
+        if (index !== -1) tasks.splice(index, 1)
       })
       .addCase(todoListsActions.clearTodoLists, () => ({}))
   },
