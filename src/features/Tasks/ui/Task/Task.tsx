@@ -16,39 +16,39 @@ type PropsType = {
   status: boolean
 }
 export const Task: FC<PropsType> = memo(({ task, status }) => {
+  const { id: taskID, todoListId: todoListID } = task
+
   const dispatch = useAppDispatch()
 
   const deleteTask = useCallback(() => {
-    dispatch(tasksThunks.deleteTask({ todoListID: task.todoListId, taskID: task.id }))
-  }, [dispatch, task.todoListId, task.id])
+    dispatch(tasksThunks.deleteTask({ todoListID, taskID }))
+  }, [dispatch, todoListID, taskID])
 
   const updateStatusTask = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       dispatch(
         tasksThunks.updateTask({
-          todoListID: task.todoListId,
-          taskID: task.id,
+          todoListID,
+          taskID,
           data: { status: e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New },
         })
       )
     },
-    [dispatch, task.todoListId, task.id]
+    [dispatch, todoListID, taskID]
   )
 
   const updateTitleTask = useCallback(
     (title: string) => {
-      dispatch(
-        tasksThunks.updateTask({ todoListID: task.todoListId, taskID: task.id, data: { title } })
-      )
+      dispatch(tasksThunks.updateTask({ todoListID, taskID, data: { title } }))
     },
-    [dispatch, task.todoListId, task.id]
+    [dispatch, todoListID, taskID]
   )
 
   const disabledCondition = status || task.entityStatus === 'loading'
 
   return (
     <ListItem
-      key={task.id}
+      key={taskID}
       divider
       disablePadding
       disableGutters
