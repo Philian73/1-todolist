@@ -1,5 +1,7 @@
 import { TaskType, UpdateTaskModelType } from '../types.ts'
 
+import { RequestStatusType } from 'app/model/types.ts'
+
 export const _tasksActions = {
   setTasks(todoListID: string, tasks: TaskType[]) {
     return {
@@ -19,7 +21,15 @@ export const _tasksActions = {
       payload: { task },
     } as const
   },
-  updateTask(todoListID: string, taskID: string, model: Partial<UpdateTaskModelType>) {
+  updateTask(
+    todoListID: string,
+    taskID: string,
+    model: Partial<
+      UpdateTaskModelType & {
+        entityStatus: RequestStatusType
+      }
+    >
+  ) {
     return {
       type: 'TASKS/UPDATE-TASK',
       payload: { todoListID, taskID, model },

@@ -3,6 +3,7 @@ import { TaskType, UpdateTaskModelType } from '../types.ts'
 import { _tasksActions } from './actions.ts'
 
 import { _appActions } from 'app/model/[deprecated]/actions.ts'
+import { RequestStatusType } from 'app/model/types.ts'
 import { AppThunkType } from 'app/store.ts'
 import { APIResultCodes } from 'common/api'
 import { errorAPIHandler, handlerServerNetworkError } from 'common/utils'
@@ -62,7 +63,7 @@ export const _tasksThunks = {
       try {
         const task = getState().tasks[todoListID].find(task => task.id === taskID)!
 
-        const model: UpdateTaskModelType = {
+        const model: UpdateTaskModelType & { entityStatus: RequestStatusType } = {
           title: task.title,
           deadline: task.deadline,
           startDate: task.startDate,
