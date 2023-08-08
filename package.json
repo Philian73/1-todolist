@@ -33,6 +33,7 @@
   "devDependencies": {
     "@it-incubator/eslint-config": "^0.1.2",
     "@it-incubator/prettier-config": "^0.1.1",
+    "@types/node": "^20.4.8",
     "@types/react": "^18.2.12",
     "@types/react-dom": "^18.2.5",
     "@types/uuid": "^9.0.2",
