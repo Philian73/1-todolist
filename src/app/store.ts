@@ -1,5 +1,4 @@
-import { configureStore, ThunkAction } from '@reduxjs/toolkit'
-import { AnyAction } from 'redux'
+import { configureStore } from '@reduxjs/toolkit'
 
 import { appReducer } from '@/app/model'
 import { authReducer } from '@/features/Auth/model'
@@ -17,11 +16,4 @@ export const store = configureStore({
 
 // TYPES
 export type AppRootStateType = ReturnType<typeof store.getState>
-
 export type AppDispatchType = typeof store.dispatch
-export type AppThunkType<ReturnType = void> = ThunkAction<
-  ReturnType,
-  AppRootStateType,
-  unknown,
-  AnyAction
->
