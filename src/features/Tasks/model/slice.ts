@@ -158,6 +158,7 @@ const slice = createSlice({
       .addCase(todoListsThunks.createTodoList.fulfilled, (state, action) => {
         state[action.payload.todoList.id] = []
       })
+      .addCase(todoListsActions.clearTodoLists, () => ({}))
       .addCase(fetchTasks.fulfilled, (state, action) => {
         action.payload.tasks.forEach(task => {
           state[action.payload.todoListID].push({ ...task, entityStatus: 'idle' })
@@ -181,7 +182,6 @@ const slice = createSlice({
 
         if (index !== -1) tasks[index] = { ...tasks[index], ...action.payload.data }
       })
-      .addCase(todoListsActions.clearTodoLists, () => ({}))
   },
 })
 
