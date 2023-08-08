@@ -1,5 +1,5 @@
-import { AppRootStateType } from '@/app/store'
+import { RootStateType } from '@/app/store'
 
 export const authSelectors = {
-  isLoggedIn: (state: AppRootStateType) => state.auth.isLoggedIn,
+  isLoggedIn: (state: RootStateType) => state.auth.isLoggedIn,
 }

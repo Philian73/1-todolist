@@ -1,7 +1,7 @@
-import { AppRootStateType } from '@/app/store'
+import { RootStateType } from '@/app/store'
 
 export const appSelectors = {
-  isInitialized: (state: AppRootStateType) => state.app.isInitialized,
-  status: (state: AppRootStateType) => state.app.status,
-  error: (state: AppRootStateType) => state.app.error,
+  isInitialized: (state: RootStateType) => state.app.isInitialized,
+  status: (state: RootStateType) => state.app.status,
+  error: (state: RootStateType) => state.app.error,
 }

@@ -2,12 +2,12 @@ import { createSelector } from '@reduxjs/toolkit'
 
 import { TaskStatuses } from './types'
 
-import { AppRootStateType } from '@/app/store'
+import { RootStateType } from '@/app/store'
 import { FilterValuesType } from '@/features/TodoLists/model'
 
 export const tasksSelectors = {
   tasksByTodoListID(todoListID: string) {
-    return (state: AppRootStateType) => state.tasks[todoListID]
+    return (state: RootStateType) => state.tasks[todoListID]
   },
   filteredTasksByTodoListID(todoListID: string, filter: FilterValuesType) {
     return createSelector(this.tasksByTodoListID(todoListID), tasks => {

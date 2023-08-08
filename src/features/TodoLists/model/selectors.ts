@@ -1,5 +1,5 @@
-import { AppRootStateType } from '@/app/store'
+import { RootStateType } from '@/app/store'
 
 export const todoListsSelectors = {
-  todoLists: (state: AppRootStateType) => state.todoLists,
+  todoLists: (state: RootStateType) => state.todoLists,
 }
