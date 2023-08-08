@@ -9,9 +9,9 @@ import { appSelectors } from './model'
 
 import { useAppDispatch, useAppSelector } from '@/common/hooks'
 import { ErrorSnackbar, Header } from '@/components'
-import { Login } from '@/features/Auth'
 import { authThunks } from '@/features/Auth/model'
-import { TodoLists } from '@/features/TodoLists'
+import { Login } from '@/features/Auth/ui'
+import { TodoLists } from '@/features/TodoLists/ui'
 
 const App = () => {
   const isInitialized = useAppSelector(appSelectors.isInitialized)

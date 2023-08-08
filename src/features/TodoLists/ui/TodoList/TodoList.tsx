@@ -17,8 +17,8 @@ import s from './TodoList.module.css'
 import { useAppDispatch } from '@/common/hooks'
 import { EditableSpan } from '@/common/ui'
 import { AddItemForm } from '@/components'
-import { Tasks } from '@/features/Tasks'
 import { tasksThunks } from '@/features/Tasks/model'
+import { Tasks } from '@/features/Tasks/ui'
 
 type PropsType = {
   todoList: TodoListDomainType
