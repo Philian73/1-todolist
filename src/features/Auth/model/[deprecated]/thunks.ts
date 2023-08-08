@@ -2,8 +2,8 @@ import { LoginParamsType } from '../'
 
 import { _authActions } from './'
 
+import { AppThunkType } from '@/app/deprecatedStore'
 import { _appActions } from '@/app/model/[deprecated]'
-import { AppThunkType } from '@/app/store'
 import { APIResultCodes } from '@/common/api'
 import { errorAPIHandler, handlerServerNetworkError } from '@/common/utils'
 import { authAPI } from '@/features/Auth/api'

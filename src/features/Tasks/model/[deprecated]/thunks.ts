@@ -2,9 +2,9 @@ import { TaskType, UpdateTaskModelType } from '../'
 
 import { _tasksActions } from './'
 
+import { AppThunkType } from '@/app/deprecatedStore'
 import { RequestStatusType } from '@/app/model'
 import { _appActions } from '@/app/model/[deprecated]'
-import { AppThunkType } from '@/app/store'
 import { APIResultCodes } from '@/common/api'
 import { errorAPIHandler, handlerServerNetworkError } from '@/common/utils'
 import { tasksAPI } from '@/features/Tasks/api'
