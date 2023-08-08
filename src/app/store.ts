@@ -1,10 +1,10 @@
 import { configureStore, ThunkAction } from '@reduxjs/toolkit'
 import { AnyAction } from 'redux'
 
-import { appReducer } from 'app/model/slice.ts'
-import { authReducer } from 'features/Auth/model/slice.ts'
-import { tasksReducer } from 'features/Tasks/model/slice.ts'
-import { todoListsReducer } from 'features/TodoLists/model/slice.ts'
+import { appReducer } from '@/app/model'
+import { authReducer } from '@/features/Auth/model'
+import { tasksReducer } from '@/features/Tasks/model'
+import { todoListsReducer } from '@/features/TodoLists/model'
 
 export const store = configureStore({
   reducer: {

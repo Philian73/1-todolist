@@ -1,8 +1,8 @@
 import { AxiosResponse } from 'axios'
 
-import { TaskType, UpdateTaskModelType } from '../model/types.ts'
+import { TaskType, UpdateTaskModelType } from '../model'
 
-import { instance, ResponseType } from 'common/api'
+import { instance, ResponseType } from '@/common/api'
 
 export const tasksAPI = {
   getTasks(todoListID: string) {

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { RequestStatusType } from './types.ts'
+import { RequestStatusType } from './types'
 
 const initialState: AppInitialStateType = {
   isInitialized: false,

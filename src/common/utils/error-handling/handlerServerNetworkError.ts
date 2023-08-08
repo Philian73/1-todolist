@@ -1,7 +1,7 @@
 import { isAxiosError } from 'axios'
 import { Dispatch } from 'redux'
 
-import { appActions } from 'app/model/slice.ts'
+import { appActions } from '@/app/model'
 
 export const handlerServerNetworkError = (error: unknown, dispatch: Dispatch) => {
   let errorMessage = 'Some error occurred'

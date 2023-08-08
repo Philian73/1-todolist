@@ -1,3 +1,3 @@
-export * from './AddItemForm/AddItemForm.tsx'
-export * from './ErrorSnackbar/ErrorSnackbar.tsx'
-export * from './Header/Header.tsx'
+export * from './AddItemForm/AddItemForm'
+export * from './ErrorSnackbar/ErrorSnackbar'
+export * from './Header/Header'

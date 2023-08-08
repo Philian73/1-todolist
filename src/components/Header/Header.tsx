@@ -7,10 +7,9 @@ import LinearProgress from '@mui/material/LinearProgress'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 
-import { appSelectors } from 'app/model/selectors.ts'
-import { useAppDispatch, useAppSelector } from 'common/hooks'
-import { authSelectors } from 'features/Auth/model/selectors.ts'
-import { authThunks } from 'features/Auth/model/slice.ts'
+import { appSelectors } from '@/app/model'
+import { useAppDispatch, useAppSelector } from '@/common/hooks'
+import { authSelectors, authThunks } from '@/features/Auth/model'
 
 export const Header = () => {
   const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)

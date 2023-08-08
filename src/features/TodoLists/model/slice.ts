@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { FilterValuesType, TodoListDomainType, TodoListType } from './types.ts'
+import { FilterValuesType, TodoListDomainType, TodoListType } from './types'
 
-import { appActions } from 'app/model/slice.ts'
-import { RequestStatusType } from 'app/model/types.ts'
-import { APIResultCodes } from 'common/api'
-import { createAppAsyncThunk, errorAPIHandler, handlerServerNetworkError } from 'common/utils'
-import { todoListsAPI } from 'features/TodoLists/api'
+import { RequestStatusType, appActions } from '@/app/model'
+import { APIResultCodes } from '@/common/api'
+import { createAppAsyncThunk, errorAPIHandler, handlerServerNetworkError } from '@/common/utils'
+import { todoListsAPI } from '@/features/TodoLists/api'
 
 // THUNKS
 const fetchTodoLists = createAppAsyncThunk<{ todoLists: TodoListType[] }, undefined>(

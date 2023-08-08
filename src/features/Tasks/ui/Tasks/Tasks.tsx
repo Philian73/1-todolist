@@ -2,11 +2,11 @@ import { FC, memo, useEffect } from 'react'
 
 import List from '@mui/material/List'
 
-import { useAppDispatch, useAppSelector } from 'common/hooks'
-import { Task } from 'features/Tasks'
-import { tasksSelectors } from 'features/Tasks/model/selectors.ts'
-import { tasksThunks } from 'features/Tasks/model/slice.ts'
-import { FilterValuesType } from 'features/TodoLists/model/types.ts'
+import { Task } from '../'
+import { tasksSelectors, tasksThunks } from '../../model'
+
+import { useAppDispatch, useAppSelector } from '@/common/hooks'
+import { FilterValuesType } from '@/features/TodoLists/model'
 
 type PropsType = {
   todoListID: string

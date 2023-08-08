@@ -1,2 +1,2 @@
-export * from './TodoLists/TodoLists.tsx'
-export * from './TodoList/TodoList.tsx'
+export * from './TodoLists/TodoLists'
+export * from './TodoList/TodoList'

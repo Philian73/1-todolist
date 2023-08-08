@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { appActions } from 'app/model/slice.ts'
-import { APIResultCodes } from 'common/api'
-import { createAppAsyncThunk, errorAPIHandler, handlerServerNetworkError } from 'common/utils'
-import { authAPI } from 'features/Auth/api'
-import { LoginParamsType } from 'features/Auth/model/types.ts'
-import { todoListsActions } from 'features/TodoLists/model/slice.ts'
+import { authAPI } from '../api'
+
+import { LoginParamsType } from './types'
+
+import { appActions } from '@/app/model'
+import { APIResultCodes } from '@/common/api'
+import { createAppAsyncThunk, errorAPIHandler, handlerServerNetworkError } from '@/common/utils'
+import { todoListsActions } from '@/features/TodoLists/model'
 
 // THUNKS
 const me = createAppAsyncThunk<{ isLoggedIn: boolean }, undefined>(

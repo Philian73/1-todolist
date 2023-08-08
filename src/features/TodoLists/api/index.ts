@@ -1,1 +1,1 @@
-export * from './todoListsAPI.ts'
+export * from './todoListsAPI'

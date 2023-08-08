@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 
-import { appActions } from 'app/model/slice.ts'
-import { ResponseType } from 'common/api'
+import { appActions } from '@/app/model'
+import { ResponseType } from '@/common/api'
 
 export const errorAPIHandler = <D>(data: ResponseType<D>, dispatch: Dispatch) => {
   dispatch(

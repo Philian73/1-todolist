@@ -1,2 +1,2 @@
-export * from './Tasks/Tasks.tsx'
-export * from './Task/Task.tsx'
+export * from './Tasks/Tasks'
+export * from './Task/Task'

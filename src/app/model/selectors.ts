@@ -1,4 +1,4 @@
-import { AppRootStateType } from 'app/store.ts'
+import { AppRootStateType } from '@/app/store'
 
 export const appSelectors = {
   isInitialized: (state: AppRootStateType) => state.app.isInitialized,

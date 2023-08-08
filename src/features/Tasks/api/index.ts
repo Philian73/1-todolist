@@ -1,1 +1,1 @@
-export * from './tasksAPI.ts'
+export * from './tasksAPI'

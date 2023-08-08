@@ -1,2 +1,2 @@
-export * from './errorAPIHandler.ts'
-export * from './handlerServerNetworkError.ts'
+export * from './errorAPIHandler'
+export * from './handlerServerNetworkError'
