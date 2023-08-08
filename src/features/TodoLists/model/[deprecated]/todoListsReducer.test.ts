@@ -1,9 +1,8 @@
 import { describe, beforeEach, it, expect } from 'vitest'
 
-import { FilterValuesType, TodoListDomainType } from '../types.ts'
+import { FilterValuesType, TodoListDomainType } from '../'
 
-import { _todoListsActions } from './actions.ts'
-import { _todoListsReducer } from './todoListsReducer.ts'
+import { _todoListsReducer, _todoListsActions } from './'
 
 describe('_todoListsReducer', () => {
   let todoListID_1: string

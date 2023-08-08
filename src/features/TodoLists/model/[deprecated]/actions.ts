@@ -1,4 +1,4 @@
-import { TodoListType, UpdateTodoListDomainModelType } from '../types.ts'
+import { TodoListType, UpdateTodoListDomainModelType } from '../'
 
 export const _todoListsActions = {
   setTodoLists(todoLists: TodoListType[]) {

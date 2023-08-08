@@ -1,4 +1,4 @@
-import { AuthActionsType } from './actions.ts'
+import { AuthActionsType } from './'
 
 const initialState = {
   isLoggedIn: false,

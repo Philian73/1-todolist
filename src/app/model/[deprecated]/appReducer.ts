@@ -1,5 +1,6 @@
-import { AppActionsType } from 'app/model/[deprecated]/actions.ts'
-import { RequestStatusType } from 'app/model/types.ts'
+import { RequestStatusType } from '../'
+
+import { AppActionsType } from './'
 
 const initialState = {
   isInitialized: false,

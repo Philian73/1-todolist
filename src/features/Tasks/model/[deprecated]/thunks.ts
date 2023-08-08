@@ -1,14 +1,14 @@
-import { TaskType, UpdateTaskModelType } from '../types.ts'
+import { TaskType, UpdateTaskModelType } from '../'
 
-import { _tasksActions } from './actions.ts'
+import { _tasksActions } from './'
 
-import { _appActions } from 'app/model/[deprecated]/actions.ts'
-import { RequestStatusType } from 'app/model/types.ts'
-import { AppThunkType } from 'app/store.ts'
-import { APIResultCodes } from 'common/api'
-import { errorAPIHandler, handlerServerNetworkError } from 'common/utils'
-import { tasksAPI } from 'features/Tasks/api'
-import { _todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
+import { RequestStatusType } from '@/app/model'
+import { _appActions } from '@/app/model/[deprecated]'
+import { AppThunkType } from '@/app/store'
+import { APIResultCodes } from '@/common/api'
+import { errorAPIHandler, handlerServerNetworkError } from '@/common/utils'
+import { tasksAPI } from '@/features/Tasks/api'
+import { _todoListsActions } from '@/features/TodoLists/model/[deprecated]'
 
 export const _tasksThunks = {
   getTasks(todoListID: string): AppThunkType {

@@ -1,6 +1,6 @@
-import { TaskType, UpdateTaskModelType } from '../types.ts'
+import { TaskType, UpdateTaskModelType } from '../'
 
-import { RequestStatusType } from 'app/model/types.ts'
+import { RequestStatusType } from '@/app/model'
 
 export const _tasksActions = {
   setTasks(todoListID: string, tasks: TaskType[]) {

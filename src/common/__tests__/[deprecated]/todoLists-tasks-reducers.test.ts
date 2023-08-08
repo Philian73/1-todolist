@@ -1,10 +1,9 @@
 import { expect, test } from 'vitest'
 
-import { _tasksReducer } from 'features/Tasks/model/[deprecated]/tasksReducer.ts'
-import { TaskPriorities, TaskStatuses, TasksType } from 'features/Tasks/model/types.ts'
-import { _todoListsActions } from 'features/TodoLists/model/[deprecated]/actions.ts'
-import { _todoListsReducer } from 'features/TodoLists/model/[deprecated]/todoListsReducer.ts'
-import { TodoListDomainType } from 'features/TodoLists/model/types.ts'
+import { TaskPriorities, TaskStatuses, TasksType } from '@/features/Tasks/model'
+import { _tasksReducer } from '@/features/Tasks/model/[deprecated]'
+import { TodoListDomainType } from '@/features/TodoLists/model'
+import { _todoListsReducer, _todoListsActions } from '@/features/TodoLists/model/[deprecated]'
 
 test('ids should be equals', () => {
   const initialTasksState: TasksType = {}

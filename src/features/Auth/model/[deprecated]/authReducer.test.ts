@@ -1,7 +1,6 @@
 import { describe, beforeEach, it, expect } from 'vitest'
 
-import { _authActions } from './actions.ts'
-import { _authReducer, InitialStateType } from './authReducer.ts'
+import { InitialStateType, _authReducer, _authActions } from './'
 
 describe('authReducer', () => {
   let initialState: InitialStateType
