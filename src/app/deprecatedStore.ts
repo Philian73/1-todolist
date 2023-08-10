@@ -18,7 +18,7 @@ export type AppDispatchType = ThunkDispatch<AppRootStateType, unknown, AnyAction
 export type AppThunkType<ReturnType = void> = ThunkAction<
   ReturnType,
   AppRootStateType,
-  unknown,
+  undefined,
   AnyAction
 >
 
