@@ -7,7 +7,7 @@ import { LoginParamsType } from './'
 import { appActions } from '@/app/model'
 import { APIResultCodes } from '@/common/api'
 import { createAppAsyncThunk, errorAPIHandler, handlerServerNetworkError } from '@/common/utils'
-import { todoListsActions } from '@/features/TodoLists/model'
+import { todoListsActions } from '@/features/todoLists/model'
 
 // THUNKS
 const me = createAppAsyncThunk<{ isLoggedIn: boolean }, undefined>(

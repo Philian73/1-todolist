@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography'
 
 import { appSelectors } from '@/app/model'
 import { useAppDispatch, useAppSelector } from '@/common/hooks'
-import { authSelectors, authThunks } from '@/features/Auth/model'
+import { authSelectors, authThunks } from '@/features/auth/model'
 
 export const Header = () => {
   const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)

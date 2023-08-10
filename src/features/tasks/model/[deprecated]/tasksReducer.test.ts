@@ -4,7 +4,7 @@ import { TaskPriorities, TaskStatuses, TasksType } from '../'
 
 import { _tasksReducer, _tasksActions } from './'
 
-import { _todoListsActions } from '@/features/TodoLists/model/[deprecated]'
+import { _todoListsActions } from '@/features/todoLists/model/[deprecated]'
 
 describe('_tasksReducer', () => {
   let todoListID_1: string

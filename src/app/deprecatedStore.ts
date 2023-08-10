@@ -2,9 +2,9 @@ import { AnyAction, applyMiddleware, combineReducers, compose, legacy_createStor
 import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { _appReducer } from '@/app/model/[deprecated]'
-import { _authReducer } from '@/features/Auth/model/[deprecated]'
-import { _tasksReducer } from '@/features/Tasks/model/[deprecated]'
-import { _todoListsReducer } from '@/features/TodoLists/model/[deprecated]'
+import { _authReducer } from '@/features/auth/model/[deprecated]'
+import { _tasksReducer } from '@/features/tasks/model/[deprecated]'
+import { _todoListsReducer } from '@/features/todoLists/model/[deprecated]'
 
 declare global {
   interface Window {

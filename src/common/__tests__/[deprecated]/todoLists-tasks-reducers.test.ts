@@ -1,9 +1,9 @@
 import { expect, test } from 'vitest'
 
-import { TaskPriorities, TaskStatuses, TasksType } from '@/features/Tasks/model'
-import { _tasksReducer } from '@/features/Tasks/model/[deprecated]'
-import { TodoListDomainType } from '@/features/TodoLists/model'
-import { _todoListsReducer, _todoListsActions } from '@/features/TodoLists/model/[deprecated]'
+import { TaskPriorities, TaskStatuses, TasksType } from '@/features/tasks/model'
+import { _tasksReducer } from '@/features/tasks/model/[deprecated]'
+import { TodoListDomainType } from '@/features/todoLists/model'
+import { _todoListsReducer, _todoListsActions } from '@/features/todoLists/model/[deprecated]'
 
 test('ids should be equals', () => {
   const initialTasksState: TasksType = {}
@@ -27,7 +27,7 @@ test('ids should be equals', () => {
   expect(idFromTodoLists).toBe(action.payload.todoList.id)
 })
 
-test('TodoLists and their tasks should been cleared', () => {
+test('todoLists and their tasks should been cleared', () => {
   const initialTasksState: TasksType = {
     ['1']: [
       {

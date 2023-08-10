@@ -7,7 +7,7 @@ import { TasksType, TaskType, UpdateTaskModelType } from './'
 import { appActions, RequestStatusType } from '@/app/model'
 import { APIResultCodes } from '@/common/api'
 import { createAppAsyncThunk, errorAPIHandler, handlerServerNetworkError } from '@/common/utils'
-import { todoListsActions, todoListsThunks } from '@/features/TodoLists/model'
+import { todoListsActions, todoListsThunks } from '@/features/todoLists/model'
 
 // THUNKS
 const fetchTasks = createAppAsyncThunk<{ todoListID: string; tasks: TaskType[] }, string>(

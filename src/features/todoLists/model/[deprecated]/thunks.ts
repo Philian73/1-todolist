@@ -7,7 +7,7 @@ import { AppThunkType } from '@/app/deprecatedStore'
 import { _appActions } from '@/app/model/[deprecated]'
 import { APIResultCodes } from '@/common/api'
 import { errorAPIHandler, handlerServerNetworkError } from '@/common/utils'
-import { _tasksThunks } from '@/features/Tasks/model/[deprecated]'
+import { _tasksThunks } from '@/features/tasks/model/[deprecated]'
 
 export const _todoListsThunks = {
   getTodoLists(): AppThunkType {

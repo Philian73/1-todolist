@@ -3,7 +3,7 @@ import { createSelector } from '@reduxjs/toolkit'
 import { TaskStatuses } from './types'
 
 import { RootStateType } from '@/app/store'
-import { FilterValuesType } from '@/features/TodoLists/model'
+import { FilterValuesType } from '@/features/todoLists/model'
 
 export const tasksSelectors = {
   tasksByTodoListID(todoListID: string) {

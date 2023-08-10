@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import { appReducer } from '@/app/model'
-import { authReducer } from '@/features/Auth/model'
-import { tasksReducer } from '@/features/Tasks/model'
-import { todoListsReducer } from '@/features/TodoLists/model'
+import { authReducer } from '@/features/auth/model'
+import { tasksReducer } from '@/features/tasks/model'
+import { todoListsReducer } from '@/features/todoLists/model'
 
 export const store = configureStore({
   reducer: {

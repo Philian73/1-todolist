@@ -6,7 +6,7 @@ import { Task } from '../'
 import { tasksSelectors, tasksThunks } from '../../model'
 
 import { useAppDispatch, useAppSelector } from '@/common/hooks'
-import { FilterValuesType } from '@/features/TodoLists/model'
+import { FilterValuesType } from '@/features/todoLists/model'
 
 type PropsType = {
   todoListID: string

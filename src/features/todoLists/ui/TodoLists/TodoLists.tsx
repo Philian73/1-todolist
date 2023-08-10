@@ -10,7 +10,7 @@ import { todoListsSelectors, todoListsThunks } from '../../model'
 import { appSelectors } from '@/app/model'
 import { useAppSelector, useAppDispatch } from '@/common/hooks'
 import { AddItemForm } from '@/components'
-import { authSelectors } from '@/features/Auth/model'
+import { authSelectors } from '@/features/auth/model'
 
 export const TodoLists = () => {
   const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)

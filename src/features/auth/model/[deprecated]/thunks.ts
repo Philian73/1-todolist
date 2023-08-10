@@ -6,8 +6,8 @@ import { AppThunkType } from '@/app/deprecatedStore'
 import { _appActions } from '@/app/model/[deprecated]'
 import { APIResultCodes } from '@/common/api'
 import { errorAPIHandler, handlerServerNetworkError } from '@/common/utils'
-import { authAPI } from '@/features/Auth/api'
-import { _todoListsActions } from '@/features/TodoLists/model/[deprecated]'
+import { authAPI } from '@/features/auth/api'
+import { _todoListsActions } from '@/features/todoLists/model/[deprecated]'
 
 export const _authThunks = {
   me(): AppThunkType {

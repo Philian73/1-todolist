@@ -7,8 +7,8 @@ import { RequestStatusType } from '@/app/model'
 import { _appActions } from '@/app/model/[deprecated]'
 import { APIResultCodes } from '@/common/api'
 import { errorAPIHandler, handlerServerNetworkError } from '@/common/utils'
-import { tasksAPI } from '@/features/Tasks/api'
-import { _todoListsActions } from '@/features/TodoLists/model/[deprecated]'
+import { tasksAPI } from '@/features/tasks/api'
+import { _todoListsActions } from '@/features/todoLists/model/[deprecated]'
 
 export const _tasksThunks = {
   getTasks(todoListID: string): AppThunkType {

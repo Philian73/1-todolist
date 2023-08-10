@@ -12,7 +12,7 @@ import { Navigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
 import { useAppDispatch, useAppSelector } from '@/common/hooks'
-import { authSelectors, authThunks } from '@/features/Auth/model'
+import { authSelectors, authThunks } from '@/features/auth/model'
 
 export const Login = () => {
   const isLoggedIn = useAppSelector(authSelectors.isLoggedIn)
