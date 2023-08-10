@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit'
 
-import { TaskStatuses } from './types'
+import { TaskStatuses } from './'
 
 import { RootStateType } from '@/app/store'
 import { FilterValuesType } from '@/features/todoLists/model'
