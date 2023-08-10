@@ -1,9 +1,9 @@
 import { isAxiosError } from 'axios'
-import { Dispatch } from 'redux'
 
 import { appActions } from '@/app/model'
+import { AppDispatchType } from '@/app/store'
 
-export const handlerServerNetworkError = (error: unknown, dispatch: Dispatch) => {
+export const handlerServerNetworkError = (error: unknown, dispatch: AppDispatchType) => {
   let errorMessage = 'Some error occurred'
 
   if (isAxiosError(error)) {
