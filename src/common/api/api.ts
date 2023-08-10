@@ -17,9 +17,14 @@ export enum APIResultCodes {
   CAPTCHA_ERROR = 10,
 }
 
+export type FieldErrorType = {
+  error: string
+  field: string
+}
+
 export type BaseResponseType<D = {}> = {
   resultCode: number
   messages: string[]
-  fieldsErrors: string[]
+  fieldsErrors: FieldErrorType[]
   data: D
 }
