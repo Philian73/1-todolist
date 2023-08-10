@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import { authAPI } from '../api'
 
-import { LoginParamsType } from './types'
+import { LoginParamsType } from './'
 
 import { appActions } from '@/app/model'
 import { APIResultCodes } from '@/common/api'

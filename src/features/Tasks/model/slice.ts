@@ -2,14 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { tasksAPI } from '../api'
 
-import { TasksType, TaskType, UpdateTaskModelType } from './types'
+import { TasksType, TaskType, UpdateTaskModelType } from './'
 
 import { appActions, RequestStatusType } from '@/app/model'
 import { APIResultCodes } from '@/common/api'
 import { createAppAsyncThunk, errorAPIHandler, handlerServerNetworkError } from '@/common/utils'
 import { todoListsActions, todoListsThunks } from '@/features/TodoLists/model'
 
-//THUNKS
+// THUNKS
 const fetchTasks = createAppAsyncThunk<{ todoListID: string; tasks: TaskType[] }, string>(
   '@@tasks/fetch-tasks',
   async (todoListID, { dispatch, rejectWithValue }) => {
@@ -122,7 +122,7 @@ const updateTask = createAppAsyncThunk<
   }
 )
 
-//SLICE
+// SLICE
 const initialState: TasksInitialStateType = {}
 
 const slice = createSlice({
@@ -184,7 +184,7 @@ const slice = createSlice({
   },
 })
 
-//EXPORTS
+// EXPORTS
 export const tasksReducer = slice.reducer
 export const tasksActions = slice.actions
 export const tasksThunks = { fetchTasks, deleteTask, createTask, updateTask }
