@@ -1,9 +1,9 @@
 import { appActions } from '@/app/model'
 import { AppDispatchType } from '@/app/store'
-import { ResponseType } from '@/common/api'
+import { BaseResponseType } from '@/common/api'
 
 export const errorAPIHandler = <D>(
-  data: ResponseType<D>,
+  data: BaseResponseType<D>,
   dispatch: AppDispatchType,
   showError: boolean = true
 ) => {

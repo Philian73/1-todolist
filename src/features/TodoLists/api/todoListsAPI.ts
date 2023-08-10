@@ -2,25 +2,28 @@ import { AxiosResponse } from 'axios'
 
 import { TodoListType } from '../model'
 
-import { instance, ResponseType } from '@/common/api'
+import { instance, BaseResponseType } from '@/common/api'
 
 export const todoListsAPI = {
   getTodoLists() {
     return instance.get<TodoListType[]>('todo-lists')
   },
   deleteTodoList(ID: string) {
-    return instance.delete<ResponseType>(`todo-lists/${ID}`)
+    return instance.delete<BaseResponseType>(`todo-lists/${ID}`)
   },
   createTodoList(title: string) {
     return instance.post<
       null,
-      AxiosResponse<ResponseType<{ item: TodoListType }>>,
+      AxiosResponse<BaseResponseType<{ item: TodoListType }>>,
       { title: string }
     >('todo-lists', { title })
   },
   updateTitleTodoList(ID: string, title: string) {
-    return instance.put<null, AxiosResponse<ResponseType>, { title: string }>(`todo-lists/${ID}`, {
-      title,
-    })
+    return instance.put<null, AxiosResponse<BaseResponseType>, { title: string }>(
+      `todo-lists/${ID}`,
+      {
+        title,
+      }
+    )
   },
 }

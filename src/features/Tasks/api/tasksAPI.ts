@@ -2,19 +2,19 @@ import { AxiosResponse } from 'axios'
 
 import { TaskType, UpdateTaskModelType } from '../model'
 
-import { instance, ResponseType } from '@/common/api'
+import { instance, BaseResponseType } from '@/common/api'
 
 export const tasksAPI = {
   getTasks(todoListID: string) {
     return instance.get<GetTasksResponseType>(`todo-lists/${todoListID}/tasks`)
   },
   deleteTask(todoListID: string, taskID: string) {
-    return instance.delete<ResponseType>(`todo-lists/${todoListID}/tasks/${taskID}`)
+    return instance.delete<BaseResponseType>(`todo-lists/${todoListID}/tasks/${taskID}`)
   },
   createTask(todoListID: string, title: string) {
     return instance.post<
       null,
-      AxiosResponse<ResponseType<{ item: TaskType }>>,
+      AxiosResponse<BaseResponseType<{ item: TaskType }>>,
       {
         title: string
       }
@@ -24,7 +24,7 @@ export const tasksAPI = {
     return instance.put<
       null,
       AxiosResponse<
-        ResponseType<{
+        BaseResponseType<{
           item: TaskType
         }>
       >,
