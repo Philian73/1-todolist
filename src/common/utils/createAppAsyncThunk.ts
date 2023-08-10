@@ -5,5 +5,5 @@ import { AppDispatchType, RootStateType } from '@/app/store'
 export const createAppAsyncThunk = createAsyncThunk.withTypes<{
   state: RootStateType
   dispatch: AppDispatchType
-  rejectValue: null
+  rejectValue: null | string
 }>()
