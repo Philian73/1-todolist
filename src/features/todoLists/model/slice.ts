@@ -124,9 +124,9 @@ const slice = createSlice({
       state,
       action: PayloadAction<{ ID: string; entityStatus: RequestStatusType }>
     ) {
-      const index = state.findIndex(todoList => todoList.id === action.payload.ID)
+      const todoList = state.find(todoList => todoList.id === action.payload.ID)
 
-      if (index !== -1) state[index].entityStatus = action.payload.entityStatus
+      if (todoList) todoList.entityStatus = action.payload.entityStatus
     },
   },
   extraReducers: builder => {
