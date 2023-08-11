@@ -138,10 +138,9 @@ const slice = createSlice({
       }>
     ) {
       const tasks = state[action.payload.todoListID]
-      const index = tasks.findIndex(task => task.id === action.payload.taskID)
+      const task = tasks.find(task => task.id === action.payload.taskID)
 
-      if (index !== -1)
-        tasks[index] = { ...tasks[index], entityStatus: action.payload.entityStatus }
+      if (task) task.entityStatus = action.payload.entityStatus
     },
   },
   extraReducers: builder => {
