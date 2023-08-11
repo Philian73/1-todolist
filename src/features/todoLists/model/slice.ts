@@ -145,9 +145,9 @@ const slice = createSlice({
         state.unshift({ ...action.payload.todoList, filter: 'all', entityStatus: 'idle' })
       })
       .addCase(updateTitleTodoList.fulfilled, (state, action) => {
-        const index = state.findIndex(todoList => todoList.id === action.payload.ID)
+        const todoList = state.find(todoList => todoList.id === action.payload.ID)
 
-        if (index !== -1) state[index].title = action.payload.title
+        if (todoList) todoList.title = action.payload.title
       })
   },
 })
