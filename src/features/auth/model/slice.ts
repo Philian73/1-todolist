@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, isFulfilled } from '@reduxjs/toolkit'
 
 import { authAPI } from '../api'
 
@@ -98,16 +98,9 @@ const slice = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
-    builder
-      .addCase(me.fulfilled, (state, action) => {
-        state.isLoggedIn = action.payload.isLoggedIn
-      })
-      .addCase(login.fulfilled, (state, action) => {
-        state.isLoggedIn = action.payload.isLoggedIn
-      })
-      .addCase(logout.fulfilled, (state, action) => {
-        state.isLoggedIn = action.payload.isLoggedIn
-      })
+    builder.addMatcher(isFulfilled, state => {
+      state.isLoggedIn = true
+    })
   },
 })
 
