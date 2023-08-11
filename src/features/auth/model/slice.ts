@@ -1,4 +1,4 @@
-import { createSlice, isAnyOf } from '@reduxjs/toolkit'
+import { createSlice, isAnyOf, isFulfilled } from '@reduxjs/toolkit'
 
 import { authAPI } from '../api'
 
@@ -10,7 +10,7 @@ import { createAppAsyncThunk, errorAPIHandler, handlerServerNetworkError } from 
 import { todoListsActions } from '@/features/todoLists/model'
 
 // THUNKS
-const me = createAppAsyncThunk<{ isLoggedIn: boolean }, undefined>(
+const me = createAppAsyncThunk<undefined, undefined>(
   '@@auth/me',
   async (_, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
@@ -20,8 +20,6 @@ const me = createAppAsyncThunk<{ isLoggedIn: boolean }, undefined>(
 
       if (response.data.resultCode === APIResultCodes.SUCCESS) {
         dispatch(appActions.setAppStatus({ status: 'succeeded' }))
-
-        return { isLoggedIn: true }
       } else {
         errorAPIHandler(response.data, dispatch)
 
@@ -37,7 +35,7 @@ const me = createAppAsyncThunk<{ isLoggedIn: boolean }, undefined>(
   }
 )
 
-const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>(
+const login = createAppAsyncThunk<undefined, LoginParamsType>(
   '@@auth/login',
   async (data, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
@@ -47,8 +45,6 @@ const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>(
 
       if (response.data.resultCode === APIResultCodes.SUCCESS) {
         dispatch(appActions.setAppStatus({ status: 'succeeded' }))
-
-        return { isLoggedIn: true }
       } else {
         errorAPIHandler(response.data, dispatch)
 
@@ -62,7 +58,7 @@ const login = createAppAsyncThunk<{ isLoggedIn: boolean }, LoginParamsType>(
   }
 )
 
-const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, undefined>(
+const logout = createAppAsyncThunk<undefined, undefined>(
   '@@auth/logout',
   async (_, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
@@ -73,8 +69,6 @@ const logout = createAppAsyncThunk<{ isLoggedIn: boolean }, undefined>(
       if (response.data.resultCode === APIResultCodes.SUCCESS) {
         dispatch(appActions.setAppStatus({ status: 'succeeded' }))
         dispatch(todoListsActions.clearTodoLists())
-
-        return { isLoggedIn: false }
       } else {
         errorAPIHandler(response.data, dispatch)
 
@@ -102,7 +96,7 @@ const slice = createSlice({
       .addCase(logout.fulfilled, state => {
         state.isLoggedIn = false
       })
-      .addMatcher(isAnyOf(me.fulfilled, login.fulfilled), state => {
+      .addMatcher(isAnyOf(isFulfilled(me, login)), state => {
         state.isLoggedIn = true
       })
   },
