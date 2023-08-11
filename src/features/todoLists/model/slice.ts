@@ -116,9 +116,9 @@ const slice = createSlice({
       return []
     },
     updateFilterTodoList(state, action: PayloadAction<{ ID: string; filter: FilterValuesType }>) {
-      const index = state.findIndex(todoList => todoList.id === action.payload.ID)
+      const todoList = state.find(todoList => todoList.id === action.payload.ID)
 
-      if (index !== -1) state[index].filter = action.payload.filter
+      if (todoList) todoList.filter = action.payload.filter
     },
     updateEntityStatusTodoList(
       state,
