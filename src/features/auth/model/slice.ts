@@ -1,4 +1,4 @@
-import { createSlice, isFulfilled } from '@reduxjs/toolkit'
+import { createSlice, isAnyOf } from '@reduxjs/toolkit'
 
 import { authAPI } from '../api'
 
@@ -98,9 +98,13 @@ const slice = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
-    builder.addMatcher(isFulfilled, state => {
-      state.isLoggedIn = true
-    })
+    builder
+      .addCase(logout.fulfilled, state => {
+        state.isLoggedIn = false
+      })
+      .addMatcher(isAnyOf(me.fulfilled, login.fulfilled), state => {
+        state.isLoggedIn = true
+      })
   },
 })
 
