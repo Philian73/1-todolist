@@ -1,5 +1,3 @@
-import { RequestStatusType } from '@/app/model'
-
 export enum TaskStatuses {
   New = 0,
   InProgress = 1,
@@ -29,7 +27,7 @@ export type TaskType = {
 }
 
 export type TaskDomainType = TaskType & {
-  entityStatus: RequestStatusType
+  isLoading: boolean
 }
 
 export type UpdateTaskModelType = Omit<TaskType, 'id' | 'todoListId' | 'addedDate' | 'order'>
