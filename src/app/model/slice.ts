@@ -9,7 +9,7 @@ const initialState: AppInitialStateType = {
 }
 
 const slice = createSlice({
-  name: '@@app',
+  name: 'app',
   initialState,
   reducers: {
     setAppIsInitialized(state, action: PayloadAction<{ isInitialized: boolean }>) {
