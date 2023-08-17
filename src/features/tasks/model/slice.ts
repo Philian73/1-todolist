@@ -11,7 +11,7 @@ import { todoListsActions, todoListsThunks } from '@/features/todoLists/model'
 
 // THUNKS
 const fetchTasks = createAppAsyncThunk<{ todoListID: string; tasks: TaskType[] }, string>(
-  '@@tasks/fetch-tasks',
+  'tasks/fetch-tasks',
   async (todoListID, { dispatch, rejectWithValue }) => {
     try {
       const response = await tasksAPI.getTasks(todoListID)
@@ -29,7 +29,7 @@ const fetchTasks = createAppAsyncThunk<{ todoListID: string; tasks: TaskType[] }
 const deleteTask = createAppAsyncThunk<
   { todoListID: string; taskID: string },
   { todoListID: string; taskID: string }
->('@@tasks/delete-task', async ({ todoListID, taskID }, { dispatch, rejectWithValue }) => {
+>('tasks/delete-task', async ({ todoListID, taskID }, { dispatch, rejectWithValue }) => {
   dispatch(appActions.setAppStatus({ status: 'loading' }))
   dispatch(tasksActions.setIsLoadingTask({ todoListID, taskID, isLoading: true }))
 
@@ -49,7 +49,7 @@ const deleteTask = createAppAsyncThunk<
 })
 
 const createTask = createAppAsyncThunk<{ task: TaskType }, { todoListID: string; title: string }>(
-  '@@tasks/create-task',
+  'tasks/create-task',
   async ({ todoListID, title }, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
     dispatch(todoListsActions.setIsLoadingTodoList({ ID: todoListID, isLoading: true }))
@@ -81,7 +81,7 @@ const updateTask = createAppAsyncThunk<
   { todoListID: string; taskID: string; data: Partial<UpdateTaskModelType> },
   { todoListID: string; taskID: string; data: Partial<UpdateTaskModelType> }
 >(
-  '@@tasks/update-task',
+  'tasks/update-task',
   async ({ todoListID, taskID, data }, { dispatch, getState, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
     dispatch(tasksActions.setIsLoadingTask({ todoListID, taskID, isLoading: true }))
