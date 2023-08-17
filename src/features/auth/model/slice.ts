@@ -11,7 +11,7 @@ import { todoListsActions } from '@/features/todoLists/model'
 
 // THUNKS
 const initializeApp = createAppAsyncThunk<undefined, undefined>(
-  '@@auth/me',
+  '@@auth/initialize-app',
   async (_, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
 
