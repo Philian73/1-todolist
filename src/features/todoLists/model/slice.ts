@@ -10,7 +10,7 @@ import { createAppAsyncThunk, errorAPIHandler, handlerServerNetworkError } from 
 
 // THUNKS
 const fetchTodoLists = createAppAsyncThunk<{ todoLists: TodoListType[] }, undefined>(
-  '@@todoLists/fetch-todoLists',
+  'todoLists/fetch-todoLists',
   async (_, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
 
@@ -30,7 +30,7 @@ const fetchTodoLists = createAppAsyncThunk<{ todoLists: TodoListType[] }, undefi
 )
 
 const deleteTodoList = createAppAsyncThunk<{ ID: string }, string>(
-  '@@todoLists/delete-todoList',
+  'todoLists/delete-todoList',
   async (ID, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
     dispatch(todoListsActions.setIsLoadingTodoList({ ID, isLoading: true }))
@@ -52,7 +52,7 @@ const deleteTodoList = createAppAsyncThunk<{ ID: string }, string>(
 )
 
 const createTodoList = createAppAsyncThunk<{ todoList: TodoListType }, string>(
-  '@@todoLists/create-todoList',
+  'todoLists/create-todoList',
   async (title, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
 
@@ -80,7 +80,7 @@ const createTodoList = createAppAsyncThunk<{ todoList: TodoListType }, string>(
 const updateTitleTodoList = createAppAsyncThunk<
   { ID: string; title: string },
   { ID: string; title: string }
->('@@todoLists/update-title-todoList', async ({ ID, title }, { dispatch, rejectWithValue }) => {
+>('todoLists/update-title-todoList', async ({ ID, title }, { dispatch, rejectWithValue }) => {
   dispatch(appActions.setAppStatus({ status: 'loading' }))
   dispatch(todoListsActions.setIsLoadingTodoList({ ID, isLoading: true }))
 
