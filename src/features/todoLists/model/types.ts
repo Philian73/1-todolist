@@ -1,5 +1,3 @@
-import { RequestStatusType } from '@/app/model'
-
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
 export type TodoListType = {
@@ -11,5 +9,5 @@ export type TodoListType = {
 
 export type TodoListDomainType = TodoListType & {
   filter: FilterValuesType
-  entityStatus: RequestStatusType
+  isLoading: boolean
 }

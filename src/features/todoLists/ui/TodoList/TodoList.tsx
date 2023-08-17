@@ -26,7 +26,7 @@ type PropsType = {
 export const TodoList: FC<PropsType> = memo(({ todoList }) => {
   const dispatch = useAppDispatch()
 
-  const { id: ID, title, filter, entityStatus } = todoList
+  const { id: ID, title, filter, isLoading } = todoList
 
   const updateFilterTodoList = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
@@ -59,18 +59,17 @@ export const TodoList: FC<PropsType> = memo(({ todoList }) => {
   )
 
   const getFilterClasses = (value: FilterValuesType) => (filter === value ? 'outlined' : 'text')
-  const disabledCondition = entityStatus === 'loading'
 
   return (
     <div className={s.todoList}>
       <Typography fontSize="x-large" variant="h2" fontWeight="bold" sx={{ mb: '15px', ml: '5px' }}>
-        <EditableSpan disabled={disabledCondition} value={title} onChange={updateTitleTodoList} />
-        <IconButton disabled={disabledCondition} sx={{ ml: '15px' }} onClick={deleteTodoList}>
+        <EditableSpan disabled={isLoading} value={title} onChange={updateTitleTodoList} />
+        <IconButton disabled={isLoading} sx={{ ml: '15px' }} onClick={deleteTodoList}>
           <DeleteForeverIcon />
         </IconButton>
       </Typography>
-      <AddItemForm addItem={createTask} disabled={disabledCondition} />
-      <Tasks todoListID={ID} filter={filter} todoListStatus={disabledCondition} />
+      <AddItemForm addItem={createTask} disabled={isLoading} />
+      <Tasks todoListID={ID} filter={filter} todoListStatus={isLoading} />
       <div className={s.todoListControls}>
         <Button
           name="all"

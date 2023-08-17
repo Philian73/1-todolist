@@ -52,9 +52,7 @@ const createTask = createAppAsyncThunk<{ task: TaskType }, { todoListID: string;
   '@@tasks/create-task',
   async ({ todoListID, title }, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
-    dispatch(
-      todoListsActions.updateEntityStatusTodoList({ ID: todoListID, entityStatus: 'loading' })
-    )
+    dispatch(todoListsActions.updateEntityStatusTodoList({ ID: todoListID, isLoading: true }))
 
     try {
       const response = await tasksAPI.createTask(todoListID, title)
@@ -74,9 +72,7 @@ const createTask = createAppAsyncThunk<{ task: TaskType }, { todoListID: string;
 
       return rejectWithValue(null)
     } finally {
-      dispatch(
-        todoListsActions.updateEntityStatusTodoList({ ID: todoListID, entityStatus: 'idle' })
-      )
+      dispatch(todoListsActions.updateEntityStatusTodoList({ ID: todoListID, isLoading: false }))
     }
   }
 )

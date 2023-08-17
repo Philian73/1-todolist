@@ -4,7 +4,7 @@ import { todoListsAPI } from '../api'
 
 import { FilterValuesType, TodoListDomainType, TodoListType } from './'
 
-import { RequestStatusType, appActions } from '@/app/model'
+import { appActions } from '@/app/model'
 import { APIResultCodes } from '@/common/api'
 import { createAppAsyncThunk, errorAPIHandler, handlerServerNetworkError } from '@/common/utils'
 
@@ -33,7 +33,7 @@ const deleteTodoList = createAppAsyncThunk<{ ID: string }, string>(
   '@@todoLists/delete-todoList',
   async (ID, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
-    dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'loading' }))
+    dispatch(todoListsActions.updateEntityStatusTodoList({ ID, isLoading: true }))
 
     try {
       await todoListsAPI.deleteTodoList(ID)
@@ -46,7 +46,7 @@ const deleteTodoList = createAppAsyncThunk<{ ID: string }, string>(
 
       return rejectWithValue(null)
     } finally {
-      dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'idle' }))
+      dispatch(todoListsActions.updateEntityStatusTodoList({ ID, isLoading: false }))
     }
   }
 )
@@ -82,7 +82,7 @@ const updateTitleTodoList = createAppAsyncThunk<
   { ID: string; title: string }
 >('@@todoLists/update-title-todoList', async ({ ID, title }, { dispatch, rejectWithValue }) => {
   dispatch(appActions.setAppStatus({ status: 'loading' }))
-  dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'loading' }))
+  dispatch(todoListsActions.updateEntityStatusTodoList({ ID, isLoading: true }))
 
   try {
     const response = await todoListsAPI.updateTitleTodoList(ID, title)
@@ -101,7 +101,7 @@ const updateTitleTodoList = createAppAsyncThunk<
 
     return rejectWithValue(null)
   } finally {
-    dispatch(todoListsActions.updateEntityStatusTodoList({ ID, entityStatus: 'idle' }))
+    dispatch(todoListsActions.updateEntityStatusTodoList({ ID, isLoading: false }))
   }
 })
 
@@ -120,20 +120,17 @@ const slice = createSlice({
 
       if (todoList) todoList.filter = action.payload.filter
     },
-    updateEntityStatusTodoList(
-      state,
-      action: PayloadAction<{ ID: string; entityStatus: RequestStatusType }>
-    ) {
+    updateEntityStatusTodoList(state, action: PayloadAction<{ ID: string; isLoading: boolean }>) {
       const todoList = state.find(todoList => todoList.id === action.payload.ID)
 
-      if (todoList) todoList.entityStatus = action.payload.entityStatus
+      if (todoList) todoList.isLoading = action.payload.isLoading
     },
   },
   extraReducers: builder => {
     builder
       .addCase(fetchTodoLists.fulfilled, (state, action) => {
         action.payload.todoLists.forEach(todoList => {
-          state.push({ ...todoList, filter: 'all', entityStatus: 'idle' })
+          state.push({ ...todoList, filter: 'all', isLoading: false })
         })
       })
       .addCase(deleteTodoList.fulfilled, (state, action) => {
@@ -142,7 +139,7 @@ const slice = createSlice({
         if (index !== -1) state.splice(index, 1)
       })
       .addCase(createTodoList.fulfilled, (state, action) => {
-        state.unshift({ ...action.payload.todoList, filter: 'all', entityStatus: 'idle' })
+        state.unshift({ ...action.payload.todoList, filter: 'all', isLoading: false })
       })
       .addCase(updateTitleTodoList.fulfilled, (state, action) => {
         const todoList = state.find(todoList => todoList.id === action.payload.ID)
