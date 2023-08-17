@@ -109,7 +109,7 @@ const updateTitleTodoList = createAppAsyncThunk<
 const initialState: TodoListsInitialStateType = []
 
 const slice = createSlice({
-  name: '@@todoLists',
+  name: 'todoLists',
   initialState,
   reducers: {
     clearTodoLists() {
