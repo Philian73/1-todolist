@@ -12,9 +12,9 @@ import { EditableSpan } from '@/common/ui'
 
 type PropsType = {
   task: TaskDomainType
-  status: boolean
+  isLoadingTodoList: boolean
 }
-export const Task: FC<PropsType> = memo(({ task, status }) => {
+export const Task: FC<PropsType> = memo(({ task, isLoadingTodoList }) => {
   const { id: taskID, todoListId: todoListID, isLoading: isLoadingTask } = task
 
   const dispatch = useAppDispatch()
@@ -43,7 +43,7 @@ export const Task: FC<PropsType> = memo(({ task, status }) => {
     [dispatch, todoListID, taskID]
   )
 
-  const disabledCondition = status || isLoadingTask
+  const disabledCondition = isLoadingTodoList || isLoadingTask
 
   return (
     <ListItem

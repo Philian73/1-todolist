@@ -11,9 +11,9 @@ import { FilterValuesType } from '@/features/todoLists/model'
 type PropsType = {
   todoListID: string
   filter: FilterValuesType
-  todoListStatus: boolean
+  isLoadingTodoList: boolean
 }
-export const Tasks: FC<PropsType> = memo(({ todoListID, filter, todoListStatus }) => {
+export const Tasks: FC<PropsType> = memo(({ todoListID, filter, isLoadingTodoList }) => {
   const tasks = useAppSelector(tasksSelectors.filteredTasksByTodoListID(todoListID, filter))
 
   const dispatch = useAppDispatch()
@@ -23,7 +23,7 @@ export const Tasks: FC<PropsType> = memo(({ todoListID, filter, todoListStatus }
   }, [dispatch, todoListID])
 
   const tasksMap = tasks.map(task => {
-    return <Task key={task.id} task={task} status={todoListStatus} />
+    return <Task key={task.id} task={task} isLoadingTodoList={isLoadingTodoList} />
   })
 
   return <List>{tasksMap}</List>
