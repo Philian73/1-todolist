@@ -13,7 +13,3 @@ export type TodoListDomainType = TodoListType & {
   filter: FilterValuesType
   entityStatus: RequestStatusType
 }
-
-export type UpdateTodoListDomainModelType = Partial<
-  Omit<TodoListDomainType, 'id' | 'addedDate' | 'order'>
->
