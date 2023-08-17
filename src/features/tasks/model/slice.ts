@@ -31,7 +31,7 @@ const deleteTask = createAppAsyncThunk<
   { todoListID: string; taskID: string }
 >('@@tasks/delete-task', async ({ todoListID, taskID }, { dispatch, rejectWithValue }) => {
   dispatch(appActions.setAppStatus({ status: 'loading' }))
-  dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, isLoading: true }))
+  dispatch(tasksActions.setIsLoadingTask({ todoListID, taskID, isLoading: true }))
 
   try {
     await tasksAPI.deleteTask(todoListID, taskID)
@@ -44,7 +44,7 @@ const deleteTask = createAppAsyncThunk<
 
     return rejectWithValue(null)
   } finally {
-    dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, isLoading: false }))
+    dispatch(tasksActions.setIsLoadingTask({ todoListID, taskID, isLoading: false }))
   }
 })
 
@@ -52,7 +52,7 @@ const createTask = createAppAsyncThunk<{ task: TaskType }, { todoListID: string;
   '@@tasks/create-task',
   async ({ todoListID, title }, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
-    dispatch(todoListsActions.updateEntityStatusTodoList({ ID: todoListID, isLoading: true }))
+    dispatch(todoListsActions.setIsLoadingTodoList({ ID: todoListID, isLoading: true }))
 
     try {
       const response = await tasksAPI.createTask(todoListID, title)
@@ -72,7 +72,7 @@ const createTask = createAppAsyncThunk<{ task: TaskType }, { todoListID: string;
 
       return rejectWithValue(null)
     } finally {
-      dispatch(todoListsActions.updateEntityStatusTodoList({ ID: todoListID, isLoading: false }))
+      dispatch(todoListsActions.setIsLoadingTodoList({ ID: todoListID, isLoading: false }))
     }
   }
 )
@@ -84,7 +84,7 @@ const updateTask = createAppAsyncThunk<
   '@@tasks/update-task',
   async ({ todoListID, taskID, data }, { dispatch, getState, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
-    dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, isLoading: true }))
+    dispatch(tasksActions.setIsLoadingTask({ todoListID, taskID, isLoading: true }))
 
     try {
       const task = getState().tasks[todoListID].find(task => task.id === taskID)!
@@ -113,7 +113,7 @@ const updateTask = createAppAsyncThunk<
 
       return rejectWithValue(null)
     } finally {
-      dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, isLoading: false }))
+      dispatch(tasksActions.setIsLoadingTask({ todoListID, taskID, isLoading: false }))
     }
   }
 )
@@ -125,7 +125,7 @@ const slice = createSlice({
   name: '@@tasks',
   initialState,
   reducers: {
-    updateEntityStatusTask(
+    setIsLoadingTask(
       state,
       action: PayloadAction<{ todoListID: string; taskID: string; isLoading: boolean }>
     ) {

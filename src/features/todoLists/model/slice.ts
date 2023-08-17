@@ -33,7 +33,7 @@ const deleteTodoList = createAppAsyncThunk<{ ID: string }, string>(
   '@@todoLists/delete-todoList',
   async (ID, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
-    dispatch(todoListsActions.updateEntityStatusTodoList({ ID, isLoading: true }))
+    dispatch(todoListsActions.setIsLoadingTodoList({ ID, isLoading: true }))
 
     try {
       await todoListsAPI.deleteTodoList(ID)
@@ -46,7 +46,7 @@ const deleteTodoList = createAppAsyncThunk<{ ID: string }, string>(
 
       return rejectWithValue(null)
     } finally {
-      dispatch(todoListsActions.updateEntityStatusTodoList({ ID, isLoading: false }))
+      dispatch(todoListsActions.setIsLoadingTodoList({ ID, isLoading: false }))
     }
   }
 )
@@ -82,7 +82,7 @@ const updateTitleTodoList = createAppAsyncThunk<
   { ID: string; title: string }
 >('@@todoLists/update-title-todoList', async ({ ID, title }, { dispatch, rejectWithValue }) => {
   dispatch(appActions.setAppStatus({ status: 'loading' }))
-  dispatch(todoListsActions.updateEntityStatusTodoList({ ID, isLoading: true }))
+  dispatch(todoListsActions.setIsLoadingTodoList({ ID, isLoading: true }))
 
   try {
     const response = await todoListsAPI.updateTitleTodoList(ID, title)
@@ -101,7 +101,7 @@ const updateTitleTodoList = createAppAsyncThunk<
 
     return rejectWithValue(null)
   } finally {
-    dispatch(todoListsActions.updateEntityStatusTodoList({ ID, isLoading: false }))
+    dispatch(todoListsActions.setIsLoadingTodoList({ ID, isLoading: false }))
   }
 })
 
@@ -120,7 +120,7 @@ const slice = createSlice({
 
       if (todoList) todoList.filter = action.payload.filter
     },
-    updateEntityStatusTodoList(state, action: PayloadAction<{ ID: string; isLoading: boolean }>) {
+    setIsLoadingTodoList(state, action: PayloadAction<{ ID: string; isLoading: boolean }>) {
       const todoList = state.find(todoList => todoList.id === action.payload.ID)
 
       if (todoList) todoList.isLoading = action.payload.isLoading
