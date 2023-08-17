@@ -122,7 +122,7 @@ const updateTask = createAppAsyncThunk<
 const initialState: TasksInitialStateType = {}
 
 const slice = createSlice({
-  name: '@@tasks',
+  name: 'tasks',
   initialState,
   reducers: {
     setIsLoadingTask(
