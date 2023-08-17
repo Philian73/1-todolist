@@ -11,7 +11,7 @@ import { todoListsActions } from '@/features/todoLists/model'
 
 // THUNKS
 const initializeApp = createAppAsyncThunk<undefined, undefined>(
-  '@@auth/initialize-app',
+  'auth/initialize-app',
   async (_, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
 
@@ -36,7 +36,7 @@ const initializeApp = createAppAsyncThunk<undefined, undefined>(
 )
 
 const login = createAppAsyncThunk<undefined, LoginParamsType>(
-  '@@auth/login',
+  'auth/login',
   async (data, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
 
@@ -59,7 +59,7 @@ const login = createAppAsyncThunk<undefined, LoginParamsType>(
 )
 
 const logout = createAppAsyncThunk<undefined, undefined>(
-  '@@auth/logout',
+  'auth/logout',
   async (_, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
 
