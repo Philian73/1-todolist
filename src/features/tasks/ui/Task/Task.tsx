@@ -15,7 +15,7 @@ type PropsType = {
   status: boolean
 }
 export const Task: FC<PropsType> = memo(({ task, status }) => {
-  const { id: taskID, todoListId: todoListID } = task
+  const { id: taskID, todoListId: todoListID, isLoading: isLoadingTask } = task
 
   const dispatch = useAppDispatch()
 
@@ -43,7 +43,7 @@ export const Task: FC<PropsType> = memo(({ task, status }) => {
     [dispatch, todoListID, taskID]
   )
 
-  const disabledCondition = status || task.entityStatus === 'loading'
+  const disabledCondition = status || isLoadingTask
 
   return (
     <ListItem

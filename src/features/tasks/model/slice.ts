@@ -4,7 +4,7 @@ import { tasksAPI } from '../api'
 
 import { TasksType, TaskType, UpdateTaskModelType } from './'
 
-import { appActions, RequestStatusType } from '@/app/model'
+import { appActions } from '@/app/model'
 import { APIResultCodes } from '@/common/api'
 import { createAppAsyncThunk, errorAPIHandler, handlerServerNetworkError } from '@/common/utils'
 import { todoListsActions, todoListsThunks } from '@/features/todoLists/model'
@@ -31,7 +31,7 @@ const deleteTask = createAppAsyncThunk<
   { todoListID: string; taskID: string }
 >('@@tasks/delete-task', async ({ todoListID, taskID }, { dispatch, rejectWithValue }) => {
   dispatch(appActions.setAppStatus({ status: 'loading' }))
-  dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, entityStatus: 'loading' }))
+  dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, isLoading: true }))
 
   try {
     await tasksAPI.deleteTask(todoListID, taskID)
@@ -44,7 +44,7 @@ const deleteTask = createAppAsyncThunk<
 
     return rejectWithValue(null)
   } finally {
-    dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, entityStatus: 'idle' }))
+    dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, isLoading: false }))
   }
 })
 
@@ -84,7 +84,7 @@ const updateTask = createAppAsyncThunk<
   '@@tasks/update-task',
   async ({ todoListID, taskID, data }, { dispatch, getState, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
-    dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, entityStatus: 'loading' }))
+    dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, isLoading: true }))
 
     try {
       const task = getState().tasks[todoListID].find(task => task.id === taskID)!
@@ -113,7 +113,7 @@ const updateTask = createAppAsyncThunk<
 
       return rejectWithValue(null)
     } finally {
-      dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, entityStatus: 'idle' }))
+      dispatch(tasksActions.updateEntityStatusTask({ todoListID, taskID, isLoading: false }))
     }
   }
 )
@@ -127,16 +127,12 @@ const slice = createSlice({
   reducers: {
     updateEntityStatusTask(
       state,
-      action: PayloadAction<{
-        todoListID: string
-        taskID: string
-        entityStatus: RequestStatusType
-      }>
+      action: PayloadAction<{ todoListID: string; taskID: string; isLoading: boolean }>
     ) {
       const tasks = state[action.payload.todoListID]
       const task = tasks.find(task => task.id === action.payload.taskID)
 
-      if (task) task.entityStatus = action.payload.entityStatus
+      if (task) task.isLoading = action.payload.isLoading
     },
   },
   extraReducers: builder => {
@@ -155,7 +151,7 @@ const slice = createSlice({
       .addCase(todoListsActions.clearTodoLists, () => ({}))
       .addCase(fetchTasks.fulfilled, (state, action) => {
         action.payload.tasks.forEach(task => {
-          state[action.payload.todoListID].push({ ...task, entityStatus: 'idle' })
+          state[action.payload.todoListID].push({ ...task, isLoading: false })
         })
       })
       .addCase(deleteTask.fulfilled, (state, action) => {
@@ -167,7 +163,7 @@ const slice = createSlice({
       .addCase(createTask.fulfilled, (state, action) => {
         state[action.payload.task.todoListId].unshift({
           ...action.payload.task,
-          entityStatus: 'idle',
+          isLoading: false,
         })
       })
       .addCase(updateTask.fulfilled, (state, action) => {
