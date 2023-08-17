@@ -10,7 +10,7 @@ import { createAppAsyncThunk, errorAPIHandler, handlerServerNetworkError } from 
 import { todoListsActions } from '@/features/todoLists/model'
 
 // THUNKS
-const me = createAppAsyncThunk<undefined, undefined>(
+const initializeApp = createAppAsyncThunk<undefined, undefined>(
   '@@auth/me',
   async (_, { dispatch, rejectWithValue }) => {
     dispatch(appActions.setAppStatus({ status: 'loading' }))
@@ -96,7 +96,7 @@ const slice = createSlice({
       .addCase(logout.fulfilled, state => {
         state.isLoggedIn = false
       })
-      .addMatcher(isAnyOf(isFulfilled(me, login)), state => {
+      .addMatcher(isAnyOf(isFulfilled(initializeApp, login)), state => {
         state.isLoggedIn = true
       })
   },
@@ -104,7 +104,7 @@ const slice = createSlice({
 
 // EXPORTS
 export const authReducer = slice.reducer
-export const authThunks = { me, login, logout }
+export const authThunks = { initializeApp, login, logout }
 
 // TYPES
 export type AuthInitialStateType = {

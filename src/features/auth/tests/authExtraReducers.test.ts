@@ -14,7 +14,7 @@ describe('authExtraReducers', () => {
   })
 
   it('isLoggedIn set to true on authThunks.me()', () => {
-    const action = createFulfilledAction(authThunks.me)
+    const action = createFulfilledAction(authThunks.initializeApp)
     const endState = authReducer(initialState, action)
 
     expect(endState.isLoggedIn).toBeTruthy()

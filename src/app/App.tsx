@@ -19,7 +19,7 @@ const App = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(authThunks.me())
+    dispatch(authThunks.initializeApp())
   }, [])
 
   return isInitialized ? (
